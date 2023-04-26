@@ -5,9 +5,16 @@ import {
 	Button,
 	Box,
 	ThemeProvider,
-	CssBaseline
+	CssBaseline,
+	Paper,
+	Typography
 } from '@mui/material';
-import { RootRoute, Route, Router, RouterProvider } from '@tanstack/react-router';
+import {
+	RootRoute,
+	Route,
+	Router,
+	RouterProvider
+} from '@tanstack/react-router';
 import 'react';
 import ButtonLink from './components/ButtonLink';
 import theme from './theme';
@@ -16,6 +23,7 @@ import Profile from './pages/Profile';
 import Rides from './pages/Rides';
 import PublishRide from './pages/PublishRide';
 import NotFound from './pages/NotFound';
+import { FormEvent } from 'react';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -23,7 +31,7 @@ const rootRoute = new RootRoute({
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 
-				<AppBar sx={{ position: 'sticky' }}>
+				<AppBar sx={{ position: 'sticky', background: '#FFFFFF' }}>
 					<Container maxWidth="sm">
 						<Toolbar disableGutters sx={{ gap: 2 }}>
 							<ButtonLink to="/">Home</ButtonLink>
