@@ -1,35 +1,90 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+	AppBar,
+	Container,
+	Toolbar,
+	Button,
+	Box,
+	ThemeProvider,
+	CssBaseline
+} from '@mui/material';
+import { RootRoute, Route, Router, RouterProvider } from '@tanstack/react-router';
+import 'react';
+import ButtonLink from './components/ButtonLink';
+import theme from './theme';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import Rides from './pages/Rides';
+import PublishRide from './pages/PublishRide';
+import NotFound from './pages/NotFound';
 
-function App() {
-  const [count, setCount] = useState(0)
+const rootRoute = new RootRoute({
+	component: () => {
+		return (
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+				<AppBar sx={{ position: 'sticky' }}>
+					<Container maxWidth="sm">
+						<Toolbar disableGutters sx={{ gap: 2 }}>
+							<ButtonLink to="/">Home</ButtonLink>
+							<ButtonLink to="/profile">Profile</ButtonLink>
+							<ButtonLink to="/rides">Rides</ButtonLink>
+							<ButtonLink to="/publishRide">Publish ride</ButtonLink>
+						</Toolbar>
+					</Container>
+				</AppBar>
+			</ThemeProvider>
+		);
+	}
+});
+
+const indexRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/',
+	component: Home
+});
+
+const profileRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/profile',
+	component: Profile
+});
+
+const ridesRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/rides',
+	component: Rides
+});
+
+const publishRideRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/publishRide',
+	component: PublishRide
+});
+
+const notFoundRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '*',
+	component: NotFound
+});
+
+const routeTree = rootRoute.addChildren([
+	indexRoute,
+	profileRoute,
+	ridesRoute,
+	publishRideRoute,
+	notFoundRoute
+]);
+
+const router = new Router({ routeTree });
+
+declare module '@tanstack/react-router' {
+	// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+	interface Register {
+		router: typeof router;
+	}
 }
 
-export default App
+const App = () => <RouterProvider router={router} />;
+
+export default App;
