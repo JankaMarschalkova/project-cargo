@@ -2,14 +2,12 @@ import {
 	AppBar,
 	Container,
 	Toolbar,
-	Button,
-	Box,
 	ThemeProvider,
 	CssBaseline,
-	Paper,
-	Typography
+	Box,
 } from '@mui/material';
 import {
+	Outlet,
 	RootRoute,
 	Route,
 	Router,
@@ -23,7 +21,8 @@ import Profile from './pages/Profile';
 import Rides from './pages/Rides';
 import PublishRide from './pages/PublishRide';
 import NotFound from './pages/NotFound';
-import { FormEvent } from 'react';
+import ProfileIcon from '@mui/icons-material/Person2Sharp';
+
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -35,12 +34,32 @@ const rootRoute = new RootRoute({
 					<Container maxWidth="sm">
 						<Toolbar disableGutters sx={{ gap: 2 }}>
 							<ButtonLink to="/">Home</ButtonLink>
-							<ButtonLink to="/profile">Profile</ButtonLink>
-							<ButtonLink to="/rides">Rides</ButtonLink>
-							<ButtonLink to="/publishRide">Publish ride</ButtonLink>
+							<ButtonLink to="/your-rides">Your rides</ButtonLink>
+							<ButtonLink to="/publish-ride">Publish ride</ButtonLink>
+
+							<Box sx={{ flexGrow: 1 }} />
+							<ButtonLink to="/profile">			
+								<ProfileIcon />
+							</ButtonLink>
 						</Toolbar>
 					</Container>
 				</AppBar>
+
+				<Container
+					maxWidth="sm"
+					component="main"
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center',
+						alignItems: 'center',
+						flexGrow: 1,
+						gap: 2,
+						my: 4
+					}}
+				>
+					<Outlet />
+				</Container>
 			</ThemeProvider>
 		);
 	}
@@ -60,13 +79,13 @@ const profileRoute = new Route({
 
 const ridesRoute = new Route({
 	getParentRoute: () => rootRoute,
-	path: '/rides',
+	path: '/your-rides',
 	component: Rides
 });
 
 const publishRideRoute = new Route({
 	getParentRoute: () => rootRoute,
-	path: '/publishRide',
+	path: '/publish-ride',
 	component: PublishRide
 });
 

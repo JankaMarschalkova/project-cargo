@@ -3,9 +3,9 @@ import { createTheme } from '@mui/material';
 const theme = createTheme({
 	palette: {
 		primary: { main: '#469597' },
-        background: {default: '#E5E3E4'},
-        text: { primary: '#FFFFFF'},
-        mode: 'light'
+		background: { default: '#ADA7AA' },
+		text: { primary: '#FFFFFF' },
+		mode: 'light'
 	},
 	components: {
 		MuiCssBaseline: {

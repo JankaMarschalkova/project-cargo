@@ -5,6 +5,7 @@ import usePageTitle from '../hooks/usePageTitle';
 
 const NotFound = () => {
 	usePageTitle('Not found');
+
 	return (
 		<>
 			<WarningIcon sx={{ typography: 'h1' }} />

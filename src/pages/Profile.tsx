@@ -4,6 +4,7 @@ import usePageTitle from '../hooks/usePageTitle';
 
 const Profile = () => {
 	usePageTitle('Profile');
+	
 	return (
 		<>
 			<Typography variant="h2">Profile</Typography>
