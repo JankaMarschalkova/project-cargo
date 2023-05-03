@@ -13,7 +13,7 @@ import {
 	Router,
 	RouterProvider
 } from '@tanstack/react-router';
-import 'react';
+//import 'react';
 import ButtonLink from './components/ButtonLink';
 import theme from './theme';
 import Home from './pages/Home';
@@ -22,10 +22,14 @@ import Rides from './pages/Rides';
 import PublishRide from './pages/PublishRide';
 import NotFound from './pages/NotFound';
 import ProfileIcon from '@mui/icons-material/Person2Sharp';
-import { UserProvider } from './hooks/useLoggedInUser';
+//import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 
 const rootRoute = new RootRoute({
 	component: () => {
+		const user = useLoggedInUser();
 		return (
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
@@ -33,13 +37,15 @@ const rootRoute = new RootRoute({
 				<AppBar sx={{ position: 'sticky', background: '#FFFFFF' }}>
 					<Container maxWidth="sm">
 						<Toolbar disableGutters sx={{ gap: 2 }}>
+							<ButtonLink to="/">
+								<img src="./public/logo.png" width="50" />
+							</ButtonLink>
 							<ButtonLink to="/">Home</ButtonLink>
 							<ButtonLink to="/your-rides">Your rides</ButtonLink>
 							<ButtonLink to="/publish-ride">Publish ride</ButtonLink>
-
 							<Box sx={{ flexGrow: 1 }} />
 							<ButtonLink to="/profile">
-								<ProfileIcon />
+								{user ? <ProfileIcon /> : 'Login'}
 							</ButtonLink>
 						</Toolbar>
 					</Container>
@@ -114,7 +120,9 @@ declare module '@tanstack/react-router' {
 
 const App = () => (
 	<UserProvider>
-		<RouterProvider router={router} />
+		<LocalizationProvider dateAdapter={AdapterDayjs}>
+			<RouterProvider router={router} />
+		</LocalizationProvider>
 	</UserProvider>
 );
 

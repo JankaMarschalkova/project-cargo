@@ -46,8 +46,12 @@ const Profile = () => {
 					}}
 				>
 					<Typography variant="h4" component="h2" textAlign="center" mb={3}>
-						'Login'
+						Login
 					</Typography>
+					<Button variant="contained" onClick={() => signInWithGoogle()}>
+						{'Sign in with Google'}
+					</Button>
+					<Typography align="center">or using:</Typography>
 					<TextField label="Email" {...email.props} type="email" />
 					<TextField label="Password" {...password.props} type="password" />
 					<Box
@@ -83,16 +87,15 @@ const Profile = () => {
 							{'Sign in'}
 						</Button>
 					</Box>
-					<Button variant="contained" onClick={() => signInWithGoogle()}>
-						{'Sign in with Google'}
-					</Button>
 				</Paper>
 			) : (
 				<>
 					<Typography variant="h4" component="h2" textAlign="center" mb={3}>
-						Login
+						Profile
 					</Typography>
-					<Button onClick={signOut}>Logout</Button>
+					<Button variant="contained" onClick={signOut}>
+						Logout
+					</Button>
 				</>
 			)}
 		</>
