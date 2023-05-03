@@ -4,7 +4,7 @@ import {
 	Toolbar,
 	ThemeProvider,
 	CssBaseline,
-	Box,
+	Box
 } from '@mui/material';
 import {
 	Outlet,
@@ -22,7 +22,7 @@ import Rides from './pages/Rides';
 import PublishRide from './pages/PublishRide';
 import NotFound from './pages/NotFound';
 import ProfileIcon from '@mui/icons-material/Person2Sharp';
-
+import { UserProvider } from './hooks/useLoggedInUser';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -38,7 +38,7 @@ const rootRoute = new RootRoute({
 							<ButtonLink to="/publish-ride">Publish ride</ButtonLink>
 
 							<Box sx={{ flexGrow: 1 }} />
-							<ButtonLink to="/profile">			
+							<ButtonLink to="/profile">
 								<ProfileIcon />
 							</ButtonLink>
 						</Toolbar>
@@ -112,6 +112,10 @@ declare module '@tanstack/react-router' {
 	}
 }
 
-const App = () => <RouterProvider router={router} />;
+const App = () => (
+	<UserProvider>
+		<RouterProvider router={router} />
+	</UserProvider>
+);
 
 export default App;
