@@ -5,6 +5,7 @@ import { FormEvent, useState } from 'react';
 import { signIn, signInWithGoogle, signOut, signUp } from '../firebase';
 import useField from '../hooks/useField';
 import useLoggedInUser from '../hooks/useLoggedInUser';
+import LoginIcon from '@mui/icons-material/Login';
 
 const Profile = () => {
 	usePageTitle('Profile');
@@ -45,11 +46,16 @@ const Profile = () => {
 						gap: 2
 					}}
 				>
-					<Typography variant="h3" fontWeight='bold' textAlign="center" mb={3}>
+					<Typography variant="h3" fontWeight="bold" textAlign="center" mb={3}>
 						Login
 					</Typography>
 					<Button variant="contained" onClick={() => signInWithGoogle()}>
-						<img src='/google-circle.svg' alt='Google logo' width='24' style={{marginRight: '0.5em'}}/>
+						<img
+							src="/google-circle.svg"
+							alt="Google logo"
+							width="24"
+							style={{ marginRight: '0.5em' }}
+						/>
 						{'Log in with Google'}
 					</Button>
 					<Typography align="center">or using:</Typography>
@@ -86,12 +92,13 @@ const Profile = () => {
 							onClick={() => setSignUp(false)}
 						>
 							{'Log in'}
+							<LoginIcon sx={{ marginLeft: '0.25em' }} />
 						</Button>
 					</Box>
 				</Paper>
 			) : (
 				<>
-					<Typography variant="h2" fontWeight='bold'>
+					<Typography variant="h2" fontWeight="bold">
 						Profile
 					</Typography>
 					<Button variant="contained" onClick={signOut}>

@@ -14,6 +14,8 @@ import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import useField from '../hooks/useField';
 import { Timestamp, addDoc } from 'firebase/firestore';
 import { ridesCollection } from '../firebase';
+import LoginIcon from '@mui/icons-material/Login';
+
 
 const PublishRide = () => {
 	usePageTitle('Publish ride');
@@ -35,8 +37,7 @@ const PublishRide = () => {
 			await addDoc(ridesCollection, {
 				leaving_from: leaving_from.value,
 				going_to: going_to.value,
-				//datetime: (date?.value ?? '') + time,
-				datetime: Timestamp.now(),
+				datetime: Timestamp.now(), // TODO
 				seats_available: 5, // TODO
 				price_per_person: 10, // TODO
 				note: note.value
@@ -56,6 +57,7 @@ const PublishRide = () => {
 					</Typography>
 					<ButtonLink variant="contained" to="/profile">
 						Login
+						<LoginIcon sx={{ marginLeft: '0.25em' }} />
 					</ButtonLink>
 				</>
 			) : (
@@ -118,7 +120,6 @@ const PublishRide = () => {
 							}}
 						>
 							<Button
-								// type="submit"
 								variant="contained"
 								onClick={() => publishRide()}
 							>

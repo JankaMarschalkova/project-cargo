@@ -1,13 +1,8 @@
-import {
-	Box,
-	Button,
-	Paper,
-	TextField,
-	Typography
-} from '@mui/material';
+import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import usePageTitle from '../hooks/usePageTitle';
 import useField from '../hooks/useField';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Home = () => {
 	usePageTitle('Home');
@@ -23,7 +18,9 @@ const Home = () => {
 
 	return (
 		<>
-			<Typography variant="h1" fontWeight='bold' mb={2}>CarGo</Typography>
+			<Typography variant="h1" fontWeight="bold" mb={2}>
+				CarGo
+			</Typography>
 			<Paper
 				component="form"
 				sx={{
@@ -55,12 +52,9 @@ const Home = () => {
 						mt: 2
 					}}
 				>
-					<Button
-						type="submit"
-						variant="contained"
-						onClick={() => searchRides()}
-					>
+					<Button variant="contained" onClick={() => searchRides()}>
 						Search
+						<SearchIcon sx={{ marginLeft: '0.25em' }} />
 					</Button>
 				</Box>
 			</Paper>
