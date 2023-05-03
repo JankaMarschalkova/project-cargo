@@ -36,7 +36,7 @@ const rootRoute = new RootRoute({
 					<Container maxWidth="sm">
 						<Toolbar disableGutters sx={{ gap: 2 }}>
 							<ButtonLink to="/">
-								<img src="./public/logo.png" width="50" />
+								<img src="./logo.png" width="50" />
 							</ButtonLink>
 							<ButtonLink to="/">Home</ButtonLink>
 							<ButtonLink to="/your-rides">Your rides</ButtonLink>

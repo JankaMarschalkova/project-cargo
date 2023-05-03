@@ -10,7 +10,6 @@ import {
 	Typography
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import usePageTitle from '../hooks/usePageTitle';
 import useField from '../hooks/useField';
 import { useState } from 'react';
@@ -20,9 +19,6 @@ const Home = () => {
 
 	const leaving_from = useField('leaving_from', true);
 	const going_to = useField('going_to', true);
-	const [from, setFrom] = useState('');
-	const [to, setTo] = useState('');
-	const [date, setDate] = useState<Date | null>(null);
 	const [numPeople, setNumPeople] = useState(1);
 
 	function searchRides(): void {

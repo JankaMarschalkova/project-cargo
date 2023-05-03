@@ -12,8 +12,7 @@ import ButtonLink from '../components/ButtonLink';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import useField from '../hooks/useField';
-import { Timestamp, addDoc, setDoc } from 'firebase/firestore';
-import { useEffect } from 'react';
+import { Timestamp, addDoc } from 'firebase/firestore';
 import { ridesCollection } from '../firebase';
 
 const PublishRide = () => {
