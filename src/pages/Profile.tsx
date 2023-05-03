@@ -45,11 +45,12 @@ const Profile = () => {
 						gap: 2
 					}}
 				>
-					<Typography variant="h4" component="h2" textAlign="center" mb={3}>
+					<Typography variant="h3" fontWeight='bold' textAlign="center" mb={3}>
 						Login
 					</Typography>
 					<Button variant="contained" onClick={() => signInWithGoogle()}>
-						{'Sign in with Google'}
+						<img src='/google-circle.svg' alt='Google logo' width='24' style={{marginRight: '0.5em'}}/>
+						{'Log in with Google'}
 					</Button>
 					<Typography align="center">or using:</Typography>
 					<TextField label="Email" {...email.props} type="email" />
@@ -77,20 +78,20 @@ const Profile = () => {
 							variant="outlined"
 							onClick={() => setSignUp(true)}
 						>
-							{'Sign up'}
+							{'Create account'}
 						</Button>
 						<Button
 							type="submit"
 							variant="contained"
 							onClick={() => setSignUp(false)}
 						>
-							{'Sign in'}
+							{'Log in'}
 						</Button>
 					</Box>
 				</Paper>
 			) : (
 				<>
-					<Typography variant="h4" component="h2" textAlign="center" mb={3}>
+					<Typography variant="h2" fontWeight='bold'>
 						Profile
 					</Typography>
 					<Button variant="contained" onClick={signOut}>

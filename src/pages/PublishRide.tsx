@@ -30,7 +30,6 @@ const PublishRide = () => {
 
 	const publishRide = async () => {
 		// TODO Validation
-		console.log('OK');
 
 		try {
 			await addDoc(ridesCollection, {
@@ -49,7 +48,7 @@ const PublishRide = () => {
 
 	return (
 		<>
-			<Typography variant="h2">Publish ride</Typography>
+			<Typography variant="h2" fontWeight='bold'>Publish ride</Typography>
 			{!user ? (
 				<>
 					<Typography>
@@ -86,7 +85,6 @@ const PublishRide = () => {
 						<TextField
 							label="Number of available seats"
 							type="number"
-							// defaultValue={3}
 							InputLabelProps={{
 								shrink: true
 							}}

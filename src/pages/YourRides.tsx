@@ -4,13 +4,13 @@ import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import ButtonLink from '../components/ButtonLink';
 
-const Rides = () => {
+const YourRides = () => {
 	usePageTitle('Your rides');
 	const user = useLoggedInUser();
 
 	return (
 		<>
-			<Typography variant="h2">Your rides</Typography>
+			<Typography variant="h2" fontWeight='bold'>Your rides</Typography>
 			{!user ? (
 				<>
 					<Typography>
@@ -27,4 +27,4 @@ const Rides = () => {
 	);
 };
 
-export default Rides;
+export default YourRides;

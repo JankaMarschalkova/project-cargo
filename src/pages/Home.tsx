@@ -1,25 +1,21 @@
 import {
 	Box,
 	Button,
-	FormControl,
-	InputLabel,
-	MenuItem,
 	Paper,
-	Select,
 	TextField,
 	Typography
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import usePageTitle from '../hooks/usePageTitle';
 import useField from '../hooks/useField';
-import { useState } from 'react';
 
 const Home = () => {
 	usePageTitle('Home');
 
 	const leaving_from = useField('leaving_from', true);
 	const going_to = useField('going_to', true);
-	const [numPeople, setNumPeople] = useState(1);
+	const date = null;
+	const seats_available = useField('seats_available', true, '1');
 
 	function searchRides(): void {
 		throw new Error('Function not implemented.');
@@ -27,7 +23,7 @@ const Home = () => {
 
 	return (
 		<>
-			<Typography variant="h2">Home</Typography>
+			<Typography variant="h1" fontWeight='bold' mb={2}>CarGo</Typography>
 			<Paper
 				component="form"
 				sx={{
@@ -40,21 +36,16 @@ const Home = () => {
 			>
 				<TextField label="Leaving from" {...leaving_from.props} type="text" />
 				<TextField label="Going to" {...going_to.props} type="text" />
-				<DatePicker label="Date of the ride" />
-				<FormControl fullWidth sx={{ mb: 2 }}>
-					<InputLabel id="num-people-label">Number of people</InputLabel>
-					<Select
-						labelId="num-people-label"
-						value={numPeople}
-						onChange={e => setNumPeople(e.target.value as number)}
-					>
-						{[1, 2, 3, 4, 5, 6].map(num => (
-							<MenuItem key={num} value={num}>
-								{num}
-							</MenuItem>
-						))}
-					</Select>
-				</FormControl>
+				<DatePicker label="Date of the ride" value={date} />
+
+				<TextField
+					label="Number of available seats"
+					type="number"
+					InputLabelProps={{
+						shrink: true
+					}}
+					{...seats_available.props}
+				/>
 				<Box
 					sx={{
 						display: 'flex',

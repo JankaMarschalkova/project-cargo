@@ -17,7 +17,7 @@ import ButtonLink from './components/ButtonLink';
 import theme from './theme';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
-import Rides from './pages/Rides';
+import YourRides from './pages/YourRides';
 import PublishRide from './pages/PublishRide';
 import NotFound from './pages/NotFound';
 import ProfileIcon from '@mui/icons-material/Person2Sharp';
@@ -27,6 +27,7 @@ import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 
 const rootRoute = new RootRoute({
 	component: () => {
+		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const user = useLoggedInUser();
 		return (
 			<ThemeProvider theme={theme}>
@@ -36,7 +37,7 @@ const rootRoute = new RootRoute({
 					<Container maxWidth="sm">
 						<Toolbar disableGutters sx={{ gap: 2 }}>
 							<ButtonLink to="/">
-								<img src="./logo.png" width="50" />
+								<img src="./logo.png" alt='CarGo logo' width="48" />
 							</ButtonLink>
 							<ButtonLink to="/">Home</ButtonLink>
 							<ButtonLink to="/your-rides">Your rides</ButtonLink>
@@ -84,7 +85,7 @@ const profileRoute = new Route({
 const ridesRoute = new Route({
 	getParentRoute: () => rootRoute,
 	path: '/your-rides',
-	component: Rides
+	component: YourRides
 });
 
 const publishRideRoute = new Route({
