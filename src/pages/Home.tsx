@@ -3,14 +3,16 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import usePageTitle from '../hooks/usePageTitle';
 import useField from '../hooks/useField';
 import SearchIcon from '@mui/icons-material/Search';
+import useNumberField from '../hooks/useNumberField';
+import useDateField from '../hooks/useDateField';
 
 const Home = () => {
 	usePageTitle('Home');
 
 	const leaving_from = useField('leaving_from', true);
 	const going_to = useField('going_to', true);
-	const date = null;
-	const seats_available = useField('seats_available', true, '1');
+	const date = useDateField('date', new Date(), true);
+	const seats_available = useNumberField('seats_available', 1, true);
 
 	function searchRides(): void {
 		throw new Error('Function not implemented.');

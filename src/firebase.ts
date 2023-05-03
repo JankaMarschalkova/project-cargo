@@ -60,7 +60,7 @@ const db = getFirestore();
 export type Ride = {
 	leaving_from: string;
 	going_to: string;
-	datetime: Timestamp;
+	datetime: Date;
 	seats_available: number;
 	price_per_person: number;
 	note?: string;

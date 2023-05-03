@@ -12,10 +12,11 @@ import ButtonLink from '../components/ButtonLink';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import useField from '../hooks/useField';
-import { Timestamp, addDoc } from 'firebase/firestore';
+import { addDoc } from 'firebase/firestore';
 import { ridesCollection } from '../firebase';
 import LoginIcon from '@mui/icons-material/Login';
-
+import useNumberField from '../hooks/useNumberField';
+import useDateField from '../hooks/useDateField';
 
 const PublishRide = () => {
 	usePageTitle('Publish ride');
@@ -24,10 +25,10 @@ const PublishRide = () => {
 
 	const leaving_from = useField('leaving_from', true);
 	const going_to = useField('going_to', true);
-	const date = null;
-	const time = null;
-	const seats_available = useField('seats_available', true, '3');
-	const price_per_person = useField('price_per_person', true);
+	const date = useDateField('date', new Date(), true);
+	const time = useDateField('time', new Date(), true);
+	const seats_available = useNumberField('seats_available', 3, true);
+	const price_per_person = useNumberField('price_per_person', 5, true);
 	const note = useField('note', false);
 
 	const publishRide = async () => {
@@ -37,9 +38,9 @@ const PublishRide = () => {
 			await addDoc(ridesCollection, {
 				leaving_from: leaving_from.value,
 				going_to: going_to.value,
-				datetime: Timestamp.now(), // TODO
-				seats_available: 5, // TODO
-				price_per_person: 10, // TODO
+				datetime: date?.value ?? new Date(), // TODO
+				seats_available: seats_available.value,
+				price_per_person: price_per_person.value,
 				note: note.value
 			});
 		} catch (err) {
@@ -49,7 +50,9 @@ const PublishRide = () => {
 
 	return (
 		<>
-			<Typography variant="h2" fontWeight='bold'>Publish ride</Typography>
+			<Typography variant="h2" fontWeight="bold">
+				Publish ride
+			</Typography>
 			{!user ? (
 				<>
 					<Typography>
@@ -119,10 +122,7 @@ const PublishRide = () => {
 								mt: 2
 							}}
 						>
-							<Button
-								variant="contained"
-								onClick={() => publishRide()}
-							>
+							<Button variant="contained" onClick={() => publishRide()}>
 								Publish ride
 							</Button>
 						</Box>
