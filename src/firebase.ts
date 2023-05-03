@@ -7,10 +7,14 @@ import {
 	onAuthStateChanged,
 	User,
 	GoogleAuthProvider,
-	signInWithPopup,
-	FacebookAuthProvider
+	signInWithPopup
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import {
+	CollectionReference,
+	Timestamp,
+	collection,
+	getFirestore
+} from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -50,3 +54,18 @@ export const signInWithGoogle = () => {
 
 // Firestore
 const db = getFirestore();
+
+// Rides collection
+export type Ride = {
+	leaving_from: string;
+	going_to: string;
+	datetime: Timestamp;
+	seats_available: number;
+	price_per_person: number;
+	note?: string;
+};
+
+export const ridesCollection = collection(
+	db,
+	'rides'
+) as CollectionReference<Ride>;

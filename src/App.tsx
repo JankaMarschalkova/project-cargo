@@ -13,7 +13,6 @@ import {
 	Router,
 	RouterProvider
 } from '@tanstack/react-router';
-//import 'react';
 import ButtonLink from './components/ButtonLink';
 import theme from './theme';
 import Home from './pages/Home';
@@ -22,7 +21,6 @@ import Rides from './pages/Rides';
 import PublishRide from './pages/PublishRide';
 import NotFound from './pages/NotFound';
 import ProfileIcon from '@mui/icons-material/Person2Sharp';
-//import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';

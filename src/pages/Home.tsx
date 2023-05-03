@@ -44,7 +44,7 @@ const Home = () => {
 			>
 				<TextField label="Leaving from" {...leaving_from.props} type="text" />
 				<TextField label="Going to" {...going_to.props} type="text" />
-				<DatePicker label="Basic date picker" />
+				<DatePicker label="Date of the ride" />
 				<FormControl fullWidth sx={{ mb: 2 }}>
 					<InputLabel id="num-people-label">Number of people</InputLabel>
 					<Select
