@@ -20,6 +20,7 @@ const Home = () => {
 
 	return (
 		<>
+			<img src="./logo.png" alt="CarGo logo" />
 			<Typography variant="h1" fontWeight="bold" mb={2}>
 				CarGo
 			</Typography>

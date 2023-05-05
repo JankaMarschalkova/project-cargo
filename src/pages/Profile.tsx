@@ -101,9 +101,35 @@ const Profile = () => {
 					<Typography variant="h2" fontWeight="bold">
 						Profile
 					</Typography>
-					<Button variant="contained" onClick={signOut}>
-						Logout
-					</Button>
+					<Paper
+						component="form"
+						sx={{
+							display: 'flex',
+							flexDirection: 'column',
+							width: '100%',
+							p: 4,
+							gap: 2
+						}}
+					>
+						<Typography fontWeight="bold">User name: </Typography> {user.email}
+						<Typography fontWeight="bold">Age: </Typography>
+						<Typography fontWeight="bold">Gender: </Typography>
+						<Typography fontWeight="bold">Car:</Typography>
+						<Typography fontWeight="bold">
+							Number of published rides:
+						</Typography>
+						<Typography fontWeight="bold">
+							Number of your reserved rides:
+						</Typography>
+						<Typography fontWeight="bold">Note:</Typography>
+					</Paper>
+					<Box>
+						<Button variant="contained">Edit</Button>
+						<> </>
+						<Button variant="contained" onClick={signOut}>
+							Logout
+						</Button>
+					</Box>
 				</>
 			)}
 		</>
