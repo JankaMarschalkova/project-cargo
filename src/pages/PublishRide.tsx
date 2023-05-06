@@ -57,8 +57,11 @@ const PublishRide = () => {
 				driver: user?.email ?? '',
 				passengers: []
 			});
+
+			// Redirect on success
+			window.location.href = '/your-rides';
 		} catch (err) {
-			// setSubmitError(err instanceof Error ? err.message : 'Unknown error');
+			alert(err instanceof Error ? err.message : 'Unknown error');
 		}
 	};
 
