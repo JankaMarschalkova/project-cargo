@@ -17,6 +17,7 @@ import { ridesCollection } from '../firebase';
 import LoginIcon from '@mui/icons-material/Login';
 import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
+import dayjs from 'dayjs';
 
 const PublishRide = () => {
 	usePageTitle('Publish ride');
@@ -25,23 +26,36 @@ const PublishRide = () => {
 
 	const leaving_from = useField('leaving_from', true);
 	const going_to = useField('going_to', true);
-	const date = useDateField('date', new Date(), true);
-	const time = useDateField('time', new Date(), true);
+	const date = useDateField('date', dayjs().add(1, 'day'), true);
+	const time = useDateField(
+		'time',
+		dayjs().add(1, 'hour').set('minute', 0),
+		true
+	);
 	const seats_available = useNumberField('seats_available', 3, true);
 	const price_per_person = useNumberField('price_per_person', 5, true);
 	const note = useField('note', false);
 
 	const publishRide = async () => {
-		// TODO Validation
+		// TODO Validation and email validation
+
+		const datetime = date.value
+			.set('hour', time.value.hour())
+			.set('minute', time.value.minute())
+			.set('second', 0)
+			.set('millisecond', 0)
+			.toISOString();
 
 		try {
 			await addDoc(ridesCollection, {
 				leaving_from: leaving_from.value,
 				going_to: going_to.value,
-				datetime: date?.value ?? new Date(), // TODO
+				datetime: datetime,
 				seats_available: seats_available.value,
 				price_per_person: price_per_person.value,
-				note: note.value
+				note: note.value,
+				driver: user?.email ?? '',
+				passengers: []
 			});
 		} catch (err) {
 			// setSubmitError(err instanceof Error ? err.message : 'Unknown error');
@@ -83,8 +97,8 @@ const PublishRide = () => {
 						<TextField label="Going to" {...going_to.props} type="text" />
 						<Divider />
 
-						<DatePicker label="Date of the ride" value={date} />
-						<TimePicker label="Time of the ride" value={time} />
+						<DatePicker label="Date of the ride" {...date.props} />
+						<TimePicker label="Time of the ride" {...time.props} />
 						<Divider />
 
 						<TextField

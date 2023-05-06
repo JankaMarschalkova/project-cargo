@@ -11,7 +11,6 @@ import {
 } from 'firebase/auth';
 import {
 	CollectionReference,
-	Timestamp,
 	collection,
 	getFirestore
 } from 'firebase/firestore';
@@ -60,9 +59,11 @@ const db = getFirestore();
 export type Ride = {
 	leaving_from: string;
 	going_to: string;
-	datetime: Date;
+	datetime: string;
 	seats_available: number;
 	price_per_person: number;
+	driver: string;
+	passengers: string[];
 	note?: string;
 };
 
