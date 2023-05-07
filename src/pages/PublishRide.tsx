@@ -85,6 +85,7 @@ const PublishRide = () => {
 				</>
 			) : (
 				<>
+					{/* Add car check */}
 					<Paper
 						component="form"
 						sx={{

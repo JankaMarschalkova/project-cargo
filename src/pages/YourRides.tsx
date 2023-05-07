@@ -34,10 +34,11 @@ const YourRides = () => {
 						gap: 2
 					}}
 				>
+					{/* Add car check */}
 					<Typography variant="h4" fontWeight="bold">
 						As driver
 					</Typography>
-					
+
 					<Typography variant="h4" fontWeight="bold">
 						As passenger
 					</Typography>
