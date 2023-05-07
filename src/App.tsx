@@ -24,6 +24,7 @@ import ProfileIcon from '@mui/icons-material/Person2Sharp';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
+import Results from './pages/Results';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -76,6 +77,12 @@ const indexRoute = new Route({
 	component: Home
 });
 
+const resultsRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/results',
+	component: Results
+});
+
 const profileRoute = new Route({
 	getParentRoute: () => rootRoute,
 	path: '/profile',
@@ -102,6 +109,7 @@ const notFoundRoute = new Route({
 
 const routeTree = rootRoute.addChildren([
 	indexRoute,
+	resultsRoute,
 	profileRoute,
 	ridesRoute,
 	publishRideRoute,

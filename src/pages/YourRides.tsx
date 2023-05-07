@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -25,7 +25,23 @@ const YourRides = () => {
 					</ButtonLink>
 				</>
 			) : (
-				''
+				<Paper
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						width: '100%',
+						p: 4,
+						gap: 2
+					}}
+				>
+					<Typography variant="h4" fontWeight="bold">
+						As driver
+					</Typography>
+					
+					<Typography variant="h4" fontWeight="bold">
+						As passenger
+					</Typography>
+				</Paper>
 			)}
 		</>
 	);

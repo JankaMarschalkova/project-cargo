@@ -6,17 +6,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
 import dayjs from 'dayjs';
+import { useNavigate } from '@tanstack/react-router';
 
 const Home = () => {
 	usePageTitle('Home');
+
+	const navigate = useNavigate();
 
 	const leaving_from = useField('leaving_from', true);
 	const going_to = useField('going_to', true);
 	const date = useDateField('date', dayjs(), true);
 	const seats_available = useNumberField('seats_available', 1, true);
 
-	function searchRides(): void {
-		throw new Error('Function not implemented.');
+	const searchRides = async () =>  {
+		navigate({ to: '/results' });
 	}
 
 	return (

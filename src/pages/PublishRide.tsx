@@ -18,11 +18,14 @@ import LoginIcon from '@mui/icons-material/Login';
 import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
 import dayjs from 'dayjs';
+import { useNavigate } from '@tanstack/react-router';
 
 const PublishRide = () => {
 	usePageTitle('Publish ride');
 
 	const user = useLoggedInUser();
+
+	const navigate = useNavigate();
 
 	const leaving_from = useField('leaving_from', true);
 	const going_to = useField('going_to', true);
@@ -59,7 +62,7 @@ const PublishRide = () => {
 			});
 
 			// Redirect on success
-			window.location.href = '/your-rides';
+			navigate({ to: '/your-rides' });
 		} catch (err) {
 			alert(err instanceof Error ? err.message : 'Unknown error');
 		}
