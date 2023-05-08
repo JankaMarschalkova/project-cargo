@@ -16,7 +16,7 @@ const RidePreview = (ride: RideType) => {
 			}}
 		>
 			<CardContent>
-				<Typography variant="h5" color="textSecondary" mb={1}>
+				<Typography variant="h6" fontSize={16}>
 					{new Date(ride.datetime).toLocaleString('en-US', {
 						month: 'short',
 						day: 'numeric',
@@ -27,7 +27,7 @@ const RidePreview = (ride: RideType) => {
 					})}
 				</Typography>
 				<Box >
-					<Typography variant="h6" fontWeight='bold' mb={1}>
+					<Typography variant="h5" fontWeight='bold' mt={1} mb={2}>
 						From {ride.leaving_from} to {ride.going_to}
 					</Typography>
 					<Typography>Available seats: {ride.seats_available}</Typography>
