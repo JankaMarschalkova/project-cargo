@@ -1,4 +1,4 @@
-import { Paper, Typography } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -33,15 +33,24 @@ const YourRides = () => {
 				Your rides
 			</Typography>
 			{!user ? (
-				<>
-					<Typography>
+				<Paper
+					component="form"
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						p: 4,
+						gap: 2
+					}}
+				>
+					<Typography mb={2}>
 						In order to see your rides, log in first, please
 					</Typography>
 					<ButtonLink variant="contained" to="/profile">
 						Login
 						<LoginIcon sx={{ marginLeft: '0.4em' }} />
 					</ButtonLink>
-				</>
+				</Paper>
 			) : (
 				<Paper
 					sx={{
@@ -53,14 +62,20 @@ const YourRides = () => {
 					}}
 				>
 					{profile && profile.car !== '' && (
-						<Typography variant="h4" fontWeight="bold">
-							As driver
-						</Typography>
+						<Grid mb={2}>
+							<Typography variant="h4" fontWeight="bold">
+								As driver
+							</Typography>
+							<Typography>No records</Typography>
+						</Grid>
 					)}
 
-					<Typography variant="h4" fontWeight="bold">
-						As passenger
-					</Typography>
+					<Grid mb={2}>
+						<Typography variant="h4" fontWeight="bold">
+							As passenger
+						</Typography>
+						<Typography>No records</Typography>
+					</Grid>
 				</Paper>
 			)}
 		</>
