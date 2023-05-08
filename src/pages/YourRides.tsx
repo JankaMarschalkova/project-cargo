@@ -86,21 +86,20 @@ const YourRides = () => {
 						gap: 2
 					}}
 				>
-					{profile && profile.car !== '' && (
-						<Grid mb={2}>
-							<Typography variant="h4" fontWeight="bold" mb={1}>
-								As driver
-							</Typography>
+					<Grid mb={2}>
+						<Typography variant="h4" fontWeight="bold" mb={1}>
+							As driver
+						</Typography>
 
-							{!asDriver || asDriver.length === 0 ? (
-								<Typography>No records</Typography>
-							) : (
-								asDriver?.map((ride, i) => (
-									<RidePreview key={i} ride={ride} isPassenger={false} />
-								))
-							)}
-						</Grid>
-					)}
+						{!asDriver || asDriver.length === 0 ? (
+							<Typography>No records</Typography>
+						) : (
+							asDriver?.map((ride, i) => (
+								<RidePreview key={i} ride={ride} isPassenger={false} />
+							))
+						)}
+					</Grid>
+
 					<Grid mb={2}>
 						<Typography variant="h4" fontWeight="bold" mb={2}>
 							As passenger
