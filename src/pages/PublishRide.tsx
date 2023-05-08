@@ -19,6 +19,7 @@ import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
 import dayjs from 'dayjs';
 import { useNavigate } from '@tanstack/react-router';
+import AddIcon from '@mui/icons-material/Add';
 
 const PublishRide = () => {
 	usePageTitle('Publish ride');
@@ -80,7 +81,7 @@ const PublishRide = () => {
 					</Typography>
 					<ButtonLink variant="contained" to="/profile">
 						Login
-						<LoginIcon sx={{ marginLeft: '0.25em' }} />
+						<LoginIcon sx={{ marginLeft: '0.4em' }} />
 					</ButtonLink>
 				</>
 			) : (
@@ -145,6 +146,7 @@ const PublishRide = () => {
 						>
 							<Button variant="contained" onClick={() => publishRide()}>
 								Publish ride
+								<AddIcon sx={{ marginLeft: '0.25em' }} />
 							</Button>
 						</Box>
 					</Paper>

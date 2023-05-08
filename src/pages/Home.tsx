@@ -61,7 +61,7 @@ const Home = () => {
 				>
 					<Button variant="contained" onClick={() => searchRides()}>
 						Search
-						<SearchIcon sx={{ marginLeft: '0.25em' }} />
+						<SearchIcon sx={{ marginLeft: '0.4em' }} />
 					</Button>
 				</Box>
 			</Paper>
