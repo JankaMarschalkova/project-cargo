@@ -5,17 +5,21 @@ import useField from '../hooks/useField';
 import SearchIcon from '@mui/icons-material/Search';
 import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
+import dayjs from 'dayjs';
+import { useNavigate } from '@tanstack/react-router';
 
 const Home = () => {
 	usePageTitle('Home');
 
+	const navigate = useNavigate();
+
 	const leaving_from = useField('leaving_from', true);
 	const going_to = useField('going_to', true);
-	const date = useDateField('date', new Date(), true);
+	const date = useDateField('date', dayjs(), true);
 	const seats_available = useNumberField('seats_available', 1, true);
 
-	function searchRides(): void {
-		throw new Error('Function not implemented.');
+	const searchRides = async () =>  {
+		navigate({ to: '/results' });
 	}
 
 	return (
@@ -35,8 +39,8 @@ const Home = () => {
 				}}
 			>
 				<TextField label="Leaving from" {...leaving_from.props} type="text" />
-				<TextField label="Going to" {...going_to.props} type="text" />
-				<DatePicker label="Date of the ride" value={date} />
+				<TextField sx={{ mb: 3 }} label="Going to" {...going_to.props} type="text" />
+				<DatePicker label="Date of the ride" {...date.props} />
 
 				<TextField
 					label="Number of available seats"
@@ -52,12 +56,12 @@ const Home = () => {
 						gap: 2,
 						alignItems: 'center',
 						alignSelf: 'flex-end',
-						mt: 2
+						mt: 3
 					}}
 				>
 					<Button variant="contained" onClick={() => searchRides()}>
 						Search
-						<SearchIcon sx={{ marginLeft: '0.25em' }} />
+						<SearchIcon sx={{ marginLeft: '0.4em' }} />
 					</Button>
 				</Box>
 			</Paper>

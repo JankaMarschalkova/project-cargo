@@ -11,8 +11,9 @@ import {
 } from 'firebase/auth';
 import {
 	CollectionReference,
-	Timestamp,
+	DocumentReference,
 	collection,
+	doc,
 	getFirestore
 } from 'firebase/firestore';
 
@@ -60,9 +61,11 @@ const db = getFirestore();
 export type Ride = {
 	leaving_from: string;
 	going_to: string;
-	datetime: Date;
+	datetime: string;
 	seats_available: number;
 	price_per_person: number;
+	driver: string;
+	passengers: string[];
 	note?: string;
 };
 
@@ -70,3 +73,24 @@ export const ridesCollection = collection(
 	db,
 	'rides'
 ) as CollectionReference<Ride>;
+
+// Profiles collection
+export type Profile = {
+	email: string;
+	nickname?: string;
+	age?: number;
+	gender?: string;
+	phone_number?: string;
+	car?: string;
+	published_rides?: number;
+	reserved_rides?: number;
+	note?: string;
+};
+
+export const profilesCollection = collection(
+	db,
+	'profiles'
+) as CollectionReference<Profile>;
+
+export const profilesDocument = (id: string) =>
+	doc(db, 'profiles', id) as DocumentReference<Profile>;

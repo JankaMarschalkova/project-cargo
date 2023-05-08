@@ -1,13 +1,51 @@
-import { Typography } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import ButtonLink from '../components/ButtonLink';
 import LoginIcon from '@mui/icons-material/Login';
+import { useEffect, useState } from 'react';
+import { onSnapshot } from 'firebase/firestore';
+import {
+	profilesCollection,
+	Profile as ProfileType,
+	ridesCollection,
+	Ride as RideType
+} from '../firebase';
+import RidePreview from '../components/RidePreview';
 
 const YourRides = () => {
 	usePageTitle('Your rides');
 	const user = useLoggedInUser();
+	const [profile, setProfile] = useState<ProfileType | null>(null);
+
+	useEffect(() => {
+		if (!user?.email) {
+			return;
+		}
+
+		onSnapshot(profilesCollection, snapshot => {
+			const profiles = snapshot.docs.map(doc => doc.data());
+			setProfile(
+				profiles.find(profile => profile.email === user?.email) ?? null
+			);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
+	const [rides, setRide] = useState<RideType[] | null>(null);
+
+	useEffect(() => {
+		if (!user?.email) {
+			return;
+		}
+
+		onSnapshot(ridesCollection, snapshot => {
+			const rides = snapshot.docs.map(doc => doc.data());
+			setRide(rides.filter(ride => ride.driver === user?.email) ?? null);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user, profile]);
 
 	return (
 		<>
@@ -15,17 +53,54 @@ const YourRides = () => {
 				Your rides
 			</Typography>
 			{!user ? (
-				<>
-					<Typography>
+				<Paper
+					component="form"
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						p: 4,
+						gap: 2
+					}}
+				>
+					<Typography mb={2}>
 						In order to see your rides, log in first, please
 					</Typography>
 					<ButtonLink variant="contained" to="/profile">
 						Login
-						<LoginIcon sx={{ marginLeft: '0.25em' }} />
+						<LoginIcon sx={{ marginLeft: '0.4em' }} />
 					</ButtonLink>
-				</>
+				</Paper>
 			) : (
-				''
+				<Paper
+					sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						width: '100%',
+						p: 4,
+						gap: 2
+					}}
+				>
+					{profile && profile.car !== '' && (
+						<Grid mb={2}>
+							<Typography variant="h4" fontWeight="bold">
+								As driver
+							</Typography>
+
+							{!rides || rides.length === 0 ? (
+								<Typography>No records</Typography>
+							) : (
+								rides?.map((ride, i) => <RidePreview key={i} {...ride} />)
+							)}
+						</Grid>
+					)}
+					<Grid mb={2}>
+						<Typography variant="h4" fontWeight="bold">
+							As passenger
+						</Typography>
+						<Typography>No records</Typography>
+					</Grid>
+				</Paper>
 			)}
 		</>
 	);
