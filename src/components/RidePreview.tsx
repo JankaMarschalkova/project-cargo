@@ -26,14 +26,14 @@ const RidePreview = (ride: RideType) => {
 						hour12: true
 					})}
 				</Typography>
-				<Box mb={2}>
+				<Box >
 					<Typography variant="h6" fontWeight='bold' mb={1}>
 						From {ride.leaving_from} to {ride.going_to}
 					</Typography>
 					<Typography>Available seats: {ride.seats_available}</Typography>
 					<Typography>Price per person: {ride.price_per_person} €</Typography>
 				</Box>
-				{ride.note && <Typography fontStyle='italic'>{ride.note}</Typography>}
+				{ride.note && <Typography mt={2} fontStyle='italic'>{ride.note}</Typography>}
 			</CardContent>
 		</Card>
 	);
