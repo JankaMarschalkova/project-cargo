@@ -102,12 +102,19 @@ const PublishRide = () => {
 							{...leaving_from.props}
 							type="text"
 						/>
-						<TextField label="Going to" {...going_to.props} type="text" />
-						<Divider />
+						<TextField
+							sx={{ mb: 3 }}
+							label="Going to"
+							{...going_to.props}
+							type="text"
+						/>
 
 						<DatePicker label="Date of the ride" {...date.props} />
-						<TimePicker label="Time of the ride" {...time.props} />
-						<Divider />
+						<TimePicker
+							sx={{ mb: 3 }}
+							label="Time of the ride"
+							{...time.props}
+						/>
 
 						<TextField
 							label="Number of available seats"
@@ -118,6 +125,7 @@ const PublishRide = () => {
 							{...seats_available.props}
 						/>
 						<TextField
+							sx={{ mb: 3 }}
 							label="Price per person (in €)"
 							type="number"
 							InputLabelProps={{
@@ -125,7 +133,6 @@ const PublishRide = () => {
 							}}
 							{...price_per_person.props}
 						/>
-						<Divider />
 
 						<TextField
 							label="Note"
@@ -141,7 +148,7 @@ const PublishRide = () => {
 								gap: 2,
 								alignItems: 'center',
 								alignSelf: 'flex-end',
-								mt: 2
+								mt: 3
 							}}
 						>
 							<Button variant="contained" onClick={() => publishRide()}>

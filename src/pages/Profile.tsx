@@ -174,7 +174,6 @@ const Profile = () => {
 								<Typography fontWeight="bold">
 									{profile && profile.car !== '' ? profile?.car : '(empty)'}
 								</Typography>
-								<Typography fontWeight="bold">{profile?.car}</Typography>
 								<Typography fontWeight="bold" mb={3}>
 									{profile && profile.note !== '' ? profile?.note : '(empty)'}
 								</Typography>

@@ -39,7 +39,7 @@ const Home = () => {
 				}}
 			>
 				<TextField label="Leaving from" {...leaving_from.props} type="text" />
-				<TextField label="Going to" {...going_to.props} type="text" />
+				<TextField sx={{ mb: 3 }} label="Going to" {...going_to.props} type="text" />
 				<DatePicker label="Date of the ride" {...date.props} />
 
 				<TextField
@@ -56,7 +56,7 @@ const Home = () => {
 						gap: 2,
 						alignItems: 'center',
 						alignSelf: 'flex-end',
-						mt: 2
+						mt: 3
 					}}
 				>
 					<Button variant="contained" onClick={() => searchRides()}>

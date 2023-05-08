@@ -4,10 +4,28 @@ import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import ButtonLink from '../components/ButtonLink';
 import LoginIcon from '@mui/icons-material/Login';
+import { useEffect, useState } from 'react';
+import { onSnapshot } from 'firebase/firestore';
+import { profilesCollection, Profile as ProfileType } from '../firebase';
 
 const YourRides = () => {
 	usePageTitle('Your rides');
 	const user = useLoggedInUser();
+	const [profile, setProfile] = useState<ProfileType | null>(null);
+
+	useEffect(() => {
+		if (!user?.email) {
+			return;
+		}
+
+		onSnapshot(profilesCollection, snapshot => {
+			const profiles = snapshot.docs.map(doc => doc.data());
+			setProfile(
+				profiles.find(profile => profile.email === user?.email) ?? null
+			);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
 
 	return (
 		<>
@@ -34,10 +52,11 @@ const YourRides = () => {
 						gap: 2
 					}}
 				>
-					{/* Add car check */}
-					<Typography variant="h4" fontWeight="bold">
-						As driver
-					</Typography>
+					{profile && profile.car !== '' && (
+						<Typography variant="h4" fontWeight="bold">
+							As driver
+						</Typography>
+					)}
 
 					<Typography variant="h4" fontWeight="bold">
 						As passenger
