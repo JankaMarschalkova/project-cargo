@@ -15,6 +15,7 @@ import usePageTitle from '../hooks/usePageTitle';
 import { useState } from 'react';
 import { profilesDocument } from '../firebase';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SaveIcon from '@mui/icons-material/Save';
 import useField from '../hooks/useField';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 
@@ -24,11 +25,11 @@ import useNumberField from '../hooks/useNumberField';
 const EditProfile = () => {
 	usePageTitle('Edit profile');
 	const user = useLoggedInUser();
+
 	const navigate = useNavigate();
 
 	const nickname = useField('nick_name', false);
 	const age = useField('age', false);
-	//const gender = useField('gender', true);
 	const [gender, setGender] = useState('');
 	const phone_number = useField('phone_number', false);
 	const car = useField('car', false);
@@ -36,14 +37,14 @@ const EditProfile = () => {
 	const reserved_rides = useNumberField('number_reserved_rides', 0, false);
 	const note = useField('note', false);
 
-	const [submitError, setSubmitError] = useState<string>();
+	const [submitError, setSubmitError] = useState<string>(); // TODO Unnecessary
 
 	const saveProfile = async () => {
 		try {
 			await setDoc(profilesDocument(user?.email ?? ''), {
 				email: user?.email ?? '',
 				nickname: nickname.value,
-				age: parseInt(age.value),
+				age: isNaN(parseInt(age.value)) ? 0 : parseInt(age.value),
 				phone_number: phone_number.value,
 				gender: gender,
 				car: car.value,
@@ -53,6 +54,7 @@ const EditProfile = () => {
 			});
 		} catch (err) {
 			setSubmitError(err instanceof Error ? err.message : 'Unknown error');
+			console.log('ERR'); // TODO Handle differently, age was not working
 		}
 		navigate({ to: '/profile' });
 	};
@@ -78,7 +80,13 @@ const EditProfile = () => {
 					gap: 2
 				}}
 			>
-				<TextField label="Nick name" {...nickname.props} type="text" />
+				{/* // TODO Add initial values from original document, so it is not lost on save */}
+				<TextField
+					label="Nickname"
+					{...nickname.props}
+					type="text"
+					sx={{ mb: 3 }}
+				/>
 				<TextField label="Age" {...age.props} type="number" />
 				<FormControl fullWidth>
 					<InputLabel id="demo-simple-select-label">Gender</InputLabel>
@@ -98,17 +106,28 @@ const EditProfile = () => {
 				<TextField label="Phone number" {...phone_number.props} type="text" />
 				<TextField label="Car" {...car.props} type="text" />
 				<TextField label="Note" {...note.props} type="text" />
+
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						mt: 3,
+						gap: 2
+					}}
+				>
+					<Button variant="outlined" onClick={backToProfileInfo}>
+						<LogoutIcon
+							sx={{ marginRight: '0.4em', transform: 'scaleX(-1)' }}
+						/>
+						Back to profile
+					</Button>
+
+					<Button variant="contained" onClick={saveProfile}>
+						Save changes
+						<SaveIcon sx={{ marginLeft: '0.4em' }} />
+					</Button>
+				</Box>
 			</Paper>
-			<Box>
-				<Button variant="contained" onClick={saveProfile}>
-					Save edit
-				</Button>
-				<> </>
-				<Button variant="contained" onClick={backToProfileInfo}>
-					Back to profile info
-					<LogoutIcon sx={{ marginLeft: '0.4em' }} />
-				</Button>
-			</Box>
 		</>
 	);
 };

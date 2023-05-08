@@ -154,10 +154,10 @@ const Profile = () => {
 					>
 						<Grid container spacing={2}>
 							<Grid container item xs={6} direction="column">
-								<Typography fontStyle="italic">User name</Typography>
+								<Typography fontStyle="italic">Username</Typography>
 
 								<Typography fontStyle="italic" mb={3}>
-									Nick name
+									Nickname
 								</Typography>
 								<Typography fontStyle="italic">Age </Typography>
 								<Typography fontStyle="italic">Gender </Typography>

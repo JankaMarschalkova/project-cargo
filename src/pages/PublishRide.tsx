@@ -192,7 +192,7 @@ const PublishRide = () => {
 							}}
 						>
 							<Typography mb={2} maxWidth='22em' align='center'>
-								In order to publish rides, add nick name and car to your profile, please
+								In order to publish rides, add nickname and car to your profile, please
 							</Typography>
 							<ButtonLink variant="contained" to="/profile">
 								Profile
