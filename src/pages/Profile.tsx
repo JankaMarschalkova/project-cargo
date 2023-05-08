@@ -8,14 +8,15 @@ import {
 	signOut,
 	signUp,
 	Profile as ProfileType,
-	profilesCollection
+	profilesCollection,
+	profilesDocument
 } from '../firebase';
 import useField from '../hooks/useField';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/EditOutlined';
-import { onSnapshot } from 'firebase/firestore';
+import { addDoc, onSnapshot, setDoc } from 'firebase/firestore';
 
 const Profile = () => {
 	usePageTitle('Profile');
@@ -45,6 +46,8 @@ const Profile = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
+	const editProfile = () => navigate({ to: '/edit-profile' });
+
 	return (
 		<>
 			{!user ? (
@@ -61,6 +64,17 @@ const Profile = () => {
 									? await signUp(email.value, password.value)
 									: await signIn(email.value, password.value);
 								navigate({ to: '/' });
+								await setDoc(profilesDocument(email.value), {
+									email: email.value,
+									nickname: profile?.nickname,
+									age: profile?.age,
+									gender: profile?.gender,
+									phone_number: profile?.phone_number,
+									car: profile?.car,
+									published_rides: profile?.published_rides,
+									reserved_rides: profile?.reserved_rides,
+									note: profile?.note
+								});
 							} catch (err) {
 								setSubmitError(
 									(err as { message?: string })?.message ?? 'Unknown error'
@@ -147,6 +161,7 @@ const Profile = () => {
 								</Typography>
 								<Typography fontStyle="italic">Age </Typography>
 								<Typography fontStyle="italic">Gender </Typography>
+								<Typography fontStyle="italic">Phone number </Typography>
 								<Typography fontStyle="italic">Car</Typography>
 								<Typography fontStyle="italic" mb={3}>
 									Note
@@ -169,6 +184,11 @@ const Profile = () => {
 								<Typography fontWeight="bold">
 									{profile && profile.gender !== ''
 										? profile?.gender
+										: '(empty)'}
+								</Typography>
+								<Typography fontWeight="bold">
+									{profile && profile.phone_number !== ''
+										? profile?.phone_number
 										: '(empty)'}
 								</Typography>
 								<Typography fontWeight="bold">
@@ -199,7 +219,7 @@ const Profile = () => {
 								gap: 2
 							}}
 						>
-							<Button variant="outlined">
+							<Button variant="outlined" onClick={editProfile}>
 								<EditIcon sx={{ marginRight: '0.4em' }} />
 								Edit
 							</Button>

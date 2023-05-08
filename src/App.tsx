@@ -25,6 +25,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import Results from './pages/Results';
+import EditProfile from './pages/editProfile';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -38,7 +39,7 @@ const rootRoute = new RootRoute({
 					<Container maxWidth="sm">
 						<Toolbar disableGutters sx={{ gap: 2 }}>
 							<ButtonLink to="/">
-								<img src="./logo.png" alt='CarGo logo' width="48" />
+								<img src="./logo.png" alt="CarGo logo" width="48" />
 							</ButtonLink>
 							<ButtonLink to="/">Home</ButtonLink>
 							<ButtonLink to="/your-rides">Your rides</ButtonLink>
@@ -101,6 +102,12 @@ const publishRideRoute = new Route({
 	component: PublishRide
 });
 
+const editProfileRoute = new Route({
+	getParentRoute: () => rootRoute,
+	path: '/edit-profile',
+	component: EditProfile
+});
+
 const notFoundRoute = new Route({
 	getParentRoute: () => rootRoute,
 	path: '*',
@@ -113,6 +120,7 @@ const routeTree = rootRoute.addChildren([
 	profileRoute,
 	ridesRoute,
 	publishRideRoute,
+	editProfileRoute,
 	notFoundRoute
 ]);
 
