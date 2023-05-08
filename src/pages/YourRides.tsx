@@ -83,7 +83,7 @@ const YourRides = () => {
 				>
 					{profile && profile.car !== '' && (
 						<Grid mb={2}>
-							<Typography variant="h4" fontWeight="bold">
+							<Typography variant="h4" fontWeight="bold" mb={1}>
 								As driver
 							</Typography>
 
@@ -95,7 +95,7 @@ const YourRides = () => {
 						</Grid>
 					)}
 					<Grid mb={2}>
-						<Typography variant="h4" fontWeight="bold">
+						<Typography variant="h4" fontWeight="bold" mb={2}>
 							As passenger
 						</Typography>
 						<Typography>No records</Typography>

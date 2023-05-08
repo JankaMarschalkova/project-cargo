@@ -1,4 +1,12 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import {
+	Box,
+	Button,
+	Divider,
+	Grid,
+	Paper,
+	TextField,
+	Typography
+} from '@mui/material';
 import { useNavigate } from '@tanstack/react-router';
 import usePageTitle from '../hooks/usePageTitle';
 import { FormEvent, useEffect, useState } from 'react';
@@ -152,7 +160,36 @@ const Profile = () => {
 							gap: 2
 						}}
 					>
-						<Grid container spacing={2}>
+						<Typography variant="h5" fontWeight="bold">
+							Statistics
+						</Typography>
+
+						<Grid container spacing={2} mb={2}>
+							<Grid container item xs={6} direction="column">
+								<Typography fontStyle="italic">Published rides</Typography>
+								<Typography fontStyle="italic">Reserved rides</Typography>
+							</Grid>
+							<Grid container item xs={6} direction="column">
+								<Typography fontWeight="bold">
+									{profile && profile.published_rides !== undefined
+										? profile?.published_rides
+										: '(empty)'}
+								</Typography>
+								<Typography fontWeight="bold">
+									{profile && profile.reserved_rides !== undefined
+										? profile?.reserved_rides
+										: '(empty)'}
+								</Typography>
+							</Grid>
+						</Grid>
+
+						<Divider />
+
+						<Typography variant="h5" fontWeight="bold" mt={2}>
+							Details
+						</Typography>
+
+						<Grid container spacing={2} >
 							<Grid container item xs={6} direction="column">
 								<Typography fontStyle="italic">Username</Typography>
 
@@ -163,12 +200,7 @@ const Profile = () => {
 								<Typography fontStyle="italic">Gender </Typography>
 								<Typography fontStyle="italic">Phone number </Typography>
 								<Typography fontStyle="italic">Car</Typography>
-								<Typography fontStyle="italic" mb={3}>
-									Note
-								</Typography>
-
-								<Typography fontStyle="italic">Published rides</Typography>
-								<Typography fontStyle="italic">Reserved rides</Typography>
+								<Typography fontStyle="italic">Note</Typography>
 							</Grid>
 							<Grid container item xs={6} direction="column">
 								<Typography fontWeight="bold">{user.email}</Typography>
@@ -194,19 +226,8 @@ const Profile = () => {
 								<Typography fontWeight="bold">
 									{profile && profile.car !== '' ? profile?.car : '(empty)'}
 								</Typography>
-								<Typography fontWeight="bold" mb={3}>
+								<Typography fontWeight="bold">
 									{profile && profile.note !== '' ? profile?.note : '(empty)'}
-								</Typography>
-
-								<Typography fontWeight="bold">
-									{profile && profile.published_rides !== 0
-										? profile?.published_rides
-										: '(empty)'}
-								</Typography>
-								<Typography fontWeight="bold">
-									{profile && profile.reserved_rides !== 0
-										? profile?.reserved_rides
-										: '(empty)'}
 								</Typography>
 							</Grid>
 						</Grid>
