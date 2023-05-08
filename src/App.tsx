@@ -25,7 +25,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import Results from './pages/Results';
-import EditProfile from './pages/editProfile';
+import EditProfile from './pages/EditProfile';
 
 const rootRoute = new RootRoute({
 	component: () => {
