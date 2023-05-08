@@ -79,8 +79,8 @@ export type Profile = {
 	age: number;
 	gender: string;
 	car?: string;
-	number_published_rides: number;
-	number_reserved_rides: number;
+	published_rides: number;
+	reserved_rides: number;
 	note?: string;
 };
 
