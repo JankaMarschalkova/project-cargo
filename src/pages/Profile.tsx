@@ -48,78 +48,80 @@ const Profile = () => {
 	return (
 		<>
 			{!user ? (
-				<Paper
-					component="form"
-					onSubmit={async (e: FormEvent) => {
-						e.preventDefault();
-						try {
-							isSignUp
-								? await signUp(email.value, password.value)
-								: await signIn(email.value, password.value);
-							navigate({ to: '/' });
-						} catch (err) {
-							setSubmitError(
-								(err as { message?: string })?.message ?? 'Unknown error'
-							);
-						}
-					}}
-					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						width: '100%',
-						p: 4,
-						gap: 2
-					}}
-				>
-					<Typography variant="h3" fontWeight="bold" textAlign="center" mb={3}>
+				<>
+					<Typography variant="h2" fontWeight="bold" textAlign="center">
 						Login
 					</Typography>
-					<Button variant="contained" onClick={() => signInWithGoogle()}>
-						<img
-							src="/google-circle.svg"
-							alt="Google logo"
-							width="24"
-							style={{ marginRight: '0.4em' }}
-						/>
-						Log in with Google
-					</Button>
-					<Typography align="center">or using:</Typography>
-					<TextField label="Email" {...email.props} type="email" />
-					<TextField label="Password" {...password.props} type="password" />
-					{submitError && (
-						<Typography
-							variant="caption"
-							textAlign="left"
-							sx={{ color: 'error.main' }}
-						>
-							{submitError}
-						</Typography>
-					)}
-					<Box
+					<Paper
+						component="form"
+						onSubmit={async (e: FormEvent) => {
+							e.preventDefault();
+							try {
+								isSignUp
+									? await signUp(email.value, password.value)
+									: await signIn(email.value, password.value);
+								navigate({ to: '/' });
+							} catch (err) {
+								setSubmitError(
+									(err as { message?: string })?.message ?? 'Unknown error'
+								);
+							}
+						}}
 						sx={{
 							display: 'flex',
-							justifyContent: 'space-between',
-							mt: 2,
+							flexDirection: 'column',
+							width: '100%',
+							p: 4,
 							gap: 2
 						}}
 					>
-						<Button
-							type="submit"
-							variant="outlined"
-							onClick={() => setSignUp(true)}
-						>
-							Create account
+						<Button variant="contained" onClick={() => signInWithGoogle()}>
+							<img
+								src="/google-circle.svg"
+								alt="Google logo"
+								width="24"
+								style={{ marginRight: '0.4em' }}
+							/>
+							Log in with Google
 						</Button>
-						<Button
-							type="submit"
-							variant="contained"
-							onClick={() => setSignUp(false)}
+						<Typography align="center">or using:</Typography>
+						<TextField label="Email" {...email.props} type="email" />
+						<TextField label="Password" {...password.props} type="password" />
+						{submitError && (
+							<Typography
+								variant="caption"
+								textAlign="left"
+								sx={{ color: 'error.main' }}
+							>
+								{submitError}
+							</Typography>
+						)}
+						<Box
+							sx={{
+								display: 'flex',
+								justifyContent: 'space-between',
+								mt: 3,
+								gap: 2
+							}}
 						>
-							Log in
-							<LoginIcon sx={{ marginLeft: '0.25em' }} />
-						</Button>
-					</Box>
-				</Paper>
+							<Button
+								type="submit"
+								variant="outlined"
+								onClick={() => setSignUp(true)}
+							>
+								Create account
+							</Button>
+							<Button
+								type="submit"
+								variant="contained"
+								onClick={() => setSignUp(false)}
+							>
+								Log in
+								<LoginIcon sx={{ marginLeft: '0.4em' }} />
+							</Button>
+						</Box>
+					</Paper>
+				</>
 			) : (
 				<>
 					<Typography variant="h2" fontWeight="bold">
@@ -174,14 +176,18 @@ const Profile = () => {
 								</Typography>
 								<Typography fontWeight="bold">{profile?.car}</Typography>
 								<Typography fontWeight="bold" mb={3}>
-								{profile && profile.note !== '' ? profile?.note : '(empty)'}
+									{profile && profile.note !== '' ? profile?.note : '(empty)'}
 								</Typography>
 
 								<Typography fontWeight="bold">
-								{profile && profile.published_rides !== 0 ? profile?.published_rides : '(empty)'}
+									{profile && profile.published_rides !== 0
+										? profile?.published_rides
+										: '(empty)'}
 								</Typography>
 								<Typography fontWeight="bold">
-								{profile && profile.reserved_rides !== 0 ? profile?.reserved_rides : '(empty)'}
+									{profile && profile.reserved_rides !== 0
+										? profile?.reserved_rides
+										: '(empty)'}
 								</Typography>
 							</Grid>
 						</Grid>
@@ -190,7 +196,7 @@ const Profile = () => {
 							sx={{
 								display: 'flex',
 								justifyContent: 'space-between',
-								mt: 2,
+								mt: 3,
 								gap: 2
 							}}
 						>

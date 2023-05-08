@@ -21,7 +21,7 @@ const YourRides = () => {
 					</Typography>
 					<ButtonLink variant="contained" to="/profile">
 						Login
-						<LoginIcon sx={{ marginLeft: '4em' }} />
+						<LoginIcon sx={{ marginLeft: '0.4em' }} />
 					</ButtonLink>
 				</>
 			) : (
