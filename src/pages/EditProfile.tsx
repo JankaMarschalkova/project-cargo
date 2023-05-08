@@ -14,7 +14,7 @@ import { useNavigate } from '@tanstack/react-router';
 import usePageTitle from '../hooks/usePageTitle';
 import { useState } from 'react';
 import { profilesDocument } from '../firebase';
-import LogoutIcon from '@mui/icons-material/Logout';
+import BackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import useField from '../hooks/useField';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -113,9 +113,7 @@ const EditProfile = () => {
 					}}
 				>
 					<Button variant="outlined" onClick={backToProfileInfo}>
-						<LogoutIcon
-							sx={{ marginRight: '0.4em', transform: 'scaleX(-1)' }}
-						/>
+						<BackIcon sx={{ marginRight: '0.4em' }} />
 						Back to profile
 					</Button>
 

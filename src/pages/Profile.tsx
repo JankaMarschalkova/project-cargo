@@ -251,7 +251,7 @@ const Profile = () => {
 								Logout
 							</Button>
 							<Button variant="contained" onClick={editProfile}>
-								Edit
+								Edit profile
 								<EditIcon sx={{ marginLeft: '0.4em' }} />
 							</Button>
 						</Box>
