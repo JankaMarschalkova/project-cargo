@@ -109,7 +109,7 @@ const PublishRide = () => {
 				</Paper>
 			) : (
 				<>
-					{profile && profile.nickname !== '' && profile.car !== '' ? (
+					{profile && profile.phone_number !== '' && profile.car !== '' ? (
 						<Paper
 							component="form"
 							sx={{
@@ -192,7 +192,7 @@ const PublishRide = () => {
 							}}
 						>
 							<Typography mb={2} maxWidth='22em' align='center'>
-								In order to publish rides, add nickname and car to your profile, please
+								In order to publish rides, add phone number and car to your profile, please
 							</Typography>
 							<ButtonLink variant="contained" to="/profile">
 								Profile

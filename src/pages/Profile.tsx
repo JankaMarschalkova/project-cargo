@@ -166,8 +166,8 @@ const Profile = () => {
 
 						<Grid container spacing={2} mb={2}>
 							<Grid container item xs={6} direction="column">
-								<Typography fontStyle="italic">Published rides</Typography>
-								<Typography fontStyle="italic">Reserved rides</Typography>
+								<Typography fontStyle="italic">Published rides (total)</Typography>
+								<Typography fontStyle="italic">Reserved rides (total)</Typography>
 							</Grid>
 							<Grid container item xs={6} direction="column">
 								<Typography fontWeight="bold">
