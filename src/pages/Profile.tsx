@@ -166,8 +166,12 @@ const Profile = () => {
 
 						<Grid container spacing={2} mb={2}>
 							<Grid container item xs={6} direction="column">
-								<Typography fontStyle="italic">Published rides (total)</Typography>
-								<Typography fontStyle="italic">Reserved rides (total)</Typography>
+								<Typography fontStyle="italic">
+									Published rides (total)
+								</Typography>
+								<Typography fontStyle="italic">
+									Reserved rides (total)
+								</Typography>
 							</Grid>
 							<Grid container item xs={6} direction="column">
 								<Typography fontWeight="bold">
@@ -189,7 +193,7 @@ const Profile = () => {
 							Details
 						</Typography>
 
-						<Grid container spacing={2} >
+						<Grid container spacing={2}>
 							<Grid container item xs={6} direction="column">
 								<Typography fontStyle="italic">Username</Typography>
 
@@ -240,14 +244,15 @@ const Profile = () => {
 								gap: 2
 							}}
 						>
-							<Button variant="outlined" onClick={editProfile}>
-								<EditIcon sx={{ marginRight: '0.4em' }} />
-								Edit
-							</Button>
-
-							<Button variant="contained" onClick={signOut}>
+							<Button variant="outlined" onClick={signOut}>
+								<LogoutIcon
+									sx={{ marginRight: '0.4em', transform: 'scaleX(-1)' }}
+								/>
 								Logout
-								<LogoutIcon sx={{ marginLeft: '0.4em' }} />
+							</Button>
+							<Button variant="contained" onClick={editProfile}>
+								Edit
+								<EditIcon sx={{ marginLeft: '0.4em' }} />
 							</Button>
 						</Box>
 					</Paper>
