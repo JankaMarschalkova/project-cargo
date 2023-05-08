@@ -24,7 +24,7 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/EditOutlined';
-import { addDoc, onSnapshot, setDoc } from 'firebase/firestore';
+import { onSnapshot, setDoc } from 'firebase/firestore';
 
 const Profile = () => {
 	usePageTitle('Profile');

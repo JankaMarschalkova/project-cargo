@@ -95,7 +95,9 @@ const YourRides = () => {
 							{!asDriver || asDriver.length === 0 ? (
 								<Typography>No records</Typography>
 							) : (
-								asDriver?.map((ride, i) => <RidePreview key={i} {...ride} />)
+								asDriver?.map((ride, i) => (
+									<RidePreview key={i} ride={ride} isPassenger={false} />
+								))
 							)}
 						</Grid>
 					)}
@@ -106,7 +108,7 @@ const YourRides = () => {
 						{!asDriver || asDriver.length === 0 ? (
 							<Typography>No records</Typography>
 						) : (
-							asPassenger?.map((ride, i) => <RidePreview key={i} {...ride} />)
+							asPassenger?.map((ride, i) => <RidePreview key={i} ride={ride} />)
 						)}
 					</Grid>
 				</Paper>

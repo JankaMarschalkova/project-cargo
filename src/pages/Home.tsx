@@ -18,14 +18,14 @@ const Home = () => {
 	const date = useDateField('date', dayjs(), true);
 	const seats_available = useNumberField('seats_available', 1, true);
 
-	const searchRides = async () =>  {
+	const searchRides = async () => {
 		navigate({ to: '/results' });
-	}
+	};
 
 	return (
 		<>
 			<img src="./logo.png" alt="CarGo logo" />
-			<Typography variant="h1" fontWeight="bold" mb={2}>
+			<Typography variant="h1" fontWeight="bold">
 				CarGo
 			</Typography>
 			<Paper
@@ -39,7 +39,12 @@ const Home = () => {
 				}}
 			>
 				<TextField label="Leaving from" {...leaving_from.props} type="text" />
-				<TextField sx={{ mb: 3 }} label="Going to" {...going_to.props} type="text" />
+				<TextField
+					sx={{ mb: 3 }}
+					label="Going to"
+					{...going_to.props}
+					type="text"
+				/>
 				<DatePicker label="Date of the ride" {...date.props} />
 
 				<TextField

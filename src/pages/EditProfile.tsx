@@ -37,8 +37,6 @@ const EditProfile = () => {
 	const reserved_rides = useNumberField('number_reserved_rides', 0, false);
 	const note = useField('note', false);
 
-	const [submitError, setSubmitError] = useState<string>(); // TODO Unnecessary
-
 	const saveProfile = async () => {
 		try {
 			await setDoc(profilesDocument(user?.email ?? ''), {
@@ -53,8 +51,7 @@ const EditProfile = () => {
 				note: note.value
 			});
 		} catch (err) {
-			setSubmitError(err instanceof Error ? err.message : 'Unknown error');
-			console.log('ERR'); // TODO Handle differently, age was not working
+			console.log('ERR'); // TODO Handle differently, plus age was not working
 		}
 		navigate({ to: '/profile' });
 	};
