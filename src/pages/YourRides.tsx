@@ -6,7 +6,13 @@ import ButtonLink from '../components/ButtonLink';
 import LoginIcon from '@mui/icons-material/Login';
 import { useEffect, useState } from 'react';
 import { onSnapshot } from 'firebase/firestore';
-import { profilesCollection, Profile as ProfileType } from '../firebase';
+import {
+	profilesCollection,
+	Profile as ProfileType,
+	ridesCollection,
+	Ride as RideType
+} from '../firebase';
+import RidePreview from '../components/RidePreview';
 
 const YourRides = () => {
 	usePageTitle('Your rides');
@@ -26,6 +32,20 @@ const YourRides = () => {
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
+
+	const [rides, setRide] = useState<RideType[] | null>(null);
+
+	useEffect(() => {
+		if (!user?.email) {
+			return;
+		}
+
+		onSnapshot(ridesCollection, snapshot => {
+			const rides = snapshot.docs.map(doc => doc.data());
+			setRide(rides.filter(ride => ride.driver === user?.email) ?? null);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user, profile]);
 
 	return (
 		<>
@@ -66,10 +86,14 @@ const YourRides = () => {
 							<Typography variant="h4" fontWeight="bold">
 								As driver
 							</Typography>
-							<Typography>No records</Typography>
+
+							{!rides || rides.length === 0 ? (
+								<Typography>No records</Typography>
+							) : (
+								rides?.map((ride, i) => <RidePreview key={i} {...ride} />)
+							)}
 						</Grid>
 					)}
-
 					<Grid mb={2}>
 						<Typography variant="h4" fontWeight="bold">
 							As passenger
