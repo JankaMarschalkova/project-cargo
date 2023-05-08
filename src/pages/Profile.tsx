@@ -2,19 +2,10 @@ import { Box, Button, Paper, TextField, Typography } from '@mui/material';
 import { useNavigate } from '@tanstack/react-router';
 import usePageTitle from '../hooks/usePageTitle';
 import { FormEvent, useState } from 'react';
-import {
-	profilesCollection,
-	profilesDocument,
-	signIn,
-	signInWithGoogle,
-	signOut,
-	signUp
-} from '../firebase';
+import { signIn, signInWithGoogle, signOut, signUp } from '../firebase';
 import useField from '../hooks/useField';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import LoginIcon from '@mui/icons-material/Login';
-import { addDoc, setDoc } from 'firebase/firestore';
-import useNumberField from '../hooks/useNumberField';
 
 const Profile = () => {
 	usePageTitle('Profile');
@@ -26,45 +17,8 @@ const Profile = () => {
 
 	const email = useField('email', true);
 	const password = useField('password', true);
-	const age = useField('age', true);
-	const gender = useField('gender', true);
-	const car = useField('car', false);
-	const number_published_rides = useNumberField(
-		'number_published_rides',
-		0,
-		true
-	);
-	const number_reserved_rides = useNumberField(
-		'number_reserved_rides',
-		0,
-		true
-	);
-	const note = useField('note', false);
 
 	const [submitError, setSubmitError] = useState<string>();
-
-	const editProfile = async () => {
-		// TODO Validation
-
-		console.log(age.value)
-
-		console.log(profilesDocument(user?.email ?? ''))
-		console.log(profilesCollection)
-
-		try {
-			await setDoc(profilesDocument(email.value), {
-				email: email.value,
-				age: parseInt(age.value),
-				gender: gender.value,
-				car: car.value,
-				number_published_rides: number_published_rides.value,
-				number_reserved_rides: number_reserved_rides.value,
-				note: note.value
-			});
-		} catch (err) {
-			setSubmitError(err instanceof Error ? err.message : 'Unknown error');
-		}
-	};
 
 	return (
 		<>
@@ -78,15 +32,6 @@ const Profile = () => {
 								? await signUp(email.value, password.value)
 								: await signIn(email.value, password.value);
 							navigate({ to: '/' });
-							await setDoc(profilesDocument(email.value), {
-								email: email.value,
-								age: parseInt(age.value),
-								gender: gender.value,
-								car: car.value,
-								number_published_rides: number_published_rides.value,
-								number_reserved_rides: number_reserved_rides.value,
-								note: note.value
-							});
 						} catch (err) {
 							setSubmitError(
 								(err as { message?: string })?.message ?? 'Unknown error'
@@ -166,33 +111,20 @@ const Profile = () => {
 							gap: 2
 						}}
 					>
-						<Typography fontWeight="bold" {...email.props}>
-							User name:
-							<span style={{ fontWeight: 'normal' }}> {user.email}</span>
+						<Typography fontWeight="bold">User name: </Typography> {user.email}
+						<Typography fontWeight="bold">Age: </Typography>
+						<Typography fontWeight="bold">Gender: </Typography>
+						<Typography fontWeight="bold">Car:</Typography>
+						<Typography fontWeight="bold">
+							Number of published rides:
 						</Typography>
-						<TextField label="Age" {...age.props} type="number" />
-						<TextField label="Gender" {...gender.props} type="text" />
-						<TextField label="Car" {...car.props} type="text" />
-						<TextField label="Note" {...note.props} type="text" />
-						<Typography fontWeight="bold" {...number_published_rides.props}>
-							Number of published rides:{' '}
-							<span style={{ fontWeight: 'normal' }}>
-								{' '}
-								{number_published_rides.value}
-							</span>
+						<Typography fontWeight="bold">
+							Number of your reserved rides:
 						</Typography>
-						<Typography fontWeight="bold" {...number_reserved_rides.props}>
-							Number of your reserved rides:{' '}
-							<span style={{ fontWeight: 'normal' }}>
-								{' '}
-								{number_reserved_rides.value}
-							</span>
-						</Typography>
+						<Typography fontWeight="bold">Note:</Typography>
 					</Paper>
 					<Box>
-						<Button variant="contained" onClick={editProfile}>
-							Save edit
-						</Button>
+						<Button variant="contained">Edit</Button>
 						<> </>
 						<Button variant="contained" onClick={signOut}>
 							Logout
