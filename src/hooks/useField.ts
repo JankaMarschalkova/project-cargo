@@ -5,8 +5,8 @@ const useField = (
 	required?: boolean,
 	defaultValue = ''
 ) => {
-	let [value, setValue] = useState(defaultValue);
-	let [touched, setTouched] = useState(false);
+	const [value, setValue] = useState(defaultValue);
+	const [touched, setTouched] = useState(false);
 
 	const error = required && touched && !value;
 

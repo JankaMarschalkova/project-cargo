@@ -29,43 +29,41 @@ const Profile = () => {
 	const age = useField('age', true);
 	const gender = useField('gender', true);
 	const car = useField('car', false);
-	const published_rides = useNumberField('number_published_rides', 0, true);
-	const reserved_rides = useNumberField('number_reserved_rides', 0, true);
+	const number_published_rides = useNumberField(
+		'number_published_rides',
+		0,
+		true
+	);
+	const number_reserved_rides = useNumberField(
+		'number_reserved_rides',
+		0,
+		true
+	);
 	const note = useField('note', false);
 
 	const [submitError, setSubmitError] = useState<string>();
+
 	const editProfile = async () => {
 		// TODO Validation
 
+		console.log(age.value)
+
+		console.log(profilesDocument(user?.email ?? ''))
+		console.log(profilesCollection)
+
 		try {
-			await setDoc(profilesDocument(user?.email ?? ''), {
-				email: user?.email ?? '',
+			await setDoc(profilesDocument(email.value), {
+				email: email.value,
 				age: parseInt(age.value),
 				gender: gender.value,
 				car: car.value,
-				published_rides: published_rides.value,
-				reserved_rides: reserved_rides.value,
+				number_published_rides: number_published_rides.value,
+				number_reserved_rides: number_reserved_rides.value,
 				note: note.value
 			});
 		} catch (err) {
 			setSubmitError(err instanceof Error ? err.message : 'Unknown error');
 		}
-	};
-
-	const cleanData = async () => {
-		//email.value = '';
-		// password = useField('password', true);
-		// age = useField('age', true);
-		// gender = useField('gender', true);
-		// car = useField('car', false);
-		// published_rides = useNumberField('number_published_rides', 0, true);
-		// reserved_rides = useNumberField('number_reserved_rides', 0, true);
-		// note = useField('note', false);
-	};
-
-	const onSignOut = () => {
-		cleanData();
-		signOut();
 	};
 
 	return (
@@ -85,8 +83,8 @@ const Profile = () => {
 								age: parseInt(age.value),
 								gender: gender.value,
 								car: car.value,
-								published_rides: published_rides.value,
-								reserved_rides: reserved_rides.value,
+								number_published_rides: number_published_rides.value,
+								number_reserved_rides: number_reserved_rides.value,
 								note: note.value
 							});
 						} catch (err) {
@@ -176,18 +174,18 @@ const Profile = () => {
 						<TextField label="Gender" {...gender.props} type="text" />
 						<TextField label="Car" {...car.props} type="text" />
 						<TextField label="Note" {...note.props} type="text" />
-						<Typography fontWeight="bold" {...published_rides.props}>
+						<Typography fontWeight="bold" {...number_published_rides.props}>
 							Number of published rides:{' '}
 							<span style={{ fontWeight: 'normal' }}>
 								{' '}
-								{published_rides.value}
+								{number_published_rides.value}
 							</span>
 						</Typography>
-						<Typography fontWeight="bold" {...reserved_rides.props}>
+						<Typography fontWeight="bold" {...number_reserved_rides.props}>
 							Number of your reserved rides:{' '}
 							<span style={{ fontWeight: 'normal' }}>
 								{' '}
-								{reserved_rides.value}
+								{number_reserved_rides.value}
 							</span>
 						</Typography>
 					</Paper>
@@ -196,7 +194,7 @@ const Profile = () => {
 							Save edit
 						</Button>
 						<> </>
-						<Button variant="contained" onClick={onSignOut}>
+						<Button variant="contained" onClick={signOut}>
 							Logout
 						</Button>
 					</Box>
