@@ -1,6 +1,9 @@
 import {
 	Box,
 	Button,
+	Dialog,
+	DialogActions,
+	DialogTitle,
 	Divider,
 	Grid,
 	Paper,
@@ -25,11 +28,20 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import { onSnapshot, setDoc } from 'firebase/firestore';
+import EditProfile from './EditProfile';
+
+export interface SimpleDialogProps {
+	open: boolean;
+	selectedValue: string;
+	onClose: (value: string) => void;
+}
 
 const Profile = () => {
 	usePageTitle('Profile');
 	const user = useLoggedInUser();
 	const [profile, setProfile] = useState<ProfileType | null>(null);
+	const [open, setOpen] = useState(false);
+	const [selectedValue, setSelectedValue] = useState('emails[1]');
 
 	const navigate = useNavigate();
 
@@ -54,7 +66,33 @@ const Profile = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
-	const editProfile = () => navigate({ to: '/edit-profile' });
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (value: string) => {
+		setOpen(false);
+		setSelectedValue(value);
+	};
+
+	function SimpleDialog(props: SimpleDialogProps) {
+		const { onClose, selectedValue, open } = props;
+
+		const handleClose = () => {
+			onClose(selectedValue);
+			navigate({ to: '/profile' });
+		};
+
+		return (
+			<Dialog onClose={handleClose} open={open}>
+				{/*<DialogTitle>Edit profile</DialogTitle>*/}
+				<EditProfile currentProfile={profile as ProfileType} />
+				<DialogActions>
+					<Button onClick={handleClose}>Back</Button>
+				</DialogActions>
+			</Dialog>
+		);
+	}
 
 	return (
 		<>
@@ -250,10 +288,15 @@ const Profile = () => {
 								/>
 								Logout
 							</Button>
-							<Button variant="contained" onClick={editProfile}>
+							<Button variant="contained" onClick={handleClickOpen}>
 								Edit profile
 								<EditIcon sx={{ marginLeft: '0.4em' }} />
 							</Button>
+							<SimpleDialog
+								selectedValue={selectedValue}
+								open={open}
+								onClose={handleClose}
+							/>
 						</Box>
 					</Paper>
 				</>

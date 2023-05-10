@@ -13,7 +13,7 @@ import {
 import { useNavigate } from '@tanstack/react-router';
 import usePageTitle from '../hooks/usePageTitle';
 import { useState } from 'react';
-import { profilesDocument } from '../firebase';
+import { Profile as ProfileType, profilesDocument } from '../firebase';
 import BackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import useField from '../hooks/useField';
@@ -22,20 +22,28 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 import { setDoc } from 'firebase/firestore';
 import useNumberField from '../hooks/useNumberField';
 
-const EditProfile = () => {
+const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 	usePageTitle('Edit profile');
 	const user = useLoggedInUser();
 
 	const navigate = useNavigate();
 
-	const nickname = useField('nick_name', false);
+	const handleChange = (event: SelectChangeEvent) => {
+		setGender(event.target.value as string);
+	};
+
+	const nickname = useField('nick_name', false, currentProfile?.nickname);
 	const age = useField('age', false);
 	const [gender, setGender] = useState('');
-	const phone_number = useField('phone_number', false);
-	const car = useField('car', false);
+	const phone_number = useField(
+		'phone_number',
+		false,
+		currentProfile?.phone_number
+	);
+	const car = useField('car', false, currentProfile?.car);
 	const published_rides = useNumberField('number_published_rides', 0, false);
 	const reserved_rides = useNumberField('number_reserved_rides', 0, false);
-	const note = useField('note', false);
+	const note = useField('note', false, currentProfile?.note);
 
 	const saveProfile = async () => {
 		try {
@@ -54,12 +62,6 @@ const EditProfile = () => {
 			console.log('ERR'); // TODO Handle differently, plus age was not working
 		}
 		navigate({ to: '/profile' });
-	};
-
-	const backToProfileInfo = () => navigate({ to: '/profile' });
-
-	const handleChange = (event: SelectChangeEvent) => {
-		setGender(event.target.value as string);
 	};
 
 	return (
@@ -84,15 +86,21 @@ const EditProfile = () => {
 					type="text"
 					sx={{ mb: 3 }}
 				/>
-				<TextField label="Age" {...age.props} type="number" />
+				<TextField
+					label="Age"
+					{...age.props}
+					type="number"
+					defaultValue={Number(currentProfile?.age)}
+				/>
 				<FormControl fullWidth>
 					<InputLabel id="demo-simple-select-label">Gender</InputLabel>
 					<Select
 						labelId="demo-simple-select-label"
 						id="demo-simple-select"
-						value={gender}
+						//value={gender}
 						label="Gender"
 						onChange={handleChange}
+						defaultValue={currentProfile?.gender}
 					>
 						<MenuItem value={'Male'}>Male</MenuItem>
 						<MenuItem value={'Female'}>Female</MenuItem>
@@ -100,9 +108,24 @@ const EditProfile = () => {
 						<MenuItem value={'Prefer not to say'}>Prefer not to say</MenuItem>
 					</Select>
 				</FormControl>
-				<TextField label="Phone number" {...phone_number.props} type="text" />
-				<TextField label="Car" {...car.props} type="text" />
-				<TextField label="Note" {...note.props} type="text" />
+				<TextField
+					label="Phone number"
+					{...phone_number.props}
+					type="text"
+					defaultValue={currentProfile?.phone_number}
+				/>
+				<TextField
+					label="Car"
+					{...car.props}
+					type="text"
+					defaultValue={currentProfile?.car}
+				/>
+				<TextField
+					label="Note"
+					{...note.props}
+					type="text"
+					defaultValue={currentProfile?.note}
+				/>
 
 				<Box
 					sx={{
@@ -112,11 +135,11 @@ const EditProfile = () => {
 						gap: 2
 					}}
 				>
-					<Button variant="outlined" onClick={backToProfileInfo}>
+					{/*<Button variant="outlined" onClick={backToProfileInfo}>
 						<BackIcon sx={{ marginRight: '0.4em' }} />
-						Back to profile
-					</Button>
-
+						Back
+					</Button>*/}
+					<></>
 					<Button variant="contained" onClick={saveProfile}>
 						Save changes
 						<SaveIcon sx={{ marginLeft: '0.4em' }} />
