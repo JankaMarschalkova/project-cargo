@@ -42,7 +42,16 @@ const YourRides = () => {
 			return;
 		}
 
-		
+		onSnapshot(ridesCollection, snapshot => {
+			const rides = snapshot.docs.map(doc => doc.data());
+			setDriverRides(rides.filter(ride => ride.driver === user?.email) ?? null);
+			setPassengerRides(
+				rides.filter(ride => ride.passengers.includes(user?.email ?? '')) ??
+					null
+			);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user, profile]);
 
 	return (
 		<>

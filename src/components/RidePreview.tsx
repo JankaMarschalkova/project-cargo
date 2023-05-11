@@ -5,7 +5,6 @@ import {
 	CardContent,
 	Dialog,
 	DialogActions,
-	DialogTitle,
 	Typography
 } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBack';

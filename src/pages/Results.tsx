@@ -20,13 +20,13 @@ import RideDetail from '../components/RideDetail';
 const Results = ({
 	leaving_from = 'A',
 	going_to = 'B',
-	date,
+	date, // TODO
 	seats_available = 1
 }: {
-	leaving_from: string;
-	going_to: string;
-	date: Dayjs;
-	seats_available: number;
+	leaving_from?: string;
+	going_to?: string;
+	date?: Dayjs;
+	seats_available?: number;
 }) => {
 	usePageTitle('Results');
 
