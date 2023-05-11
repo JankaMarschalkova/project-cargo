@@ -45,7 +45,7 @@ const YourRides = () => {
 		onSnapshot(ridesCollection, snapshot => {
 			const rides = snapshot.docs.map(doc => doc.data());
 			setAsDriver(
-				rides.filter(ride => ride.driver.email === user?.email) ?? null
+				rides.filter(ride => ride.driver === user?.email) ?? null
 			);
 			setAsPassenger(
 				rides.filter(ride => ride.passengers.includes(user?.email ?? '')) ??

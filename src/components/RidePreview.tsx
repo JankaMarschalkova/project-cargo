@@ -9,10 +9,17 @@ import {
 	Typography
 } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBack';
-import { Ride as RideType } from '../firebase';
+import { Profile, Ride as RideType, profilesCollection } from '../firebase';
 import DriverPreview from './DriverPreview';
-import { useState } from 'react';
-import { SimpleDialogProps } from '../pages/Profile';
+import { useEffect, useState } from 'react';
+import useLoggedInUser from '../hooks/useLoggedInUser';
+import { onSnapshot } from 'firebase/firestore';
+
+export interface SimpleDialogProps {
+	open: boolean;
+	selectedValue: string;
+	onClose: (value: string) => void;
+}
 
 const RidePreview = ({
 	ride,
@@ -21,11 +28,24 @@ const RidePreview = ({
 	ride: RideType;
 	isPassenger?: boolean;
 }) => {
+	const user = useLoggedInUser();
 	const [open, setOpen] = useState(false);
 	const [selectedValue, setSelectedValue] = useState('');
-	const openDriverInfo = () => {
-		<DriverPreview profile={ride.driver} />;
-	};
+	const [profile, setProfile] = useState<Profile | null>(null);
+
+	useEffect(() => {
+		if (!user?.email) {
+			return;
+		}
+
+		onSnapshot(profilesCollection, snapshot => {
+			const profiles = snapshot.docs.map(doc => doc.data());
+			setProfile(
+				profiles.find(profile => profile.email === user?.email) ?? null
+			);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -45,14 +65,13 @@ const RidePreview = ({
 
 		return (
 			<Dialog onClose={handleClose} open={open} maxWidth="xs">
-				<DialogTitle>Driver profile</DialogTitle>
 				<DialogActions>
 					<Button variant="outlined" onClick={handleClose}>
 						<BackIcon sx={{ marginRight: '0.4em' }} />
 						Back
 					</Button>
 				</DialogActions>
-				<DriverPreview profile={ride.driver} />
+				<DriverPreview profile={profile} />
 			</Dialog>
 		);
 	}
@@ -87,10 +106,16 @@ const RidePreview = ({
 					<Typography>Price per person: {ride.price_per_person} €</Typography>
 
 					{isPassenger && (
-						<Typography>
-							Driver:{' '}
-							<Button onClick={handleClickOpen}>{ride.driver.nickname}</Button>
-						</Typography>
+						<>
+							<Typography>
+								Driver: <Button onClick={handleClickOpen}>{ride.driver}</Button>
+							</Typography>
+							<SimpleDialog
+								selectedValue={selectedValue}
+								open={open}
+								onClose={handleClose}
+							/>
+						</>
 					)}
 					{!isPassenger && (
 						<>

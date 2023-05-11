@@ -1,10 +1,10 @@
 import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { Profile } from '../firebase';
 
-const DriverPreview = ({ profile }: { profile: Profile | null}) => {
+const DriverPreview = ({ profile }: { profile: Profile | null }) => {
 	return (
 		<>
-			<Typography variant="h2" fontWeight="bold">
+			<Typography variant="h3" fontWeight="bold" align="center">
 				Driver profile
 			</Typography>
 
@@ -58,17 +58,6 @@ const DriverPreview = ({ profile }: { profile: Profile | null}) => {
 						</Typography>
 					</Grid>
 				</Grid>
-
-				<Box
-					sx={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						mt: 3,
-						gap: 2
-					}}
-				>
-					<Button variant="contained">Back</Button>
-				</Box>
 			</Paper>
 		</>
 	);

@@ -85,7 +85,7 @@ export type Ride = {
 	datetime: string;
 	seats_available: number;
 	price_per_person: number;
-	driver: Profile;
+	driver: string;
 	passengers: string[];
 	note?: string;
 };
