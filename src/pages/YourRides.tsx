@@ -3,6 +3,7 @@ import { Grid, Paper, Typography } from '@mui/material';
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import ButtonLink from '../components/ButtonLink';
+
 import LoginIcon from '@mui/icons-material/Login';
 import { useEffect, useState } from 'react';
 import { onSnapshot } from 'firebase/firestore';
@@ -41,16 +42,7 @@ const YourRides = () => {
 			return;
 		}
 
-		onSnapshot(ridesCollection, snapshot => {
-			const rides = snapshot.docs.map(doc => doc.data());
-			setDriverRides(rides.filter(ride => ride.driver === user?.email) ?? null);
-			setPassengerRides(
-				rides.filter(ride => ride.passengers.includes(user?.email ?? '')) ??
-					null
-			);
-		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user, profile]);
+		
 
 	return (
 		<>
