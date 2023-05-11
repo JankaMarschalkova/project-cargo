@@ -57,23 +57,6 @@ export const signInWithGoogle = () => {
 // Firestore
 const db = getFirestore();
 
-// Rides collection
-export type Ride = {
-	leaving_from: string;
-	going_to: string;
-	datetime: string;
-	seats_available: number;
-	price_per_person: number;
-	driver: string;
-	passengers: string[];
-	note?: string;
-};
-
-export const ridesCollection = collection(
-	db,
-	'rides'
-) as CollectionReference<Ride>;
-
 // Profiles collection
 export type Profile = {
 	email: string;
@@ -94,3 +77,21 @@ export const profilesCollection = collection(
 
 export const profilesDocument = (id: string) =>
 	doc(db, 'profiles', id) as DocumentReference<Profile>;
+
+// Rides collection
+export type Ride = {
+	leaving_from: string;
+	going_to: string;
+	datetime: string;
+	seats_available: number;
+	price_per_person: number;
+	driver: string;
+	passengers: string[];
+	note?: string;
+};
+
+export const ridesCollection = collection(
+	db,
+	'rides'
+) as CollectionReference<Ride>;
+

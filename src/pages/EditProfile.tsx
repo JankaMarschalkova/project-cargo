@@ -33,7 +33,7 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 	};
 
 	const nickname = useField('nick_name', false, currentProfile?.nickname);
-	const age = useField('age', false);
+	const age = useNumberField('age', currentProfile?.age ?? 0, false);
 	const [gender, setGender] = useState('');
 	const phone_number = useField(
 		'phone_number',
@@ -50,7 +50,7 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 			await setDoc(profilesDocument(user?.email ?? ''), {
 				email: user?.email ?? '',
 				nickname: nickname.value,
-				age: isNaN(parseInt(age.value)) ? 0 : parseInt(age.value),
+				age: age.value ? 0 : age.value,
 				phone_number: phone_number.value,
 				gender: gender,
 				car: car.value,
@@ -66,8 +66,8 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 
 	return (
 		<>
-			<Typography variant="h2" fontWeight="bold">
-				Profile
+			<Typography variant="h2" fontWeight="bold" align="center">
+				<> </>Profile<> </>
 			</Typography>
 			<Paper
 				component="form"
@@ -97,7 +97,6 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 					<Select
 						labelId="demo-simple-select-label"
 						id="demo-simple-select"
-						//value={gender}
 						label="Gender"
 						onChange={handleChange}
 						defaultValue={currentProfile?.gender}
@@ -108,31 +107,17 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 						<MenuItem value={'Prefer not to say'}>Prefer not to say</MenuItem>
 					</Select>
 				</FormControl>
-				<TextField
-					label="Phone number"
-					{...phone_number.props}
-					type="text"
-					defaultValue={currentProfile?.phone_number}
-				/>
-				<TextField
-					label="Car"
-					{...car.props}
-					type="text"
-					defaultValue={currentProfile?.car}
-				/>
-				<TextField
-					label="Note"
-					{...note.props}
-					type="text"
-					defaultValue={currentProfile?.note}
-				/>
+				<TextField label="Phone number" {...phone_number.props} type="text" />
+				<TextField label="Car" {...car.props} type="text" />
+				<TextField label="Note" {...note.props} type="text" />
 
 				<Box
 					sx={{
 						display: 'flex',
 						justifyContent: 'space-between',
 						mt: 3,
-						gap: 2
+						gap: 2,
+						align: 'center'
 					}}
 				>
 					{/*<Button variant="outlined" onClick={backToProfileInfo}>

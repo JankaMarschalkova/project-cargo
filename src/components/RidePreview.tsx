@@ -1,6 +1,25 @@
-import { Box, Card, CardContent, Typography } from '@mui/material';
+import {
+	Box,
+	Button,
+	Card,
+	CardContent,
+	Dialog,
+	DialogActions,
+	DialogTitle,
+	Typography
+} from '@mui/material';
+import BackIcon from '@mui/icons-material/ArrowBack';
+import { Profile, Ride as RideType, profilesCollection } from '../firebase';
+import DriverPreview from './DriverPreview';
+import { useEffect, useState } from 'react';
+import useLoggedInUser from '../hooks/useLoggedInUser';
+import { onSnapshot } from 'firebase/firestore';
 
-import { Ride as RideType } from '../firebase';
+export interface SimpleDialogProps {
+	open: boolean;
+	selectedValue: string;
+	onClose: (value: string) => void;
+}
 
 const RidePreview = ({
 	ride,
@@ -9,6 +28,54 @@ const RidePreview = ({
 	ride: RideType;
 	isPassenger?: boolean;
 }) => {
+	const user = useLoggedInUser();
+	const [open, setOpen] = useState(false);
+	const [selectedValue, setSelectedValue] = useState('');
+	const [profile, setProfile] = useState<Profile | null>(null);
+
+	useEffect(() => {
+		if (!user?.email) {
+			return;
+		}
+
+		onSnapshot(profilesCollection, snapshot => {
+			const profiles = snapshot.docs.map(doc => doc.data());
+			setProfile(
+				profiles.find(profile => profile.email === user?.email) ?? null
+			);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (value: string) => {
+		setOpen(false);
+		setSelectedValue(value);
+	};
+
+	function SimpleDialog(props: SimpleDialogProps) {
+		const { onClose, selectedValue, open } = props;
+
+		const handleClose = () => {
+			onClose(selectedValue);
+		};
+
+		return (
+			<Dialog onClose={handleClose} open={open} maxWidth="xs">
+				<DialogActions>
+					<Button variant="outlined" onClick={handleClose}>
+						<BackIcon sx={{ marginRight: '0.4em' }} />
+						Back
+					</Button>
+				</DialogActions>
+				<DriverPreview profile={profile} />
+			</Dialog>
+		);
+	}
+
 	return (
 		<Card
 			sx={{
@@ -38,7 +105,18 @@ const RidePreview = ({
 					</Typography>
 					<Typography>Price per person: {ride.price_per_person} €</Typography>
 
-					{isPassenger && <Typography>Driver: {ride.driver}</Typography>}
+					{isPassenger && (
+						<>
+							<Typography>
+								Driver: <Button onClick={handleClickOpen}>{ride.driver}</Button>
+							</Typography>
+							<SimpleDialog
+								selectedValue={selectedValue}
+								open={open}
+								onClose={handleClose}
+							/>
+						</>
+					)}
 					{!isPassenger && (
 						<>
 							<Typography>Available seats: {ride.seats_available}</Typography>
