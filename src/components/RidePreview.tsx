@@ -23,6 +23,7 @@ const RidePreview = ({
 		>
 			<CardContent>
 				<Typography variant="h6" fontSize={16}>
+					On{' '}
 					{new Date(ride.datetime).toLocaleString('en-US', {
 						month: 'short',
 						day: 'numeric',

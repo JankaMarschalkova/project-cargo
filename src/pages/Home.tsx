@@ -64,7 +64,10 @@ const Home = () => {
 						mt: 3
 					}}
 				>
-					<Button variant="contained" onClick={() => searchRides()}>
+					<Button
+						variant="contained"
+						onClick={() => searchRides()}
+					>
 						Search
 						<SearchIcon sx={{ marginLeft: '0.4em' }} />
 					</Button>
