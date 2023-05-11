@@ -1,4 +1,15 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import {
+	Box,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogTitle,
+	Divider,
+	Grid,
+	Paper,
+	TextField,
+	Typography
+} from '@mui/material';
 import { useNavigate } from '@tanstack/react-router';
 import usePageTitle from '../hooks/usePageTitle';
 import { FormEvent, useEffect, useState } from 'react';
@@ -16,12 +27,21 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/EditOutlined';
-import { addDoc, onSnapshot, setDoc } from 'firebase/firestore';
+import { onSnapshot, setDoc } from 'firebase/firestore';
+import EditProfile from './EditProfile';
+
+export interface SimpleDialogProps {
+	open: boolean;
+	selectedValue: string;
+	onClose: (value: string) => void;
+}
 
 const Profile = () => {
 	usePageTitle('Profile');
 	const user = useLoggedInUser();
 	const [profile, setProfile] = useState<ProfileType | null>(null);
+	const [open, setOpen] = useState(false);
+	const [selectedValue, setSelectedValue] = useState('emails[1]');
 
 	const navigate = useNavigate();
 
@@ -46,7 +66,33 @@ const Profile = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
-	const editProfile = () => navigate({ to: '/edit-profile' });
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (value: string) => {
+		setOpen(false);
+		setSelectedValue(value);
+	};
+
+	function SimpleDialog(props: SimpleDialogProps) {
+		const { onClose, selectedValue, open } = props;
+
+		const handleClose = () => {
+			onClose(selectedValue);
+			navigate({ to: '/profile' });
+		};
+
+		return (
+			<Dialog onClose={handleClose} open={open}>
+				{/*<DialogTitle>Edit profile</DialogTitle>*/}
+				<EditProfile currentProfile={profile as ProfileType} />
+				<DialogActions>
+					<Button onClick={handleClose}>Back</Button>
+				</DialogActions>
+			</Dialog>
+		);
+	}
 
 	return (
 		<>
@@ -152,23 +198,51 @@ const Profile = () => {
 							gap: 2
 						}}
 					>
+						<Typography variant="h5" fontWeight="bold">
+							Statistics
+						</Typography>
+
+						<Grid container spacing={2} mb={2}>
+							<Grid container item xs={6} direction="column">
+								<Typography fontStyle="italic">
+									Published rides (total)
+								</Typography>
+								<Typography fontStyle="italic">
+									Reserved rides (total)
+								</Typography>
+							</Grid>
+							<Grid container item xs={6} direction="column">
+								<Typography fontWeight="bold">
+									{profile && profile.published_rides !== undefined
+										? profile?.published_rides
+										: '(empty)'}
+								</Typography>
+								<Typography fontWeight="bold">
+									{profile && profile.reserved_rides !== undefined
+										? profile?.reserved_rides
+										: '(empty)'}
+								</Typography>
+							</Grid>
+						</Grid>
+
+						<Divider />
+
+						<Typography variant="h5" fontWeight="bold" mt={2}>
+							Details
+						</Typography>
+
 						<Grid container spacing={2}>
 							<Grid container item xs={6} direction="column">
-								<Typography fontStyle="italic">User name</Typography>
+								<Typography fontStyle="italic">Username</Typography>
 
 								<Typography fontStyle="italic" mb={3}>
-									Nick name
+									Nickname
 								</Typography>
 								<Typography fontStyle="italic">Age </Typography>
 								<Typography fontStyle="italic">Gender </Typography>
 								<Typography fontStyle="italic">Phone number </Typography>
 								<Typography fontStyle="italic">Car</Typography>
-								<Typography fontStyle="italic" mb={3}>
-									Note
-								</Typography>
-
-								<Typography fontStyle="italic">Published rides</Typography>
-								<Typography fontStyle="italic">Reserved rides</Typography>
+								<Typography fontStyle="italic">Note</Typography>
 							</Grid>
 							<Grid container item xs={6} direction="column">
 								<Typography fontWeight="bold">{user.email}</Typography>
@@ -194,19 +268,8 @@ const Profile = () => {
 								<Typography fontWeight="bold">
 									{profile && profile.car !== '' ? profile?.car : '(empty)'}
 								</Typography>
-								<Typography fontWeight="bold" mb={3}>
+								<Typography fontWeight="bold">
 									{profile && profile.note !== '' ? profile?.note : '(empty)'}
-								</Typography>
-
-								<Typography fontWeight="bold">
-									{profile && profile.published_rides !== 0
-										? profile?.published_rides
-										: '(empty)'}
-								</Typography>
-								<Typography fontWeight="bold">
-									{profile && profile.reserved_rides !== 0
-										? profile?.reserved_rides
-										: '(empty)'}
 								</Typography>
 							</Grid>
 						</Grid>
@@ -219,15 +282,21 @@ const Profile = () => {
 								gap: 2
 							}}
 						>
-							<Button variant="outlined" onClick={editProfile}>
-								<EditIcon sx={{ marginRight: '0.4em' }} />
-								Edit
-							</Button>
-
-							<Button variant="contained" onClick={signOut}>
+							<Button variant="outlined" onClick={signOut}>
+								<LogoutIcon
+									sx={{ marginRight: '0.4em', transform: 'scaleX(-1)' }}
+								/>
 								Logout
-								<LogoutIcon sx={{ marginLeft: '0.4em' }} />
 							</Button>
+							<Button variant="contained" onClick={handleClickOpen}>
+								Edit profile
+								<EditIcon sx={{ marginLeft: '0.4em' }} />
+							</Button>
+							<SimpleDialog
+								selectedValue={selectedValue}
+								open={open}
+								onClose={handleClose}
+							/>
 						</Box>
 					</Paper>
 				</>

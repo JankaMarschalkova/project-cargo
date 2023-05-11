@@ -33,7 +33,8 @@ const YourRides = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
-	const [rides, setRide] = useState<RideType[] | null>(null);
+	const [asDriver, setAsDriver] = useState<RideType[] | null>(null);
+	const [asPassenger, setAsPassenger] = useState<RideType[] | null>(null);
 
 	useEffect(() => {
 		if (!user?.email) {
@@ -42,7 +43,11 @@ const YourRides = () => {
 
 		onSnapshot(ridesCollection, snapshot => {
 			const rides = snapshot.docs.map(doc => doc.data());
-			setRide(rides.filter(ride => ride.driver === user?.email) ?? null);
+			setAsDriver(rides.filter(ride => ride.driver === user?.email) ?? null);
+			setAsPassenger(
+				rides.filter(ride => ride.passengers.includes(user?.email ?? '')) ??
+					null
+			);
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user, profile]);
@@ -81,24 +86,29 @@ const YourRides = () => {
 						gap: 2
 					}}
 				>
-					{profile && profile.car !== '' && (
-						<Grid mb={2}>
-							<Typography variant="h4" fontWeight="bold">
-								As driver
-							</Typography>
-
-							{!rides || rides.length === 0 ? (
-								<Typography>No records</Typography>
-							) : (
-								rides?.map((ride, i) => <RidePreview key={i} {...ride} />)
-							)}
-						</Grid>
-					)}
 					<Grid mb={2}>
-						<Typography variant="h4" fontWeight="bold">
+						<Typography variant="h4" fontWeight="bold" mb={1}>
+							As driver
+						</Typography>
+
+						{!asDriver || asDriver.length === 0 ? (
+							<Typography>No records</Typography>
+						) : (
+							asDriver?.map((ride, i) => (
+								<RidePreview key={i} ride={ride} isPassenger={false} />
+							))
+						)}
+					</Grid>
+
+					<Grid mb={2}>
+						<Typography variant="h4" fontWeight="bold" mb={2}>
 							As passenger
 						</Typography>
-						<Typography>No records</Typography>
+						{!asDriver || asDriver.length === 0 ? (
+							<Typography>No records</Typography>
+						) : (
+							asPassenger?.map((ride, i) => <RidePreview key={i} ride={ride} />)
+						)}
 					</Grid>
 				</Paper>
 			)}

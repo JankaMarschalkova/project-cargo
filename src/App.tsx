@@ -102,12 +102,6 @@ const publishRideRoute = new Route({
 	component: PublishRide
 });
 
-const editProfileRoute = new Route({
-	getParentRoute: () => rootRoute,
-	path: '/edit-profile',
-	component: EditProfile
-});
-
 const notFoundRoute = new Route({
 	getParentRoute: () => rootRoute,
 	path: '*',
@@ -120,7 +114,6 @@ const routeTree = rootRoute.addChildren([
 	profileRoute,
 	ridesRoute,
 	publishRideRoute,
-	editProfileRoute,
 	notFoundRoute
 ]);
 
