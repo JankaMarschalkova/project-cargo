@@ -27,14 +27,14 @@ const Results = ({
 	datetime?: string;
 	seats_available?: number;
 }) => {
+	usePageTitle('Results');
+
 	const searchParams = new URLSearchParams(window.location.search);
 
 	leaving_from = searchParams.get('leaving_from') || '';
 	going_to = searchParams.get('going_to') || '';
-	datetime = searchParams.get('date') || new Date().getTime().toString();
+	datetime = searchParams.get('datetime') || new Date().getTime().toString();
 	seats_available = Number(searchParams.get('seats_available')) || 1;
-
-	usePageTitle('Results');
 
 	const user = useLoggedInUser();
 
@@ -56,8 +56,7 @@ const Results = ({
 						ride =>
 							ride.leaving_from == leaving_from &&
 							ride.going_to == going_to &&
-							ride.seats_available >= (seats_available ?? 0) &&
-							ride.datetime <= (datetime ?? new Date().getTime())
+							ride.seats_available >= (seats_available ?? 0)
 					)
 					.sort(
 						(a, b) =>
@@ -67,6 +66,12 @@ const Results = ({
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
+
+	const goBack = () => {
+		window.location.href = `/?leaving_from_arg=${
+			leaving_from ?? ''
+		}&going_to_arg=${going_to ?? ''}`;
+	};
 
 	return (
 		<>
@@ -132,19 +137,15 @@ const Results = ({
 						</>
 					) : (
 						rides?.map((ride, i) => (
-							<>
-								<RideDetail key={i} ride={ride} />
+							<Grid key={i}>
+								<RideDetail ride={ride} />
 								<Divider />
-							</>
+							</Grid>
 						))
 					)}
 				</Grid>
 
-				<Button
-					variant="outlined"
-					onClick={() => navigate({ to: '/' })}
-					sx={{ mt: 1 }}
-				>
+				<Button variant="outlined" onClick={() => goBack()} sx={{ mt: 1 }}>
 					<BackIcon sx={{ marginRight: '0.4em' }} />
 					Back
 				</Button>

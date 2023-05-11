@@ -11,15 +11,25 @@ import { useNavigate } from '@tanstack/react-router';
 const Home = () => {
 	usePageTitle('Home');
 
+	const searchParams = new URLSearchParams(window.location.search);
+
 	const navigate = useNavigate();
 
-	const leaving_from = useField('leaving_from', true);
-	const going_to = useField('going_to', true);
+	const leaving_from = useField(
+		'leaving_from',
+		true,
+		searchParams.get('leaving_from_arg') || ''
+	);
+	const going_to = useField(
+		'going_to',
+		true,
+		searchParams.get('going_to_arg') || ''
+	);
 	const date = useDateField('date', dayjs(), true);
 	const seats_available = useNumberField('seats_available', 1, true);
 
 	const searchRides = async () => {
-		window.location.href = `/results?leaving_from=${leaving_from.value}&going_to=${going_to.value}&date=${date.value}&seats_available=${seats_available.value}`;
+		window.location.href = `/results?leaving_from=${leaving_from.value}&going_to=${going_to.value}&datetime=${date.value}&seats_available=${seats_available.value}`;
 	};
 
 	return (
