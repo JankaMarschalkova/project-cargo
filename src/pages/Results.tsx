@@ -10,7 +10,6 @@ import {
 	Typography
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-router';
-import { Dayjs } from 'dayjs';
 import BackIcon from '@mui/icons-material/ArrowBack';
 import { useEffect, useState } from 'react';
 import { Ride as RideType, ridesCollection } from '../firebase';
@@ -18,16 +17,23 @@ import { onSnapshot } from 'firebase/firestore';
 import RideDetail from '../components/RideDetail';
 
 const Results = ({
-	leaving_from = 'A',
-	going_to = 'B',
-	date, // TODO
-	seats_available = 1
+	leaving_from,
+	going_to,
+	datetime,
+	seats_available
 }: {
 	leaving_from?: string;
 	going_to?: string;
-	date?: Dayjs;
+	datetime?: string;
 	seats_available?: number;
 }) => {
+	const searchParams = new URLSearchParams(window.location.search);
+
+	leaving_from = searchParams.get('leaving_from') || '';
+	going_to = searchParams.get('going_to') || '';
+	datetime = searchParams.get('date') || new Date().getTime().toString();
+	seats_available = Number(searchParams.get('seats_available')) || 1;
+
 	usePageTitle('Results');
 
 	const user = useLoggedInUser();
@@ -45,7 +51,18 @@ const Results = ({
 			setRides(
 				snapshot.docs
 					.map(doc => doc.data())
-					.filter(ride => ride.driver !== user?.email) ?? null
+					.filter(ride => ride.driver !== user?.email)
+					.filter(
+						ride =>
+							ride.leaving_from == leaving_from &&
+							ride.going_to == going_to &&
+							ride.seats_available >= (seats_available ?? 0) &&
+							ride.datetime <= (datetime ?? new Date().getTime())
+					)
+					.sort(
+						(a, b) =>
+							new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
+					) ?? null
 			);
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,12 +97,15 @@ const Results = ({
 							Showing results
 						</Typography>
 
-						<Typography variant="h4" fontWeight="bold" mt={-0.5} mb={1}>
-							From {leaving_from} to {going_to}
+						<Typography variant="h4" fontWeight="bold" mt={0.5}>
+							From {leaving_from !== '' ? leaving_from : '???'}
 						</Typography>
-						<Typography variant="h6"  color="#4F4F4F">
+						<Typography variant="h4" fontWeight="bold" mb={1}>
+							To {going_to !== '' ? going_to : '???'}
+						</Typography>
+						<Typography variant="h6" color="#4F4F4F">
 							On{' '}
-							{new Date().toLocaleString('en-US', {
+							{new Date(datetime ?? '').toLocaleString('en-US', {
 								month: 'short',
 								day: 'numeric',
 								year: 'numeric',
@@ -95,12 +115,7 @@ const Results = ({
 							})}{' '}
 							(onwards)
 						</Typography>
-						<Typography
-							variant="h6"
-							fontSize={16}
-							color="#4F4F4F"
-							mt={-0.5}
-						>
+						<Typography variant="h6" fontSize={16} color="#4F4F4F">
 							For at least {seats_available} passenger
 							{seats_available != 1 ? 's' : ''}
 						</Typography>
@@ -112,7 +127,7 @@ const Results = ({
 
 					{!rides || rides.length === 0 ? (
 						<>
-							<Typography>No records</Typography>
+							<Typography my={4}>No records</Typography>
 							<Divider />
 						</>
 					) : (

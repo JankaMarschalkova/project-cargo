@@ -43,7 +43,12 @@ const YourRides = () => {
 		}
 
 		onSnapshot(ridesCollection, snapshot => {
-			const rides = snapshot.docs.map(doc => doc.data());
+			const rides = snapshot.docs
+				.map(doc => doc.data())
+				.sort(
+					(a, b) =>
+						new Date(a.datetime).getTime() - new Date(b.datetime).getTime()
+				);
 			setDriverRides(rides.filter(ride => ride.driver === user?.email) ?? null);
 			setPassengerRides(
 				rides.filter(ride => ride.passengers.includes(user?.email ?? '')) ??
@@ -108,7 +113,9 @@ const YourRides = () => {
 						{!driverRides || driverRides.length === 0 ? (
 							<Typography>No records</Typography>
 						) : (
-							passengerRides?.map((ride, i) => <RidePreview key={i} ride={ride} />)
+							passengerRides?.map((ride, i) => (
+								<RidePreview key={i} ride={ride} />
+							))
 						)}
 					</Grid>
 				</Paper>

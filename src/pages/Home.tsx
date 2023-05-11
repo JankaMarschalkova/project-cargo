@@ -19,7 +19,7 @@ const Home = () => {
 	const seats_available = useNumberField('seats_available', 1, true);
 
 	const searchRides = async () => {
-		navigate({ to: '/results' });
+		window.location.href = `/results?leaving_from=${leaving_from.value}&going_to=${going_to.value}&date=${date.value}&seats_available=${seats_available.value}`;
 	};
 
 	return (
@@ -64,10 +64,7 @@ const Home = () => {
 						mt: 3
 					}}
 				>
-					<Button
-						variant="contained"
-						onClick={() => searchRides()}
-					>
+					<Button variant="contained" onClick={() => searchRides()}>
 						Search
 						<SearchIcon sx={{ marginLeft: '0.4em' }} />
 					</Button>
