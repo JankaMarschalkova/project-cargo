@@ -1,6 +1,18 @@
-import { Box, Card, CardContent, Typography } from '@mui/material';
-
+import {
+	Box,
+	Button,
+	Card,
+	CardContent,
+	Dialog,
+	DialogActions,
+	DialogTitle,
+	Typography
+} from '@mui/material';
+import BackIcon from '@mui/icons-material/ArrowBack';
 import { Ride as RideType } from '../firebase';
+import DriverPreview from './DriverPreview';
+import { useState } from 'react';
+import { SimpleDialogProps } from '../pages/Profile';
 
 const RidePreview = ({
 	ride,
@@ -9,6 +21,42 @@ const RidePreview = ({
 	ride: RideType;
 	isPassenger?: boolean;
 }) => {
+	const [open, setOpen] = useState(false);
+	const [selectedValue, setSelectedValue] = useState('');
+	const openDriverInfo = () => {
+		<DriverPreview profile={ride.driver} />;
+	};
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = (value: string) => {
+		setOpen(false);
+		setSelectedValue(value);
+	};
+
+	function SimpleDialog(props: SimpleDialogProps) {
+		const { onClose, selectedValue, open } = props;
+
+		const handleClose = () => {
+			onClose(selectedValue);
+		};
+
+		return (
+			<Dialog onClose={handleClose} open={open} maxWidth="xs">
+				<DialogTitle>Driver profile</DialogTitle>
+				<DialogActions>
+					<Button variant="outlined" onClick={handleClose}>
+						<BackIcon sx={{ marginRight: '0.4em' }} />
+						Back
+					</Button>
+				</DialogActions>
+				<DriverPreview profile={ride.driver} />
+			</Dialog>
+		);
+	}
+
 	return (
 		<Card
 			sx={{
@@ -38,7 +86,12 @@ const RidePreview = ({
 					</Typography>
 					<Typography>Price per person: {ride.price_per_person} €</Typography>
 
-					{isPassenger && <Typography>Driver: {ride.driver}</Typography>}
+					{isPassenger && (
+						<Typography>
+							Driver:{' '}
+							<Button onClick={handleClickOpen}>{ride.driver.nickname}</Button>
+						</Typography>
+					)}
 					{!isPassenger && (
 						<>
 							<Typography>Available seats: {ride.seats_available}</Typography>

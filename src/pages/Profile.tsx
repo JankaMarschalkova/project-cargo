@@ -3,7 +3,6 @@ import {
 	Button,
 	Dialog,
 	DialogActions,
-	DialogTitle,
 	Divider,
 	Grid,
 	Paper,
@@ -12,6 +11,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-router';
 import usePageTitle from '../hooks/usePageTitle';
+import BackIcon from '@mui/icons-material/ArrowBack';
 import { FormEvent, useEffect, useState } from 'react';
 import {
 	signIn,
@@ -41,7 +41,7 @@ const Profile = () => {
 	const user = useLoggedInUser();
 	const [profile, setProfile] = useState<ProfileType | null>(null);
 	const [open, setOpen] = useState(false);
-	const [selectedValue, setSelectedValue] = useState('emails[1]');
+	const [selectedValue, setSelectedValue] = useState('');
 
 	const navigate = useNavigate();
 
@@ -84,12 +84,15 @@ const Profile = () => {
 		};
 
 		return (
-			<Dialog onClose={handleClose} open={open}>
+			<Dialog onClose={handleClose} open={open} maxWidth="xs">
 				{/*<DialogTitle>Edit profile</DialogTitle>*/}
-				<EditProfile currentProfile={profile as ProfileType} />
 				<DialogActions>
-					<Button onClick={handleClose}>Back</Button>
+					<Button variant="outlined" onClick={handleClose}>
+						<BackIcon sx={{ marginRight: '0.4em' }} />
+						Back
+					</Button>
 				</DialogActions>
+				<EditProfile currentProfile={profile as ProfileType} />
 			</Dialog>
 		);
 	}
