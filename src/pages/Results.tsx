@@ -94,7 +94,7 @@ const Results = ({
 						justifyContent: 'space-between',
 						width: '100%',
 						textAlign: 'left',
-						background: '#D5D5D5'
+						background: '#CFD8DC'
 					}}
 				>
 					<CardContent>

@@ -1,19 +1,20 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
+import { Ride as RideType } from '../firebase';
 
 const RideStatus = ({
-	is_cancelled,
-	datetime
+	ride,
+	isPassenger = true
 }: {
-	is_cancelled: boolean;
-	datetime: string;
+	ride: RideType;
+	isPassenger?: boolean;
 }) => {
 	let color, backgroundColor, text;
 
-	if (is_cancelled) {
+	if (ride.is_cancelled) {
 		color = '#FFEBEE';
 		backgroundColor = '#E53935';
 		text = 'Cancelled';
-	} else if (new Date(datetime) < new Date()) {
+	} else if (new Date(ride.datetime) >= new Date()) {
 		color = '#E0F7FA';
 		backgroundColor = '#00ACC1';
 		text = 'Active';
@@ -23,17 +24,32 @@ const RideStatus = ({
 		text = 'Completed';
 	}
 
+	const cancelRide = () => {
+		console.log('Cancel'); // TODO
+	};
+
 	return (
-		<Typography
-			fontWeight="bold"
-			px={1}
-			py={0.5}
-			mb={-0.5}
-			color={color}
-			sx={{ backgroundColor: { backgroundColor }, borderRadius: 1 }}
-		>
-			{text}
-		</Typography>
+		<>
+			<Typography
+				fontWeight="bold"
+				px={1}
+				py={0.5}
+				mb={-0.5}
+				color={color}
+				sx={{ backgroundColor: { backgroundColor }, borderRadius: 1 }}
+			>
+				{text}
+			</Typography>
+
+			{text === 'Active' && !isPassenger && (
+				<Button
+					sx={{ ml: 1.5, py: 0.5, color: '#E53935' }}
+					onClick={cancelRide}
+				>
+					Cancel ride
+				</Button>
+			)}
+		</>
 	);
 };
 

@@ -85,11 +85,11 @@ const RidePreview = ({
 				width: '100%',
 				textAlign: 'left',
 				my: 2,
-				background: '#D5D5D5'
+				background: '#CFD8DC'
 			}}
 		>
 			<CardContent>
-				<Typography variant="h6" fontSize={16}>
+				<Typography variant="h6" color="#4F4F4F" fontSize={16}>
 					On{' '}
 					{new Date(ride.datetime).toLocaleString('en-US', {
 						month: 'short',
@@ -135,15 +135,15 @@ const RidePreview = ({
 				</Box>
 
 				{ride.note && (
-					<Typography mb={2} fontStyle="italic">
+					<Typography mb={2.5} color="#4F4F4F" fontSize={16}>
 						{ride.note}
 					</Typography>
 				)}
 
-				<Box display="flex">
+				<Box display="flex" alignItems='center'>
 					<RideStatus
-						is_cancelled={ride.is_cancelled}
-						datetime={ride.datetime}
+						ride={ride}
+						isPassenger={isPassenger}
 					/>
 				</Box>
 			</CardContent>
