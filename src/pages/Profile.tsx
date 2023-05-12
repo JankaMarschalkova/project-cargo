@@ -2,7 +2,6 @@ import {
 	Box,
 	Button,
 	Dialog,
-	DialogActions,
 	DialogContent,
 	Divider,
 	Grid,
@@ -86,16 +85,15 @@ const Profile = () => {
 
 		return (
 			<Dialog onClose={handleClose} open={open}>
-				{/*<DialogTitle>Edit profile</DialogTitle>*/}
-				<DialogActions>
-					<Button variant="outlined" onClick={handleClose}>
-						<BackIcon sx={{ marginRight: '0.4em' }} />
-						Back
-					</Button>
-				</DialogActions>
 				<DialogContent>
 					<EditProfile currentProfile={profile as ProfileType} />
 				</DialogContent>
+				<Grid sx={{ mx: 3, mb: 3, alignItems: 'stretch' }}>
+					<Button variant="outlined" onClick={handleClose} sx={{ width: '100%' }}>
+						<BackIcon sx={{ marginRight: '0.4em' }} />
+						Back
+					</Button>
+				</Grid>
 			</Dialog>
 		);
 	}
@@ -111,6 +109,7 @@ const Profile = () => {
 						component="form"
 						onSubmit={async (e: FormEvent) => {
 							e.preventDefault();
+							console.log(profile?.gender);
 							try {
 								isSignUp
 									? await signUp(email.value, password.value)

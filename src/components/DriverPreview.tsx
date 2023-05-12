@@ -14,6 +14,7 @@ const DriverPreview = ({ profile }: { profile: Profile | null }) => {
 					flexDirection: 'column',
 					p: 0,
 					boxShadow: 'none'
+					
 				}}
 			>
 				<Grid container spacing={2}>

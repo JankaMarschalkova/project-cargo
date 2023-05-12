@@ -4,8 +4,8 @@ import {
 	Card,
 	CardContent,
 	Dialog,
-	DialogActions,
 	DialogContent,
+	Grid,
 	Typography
 } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBack';
@@ -66,16 +66,19 @@ const RidePreview = ({
 
 		return (
 			<Dialog onClose={handleClose} open={open}>
-				
 				<DialogContent>
 					<DriverPreview profile={profile} />
 				</DialogContent>
-				<DialogActions sx={{justifyContent: 'flex-start', ml: 2, mb: 2}}>
-					<Button variant="outlined" onClick={handleClose}>
+				<Grid sx={{ mx: 3, mb: 3, alignItems: 'stretch' }}>
+					<Button
+						variant="outlined"
+						onClick={handleClose}
+						sx={{ width: '100%' }}
+					>
 						<BackIcon sx={{ marginRight: '0.4em' }} />
 						Back
 					</Button>
-				</DialogActions>
+				</Grid>
 			</Dialog>
 		);
 	}

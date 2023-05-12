@@ -2,6 +2,7 @@ import {
 	Box,
 	Button,
 	FormControl,
+	Grid,
 	InputLabel,
 	MenuItem,
 	Paper,
@@ -10,11 +11,9 @@ import {
 	TextField,
 	Typography
 } from '@mui/material';
-import { useNavigate } from '@tanstack/react-router';
 import usePageTitle from '../hooks/usePageTitle';
 import { useState } from 'react';
 import { Profile as ProfileType, profilesDocument } from '../firebase';
-import BackIcon from '@mui/icons-material/ArrowBack';
 import SaveIcon from '@mui/icons-material/Save';
 import useField from '../hooks/useField';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -26,15 +25,13 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 	usePageTitle('Edit profile');
 	const user = useLoggedInUser();
 
-	const navigate = useNavigate();
-
 	const handleChange = (event: SelectChangeEvent) => {
 		setGender(event.target.value as string);
 	};
 
 	const nickname = useField('nick_name', false, currentProfile?.nickname);
 	const age = useNumberField('age', currentProfile?.age ?? 0, false);
-	const [gender, setGender] = useState('');
+	const [gender, setGender] = useState(currentProfile?.gender ?? '');
 	const phone_number = useField(
 		'phone_number',
 		false,
@@ -50,7 +47,7 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 			await setDoc(profilesDocument(user?.email ?? ''), {
 				email: user?.email ?? '',
 				nickname: nickname.value,
-				age: age.value ? 0 : age.value,
+				age: age.value ? age.value : 0,
 				phone_number: phone_number.value,
 				gender: gender,
 				car: car.value,
@@ -59,14 +56,13 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 				note: note.value
 			});
 		} catch (err) {
-			console.log('ERR'); // TODO Handle differently, plus age was not working
+			console.log('ERR');
 		}
-		navigate({ to: '/profile' });
 	};
 
 	return (
-		<>
-			<Typography variant="h2" fontWeight="bold" align="center">
+		<Grid minWidth="22rem">
+			<Typography variant="h3" fontWeight="bold" align="left" mt={2} mb={4}>
 				<> </>Profile<> </>
 			</Typography>
 			<Paper
@@ -75,11 +71,11 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 					display: 'flex',
 					flexDirection: 'column',
 					width: '100%',
-					p: 4,
-					gap: 2
+					p: 0,
+					gap: 2,
+					boxShadow: 'none'
 				}}
 			>
-				{/* // TODO Add initial values from original document, so it is not lost on save */}
 				<TextField
 					label="Nickname"
 					{...nickname.props}
@@ -89,8 +85,8 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 				<TextField
 					label="Age"
 					{...age.props}
+					InputProps={{ inputProps: { min: 0, max: 150 } }}
 					type="number"
-					defaultValue={Number(currentProfile?.age)}
 				/>
 				<FormControl fullWidth>
 					<InputLabel id="demo-simple-select-label">Gender</InputLabel>
@@ -114,24 +110,18 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 				<Box
 					sx={{
 						display: 'flex',
-						justifyContent: 'space-between',
+						justifyContent: 'flex-end',
 						mt: 3,
 						gap: 2,
-						align: 'center'
 					}}
 				>
-					{/*<Button variant="outlined" onClick={backToProfileInfo}>
-						<BackIcon sx={{ marginRight: '0.4em' }} />
-						Back
-					</Button>*/}
-					<></>
-					<Button variant="contained" onClick={saveProfile}>
+					<Button variant="contained" onClick={saveProfile} sx={{ width: '100%' }}>
 						Save changes
 						<SaveIcon sx={{ marginLeft: '0.4em' }} />
 					</Button>
 				</Box>
 			</Paper>
-		</>
+		</Grid>
 	);
 };
 
