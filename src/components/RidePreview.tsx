@@ -13,6 +13,7 @@ import DriverPreview from './DriverPreview';
 import { useEffect, useState } from 'react';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { onSnapshot } from 'firebase/firestore';
+import RideStatus from './RideStatus';
 
 export interface SimpleDialogProps {
 	open: boolean;
@@ -99,7 +100,7 @@ const RidePreview = ({
 						hour12: true
 					})}
 				</Typography>
-				<Box>
+				<Box mb={2}>
 					<Typography variant="h5" fontWeight="bold" mt={1} mb={2}>
 						From {ride.leaving_from} to {ride.going_to}
 					</Typography>
@@ -123,17 +124,22 @@ const RidePreview = ({
 							<Typography>
 								Passengers:{' '}
 								{ride.passengers.length == 0
-									? '(none)'
+									? '(no passengers)'
 									: ride.passengers.join(', ')}
 							</Typography>
 						</>
 					)}
 				</Box>
+
 				{ride.note && (
-					<Typography mt={2} fontStyle="italic">
+					<Typography mb={2} fontStyle="italic">
 						{ride.note}
 					</Typography>
 				)}
+				
+				<Box display='flex'>
+					<RideStatus is_cancelled={ride.is_cancelled} />
+				</Box>
 			</CardContent>
 		</Card>
 	);

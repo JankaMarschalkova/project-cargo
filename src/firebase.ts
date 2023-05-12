@@ -87,6 +87,7 @@ export type Ride = {
 	price_per_person: number;
 	driver: string;
 	passengers: string[];
+	is_cancelled: boolean;
 	note?: string;
 };
 

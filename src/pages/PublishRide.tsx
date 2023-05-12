@@ -71,9 +71,10 @@ const PublishRide = () => {
 				datetime: datetime,
 				seats_available: seats_available.value,
 				price_per_person: price_per_person.value,
-				note: note.value,
 				driver: user?.email ?? '',
-				passengers: []
+				passengers: [],
+				is_cancelled: false,
+				note: note.value
 			});
 
 			// Redirect on success
@@ -191,8 +192,9 @@ const PublishRide = () => {
 								gap: 2
 							}}
 						>
-							<Typography mb={2} maxWidth='22em' align='center'>
-								In order to publish rides, add phone number and car to your profile, please
+							<Typography mb={2} maxWidth="22em" align="center">
+								In order to publish rides, add phone number and car to your
+								profile, please
 							</Typography>
 							<ButtonLink variant="contained" to="/profile">
 								Profile
