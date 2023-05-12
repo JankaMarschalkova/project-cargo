@@ -9,7 +9,7 @@ import {
 	Typography
 } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBack';
-import { Profile, Ride as RideType, profilesCollection } from '../firebase';
+import { Profile as ProfileType, Ride as RideType, profilesCollection } from '../firebase';
 import DriverPreview from './DriverPreview';
 import { useEffect, useState } from 'react';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -32,7 +32,7 @@ const RidePreview = ({
 	const user = useLoggedInUser();
 	const [open, setOpen] = useState(false);
 	const [selectedValue, setSelectedValue] = useState('');
-	const [profile, setProfile] = useState<Profile | null>(null);
+	const [profile, setProfile] = useState<ProfileType | null>(null);
 
 	useEffect(() => {
 		if (!user?.email) {
@@ -57,7 +57,7 @@ const RidePreview = ({
 		setSelectedValue(value);
 	};
 
-	function SimpleDialog(props: SimpleDialogProps) {
+	const SimpleDialog = (props: SimpleDialogProps) => {
 		const { onClose, selectedValue, open } = props;
 
 		const handleClose = () => {
@@ -81,7 +81,7 @@ const RidePreview = ({
 				</Grid>
 			</Dialog>
 		);
-	}
+	};
 
 	return (
 		<Card

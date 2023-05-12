@@ -43,10 +43,6 @@ const Results = ({
 	const [rides, setRides] = useState<RideType[] | null>(null);
 
 	useEffect(() => {
-		if (!user?.email) {
-			return;
-		}
-
 		onSnapshot(ridesCollection, snapshot => {
 			setRides(
 				snapshot.docs
@@ -56,7 +52,8 @@ const Results = ({
 						ride =>
 							ride.leaving_from == leaving_from &&
 							ride.going_to == going_to &&
-							ride.seats_available - ride.passengers.length >= (seats_available ?? 0)
+							ride.seats_available - ride.passengers.length >=
+								(seats_available ?? 0)
 					)
 					.sort(
 						(a, b) =>
@@ -138,7 +135,7 @@ const Results = ({
 					) : (
 						rides?.map((ride, i) => (
 							<Grid key={i}>
-								<RideDetail ride={ride} />
+								<RideDetail ride={ride} username={user?.email ?? ''} />
 								<Divider />
 							</Grid>
 						))
