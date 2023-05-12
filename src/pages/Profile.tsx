@@ -3,6 +3,7 @@ import {
 	Button,
 	Dialog,
 	DialogActions,
+	DialogContent,
 	Divider,
 	Grid,
 	Paper,
@@ -84,7 +85,7 @@ const Profile = () => {
 		};
 
 		return (
-			<Dialog onClose={handleClose} open={open} maxWidth="xs">
+			<Dialog onClose={handleClose} open={open}>
 				{/*<DialogTitle>Edit profile</DialogTitle>*/}
 				<DialogActions>
 					<Button variant="outlined" onClick={handleClose}>
@@ -92,7 +93,9 @@ const Profile = () => {
 						Back
 					</Button>
 				</DialogActions>
-				<EditProfile currentProfile={profile as ProfileType} />
+				<DialogContent>
+					<EditProfile currentProfile={profile as ProfileType} />
+				</DialogContent>
 			</Dialog>
 		);
 	}

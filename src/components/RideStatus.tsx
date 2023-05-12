@@ -28,6 +28,10 @@ const RideStatus = ({
 		console.log('Cancel'); // TODO
 	};
 
+    const leaveRide = () => {
+		console.log('Leave'); // TODO
+	};
+
 	return (
 		<>
 			<Typography
@@ -47,6 +51,15 @@ const RideStatus = ({
 					onClick={cancelRide}
 				>
 					Cancel ride
+				</Button>
+			)}
+
+			{text === 'Active' && isPassenger && (
+				<Button
+					sx={{ ml: 1.5, py: 0.5, color: '#E53935' }}
+					onClick={leaveRide}
+				>
+					Leave ride
 				</Button>
 			)}
 		</>

@@ -1,21 +1,19 @@
-import { Box, Button, Grid, Paper, Typography } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 import { Profile } from '../firebase';
 
 const DriverPreview = ({ profile }: { profile: Profile | null }) => {
 	return (
-		<>
-			<Typography variant="h3" fontWeight="bold" align="center">
+		<Grid minWidth='30rem'>
+			<Typography variant="h3" fontWeight="bold" align="left" mt={2} mb={4} >
 				Driver profile
 			</Typography>
 
 			<Paper
-				component="form"
 				sx={{
 					display: 'flex',
 					flexDirection: 'column',
-					width: '100%',
-					p: 4,
-					gap: 2
+					p: 0,
+					boxShadow: 'none'
 				}}
 			>
 				<Grid container spacing={2}>
@@ -59,7 +57,7 @@ const DriverPreview = ({ profile }: { profile: Profile | null }) => {
 					</Grid>
 				</Grid>
 			</Paper>
-		</>
+		</Grid>
 	);
 };
 
