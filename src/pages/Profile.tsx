@@ -20,7 +20,8 @@ import {
 	signUp,
 	Profile as ProfileType,
 	profilesCollection,
-	profilesDocument
+	profilesDocument,
+	ridesCollection
 } from '../firebase';
 import useField from '../hooks/useField';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -66,6 +67,30 @@ const Profile = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);
 
+	const [publishedRides, setPublishedRides] = useState<number>(0);
+	const [reservedRides, setReservedRides] = useState<number>(0);
+
+	useEffect(() => {
+		if (!user?.email) {
+			return;
+		}
+
+		onSnapshot(ridesCollection, snapshot => {
+			setPublishedRides(
+				snapshot.docs
+					.map(doc => doc.data())
+					.filter(ride => ride.driver === user?.email).length ?? 0
+			);
+			setReservedRides(
+				snapshot.docs
+					.map(doc => doc.data())
+					.filter(ride => ride.passengers.includes(user?.email ?? '')).length ??
+					0
+			);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
 	const handleClickOpen = () => {
 		setOpen(true);
 	};
@@ -89,7 +114,11 @@ const Profile = () => {
 					<EditProfile currentProfile={profile as ProfileType} />
 				</DialogContent>
 				<Grid sx={{ mx: 3, mb: 3, alignItems: 'stretch' }}>
-					<Button variant="outlined" onClick={handleClose} sx={{ width: '100%' }}>
+					<Button
+						variant="outlined"
+						onClick={handleClose}
+						sx={{ width: '100%' }}
+					>
 						<BackIcon sx={{ marginRight: '0.4em' }} />
 						Back
 					</Button>
@@ -122,8 +151,6 @@ const Profile = () => {
 									gender: profile?.gender,
 									phone_number: profile?.phone_number,
 									car: profile?.car,
-									published_rides: profile?.published_rides,
-									reserved_rides: profile?.reserved_rides,
 									note: profile?.note
 								});
 							} catch (err) {
@@ -218,14 +245,10 @@ const Profile = () => {
 							</Grid>
 							<Grid container item xs={6} direction="column">
 								<Typography fontWeight="bold">
-									{profile && profile.published_rides !== undefined
-										? profile?.published_rides
-										: '(empty)'}
+									{profile && publishedRides !== undefined ? publishedRides : 0}
 								</Typography>
 								<Typography fontWeight="bold">
-									{profile && profile.reserved_rides !== undefined
-										? profile?.reserved_rides
-										: '(empty)'}
+									{profile && reservedRides !== undefined ? reservedRides : 0}
 								</Typography>
 							</Grid>
 						</Grid>

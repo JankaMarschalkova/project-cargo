@@ -65,8 +65,6 @@ export type Profile = {
 	gender?: string;
 	phone_number?: string;
 	car?: string;
-	published_rides?: number;
-	reserved_rides?: number;
 	note?: string;
 };
 

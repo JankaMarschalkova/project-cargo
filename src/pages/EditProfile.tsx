@@ -38,8 +38,6 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 		currentProfile?.phone_number
 	);
 	const car = useField('car', false, currentProfile?.car);
-	const published_rides = useNumberField('number_published_rides', 0, false);
-	const reserved_rides = useNumberField('number_reserved_rides', 0, false);
 	const note = useField('note', false, currentProfile?.note);
 
 	const saveProfile = async () => {
@@ -48,15 +46,13 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 				email: user?.email ?? '',
 				nickname: nickname.value,
 				age: age.value ? age.value : 0,
-				phone_number: phone_number.value,
 				gender: gender,
+				phone_number: phone_number.value,
 				car: car.value,
-				published_rides: published_rides.value,
-				reserved_rides: reserved_rides.value,
 				note: note.value
 			});
-		} catch (err) {
-			console.log('ERR');
+		} catch {
+			alert('Error saving profile');
 		}
 	};
 
@@ -112,10 +108,14 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 						display: 'flex',
 						justifyContent: 'flex-end',
 						mt: 3,
-						gap: 2,
+						gap: 2
 					}}
 				>
-					<Button variant="contained" onClick={saveProfile} sx={{ width: '100%' }}>
+					<Button
+						variant="contained"
+						onClick={saveProfile}
+						sx={{ width: '100%' }}
+					>
 						Save changes
 						<SaveIcon sx={{ marginLeft: '0.4em' }} />
 					</Button>
