@@ -127,6 +127,11 @@ const Profile = () => {
 		);
 	}
 
+	const logout = () => {
+		signOut();
+		setProfile(null);
+	};
+
 	return (
 		<>
 			{!user ? (
@@ -138,7 +143,7 @@ const Profile = () => {
 						component="form"
 						onSubmit={async (e: FormEvent) => {
 							e.preventDefault();
-							console.log(profile?.gender);
+
 							try {
 								isSignUp
 									? await signUp(email.value, password.value)
@@ -310,7 +315,7 @@ const Profile = () => {
 								gap: 2
 							}}
 						>
-							<Button variant="outlined" onClick={signOut}>
+							<Button variant="outlined" onClick={logout}>
 								<LogoutIcon
 									sx={{ marginRight: '0.4em', transform: 'scaleX(-1)' }}
 								/>

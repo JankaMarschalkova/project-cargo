@@ -91,12 +91,13 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 						id="demo-simple-select"
 						label="Gender"
 						onChange={handleChange}
-						defaultValue={currentProfile?.gender}
+						defaultValue={currentProfile?.gender ?? ''}
 					>
 						<MenuItem value={'Male'}>Male</MenuItem>
 						<MenuItem value={'Female'}>Female</MenuItem>
 						<MenuItem value={'Non binary'}>Non binary</MenuItem>
 						<MenuItem value={'Prefer not to say'}>Prefer not to say</MenuItem>
+						<MenuItem value={''}>Not specified</MenuItem>
 					</Select>
 				</FormControl>
 				<TextField label="Phone number" {...phone_number.props} type="text" />
