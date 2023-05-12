@@ -26,7 +26,7 @@ const RideDetail = ({ ride }: { ride: RideType }) => {
 				})}
 			</Typography>
 			<Box>
-				<Typography>Available seats: {ride.seats_available}</Typography>
+				<Typography>Available seats: {ride.seats_available - ride.passengers.length}</Typography>
 
 				<Typography>Price per person: {ride.price_per_person} €</Typography>
 

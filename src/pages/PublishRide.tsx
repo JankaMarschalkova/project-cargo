@@ -146,6 +146,7 @@ const PublishRide = () => {
 								InputLabelProps={{
 									shrink: true
 								}}
+								InputProps={{ inputProps: { min: 1, max: 10 } }}
 								{...seats_available.props}
 							/>
 							<TextField
@@ -155,6 +156,7 @@ const PublishRide = () => {
 								InputLabelProps={{
 									shrink: true
 								}}
+								InputProps={{ inputProps: { min: 1, max: 1000 } }}
 								{...price_per_person.props}
 							/>
 

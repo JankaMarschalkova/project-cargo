@@ -63,6 +63,7 @@ const Home = () => {
 					InputLabelProps={{
 						shrink: true
 					}}
+					InputProps={{ inputProps: { min: 1, max: 10 } }}
 					{...seats_available.props}
 				/>
 				<Box

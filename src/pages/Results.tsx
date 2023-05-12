@@ -56,7 +56,7 @@ const Results = ({
 						ride =>
 							ride.leaving_from == leaving_from &&
 							ride.going_to == going_to &&
-							ride.seats_available >= (seats_available ?? 0)
+							ride.seats_available - ride.passengers.length >= (seats_available ?? 0)
 					)
 					.sort(
 						(a, b) =>
@@ -132,7 +132,7 @@ const Results = ({
 
 					{!rides || rides.length === 0 ? (
 						<>
-							<Typography my={4}>No records</Typography>
+							<Typography my={4}>No available rides</Typography>
 							<Divider />
 						</>
 					) : (
