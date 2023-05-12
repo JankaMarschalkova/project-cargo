@@ -108,8 +108,11 @@ const RidePreview = ({
 
 					{isPassenger && (
 						<>
-							<Typography>
-								Driver: <Button onClick={handleClickOpen}>{ride.driver}</Button>
+							<Typography display="flex" alignItems="center">
+								Driver:{' '}
+								<Button sx={{ textTransform: 'none', fontSize: 16 }} onClick={handleClickOpen}>
+									{ride.driver}
+								</Button>
 							</Typography>
 							<SimpleDialog
 								selectedValue={selectedValue}
@@ -136,9 +139,12 @@ const RidePreview = ({
 						{ride.note}
 					</Typography>
 				)}
-				
-				<Box display='flex'>
-					<RideStatus is_cancelled={ride.is_cancelled} />
+
+				<Box display="flex">
+					<RideStatus
+						is_cancelled={ride.is_cancelled}
+						datetime={ride.datetime}
+					/>
 				</Box>
 			</CardContent>
 		</Card>
