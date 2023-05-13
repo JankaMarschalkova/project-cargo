@@ -17,6 +17,7 @@ import DriverPreview from './DriverPreview';
 import { SimpleDialogProps } from './RidePreview';
 import { onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 
 const RideDetail = ({
 	ride,
@@ -53,7 +54,9 @@ const RideDetail = ({
 
 		onSnapshot(profilesCollection, snapshot => {
 			const profiles = snapshot.docs.map(doc => doc.data());
-			setProfile(profiles.find(profile => profile.email === ride.driver) ?? null);
+			setProfile(
+				profiles.find(profile => profile.email === ride.driver) ?? null
+			);
 		});
 	}, [ride.driver]);
 
@@ -135,7 +138,7 @@ const RideDetail = ({
 				</Typography>
 			)}
 
-			{username && (
+			{username && dayjs(ride.datetime) >= dayjs() && (
 				<Box>
 					{ride.passengers.includes(username) ? (
 						<Button
