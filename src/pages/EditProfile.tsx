@@ -57,8 +57,8 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 	};
 
 	return (
-		<Grid minWidth="22rem">
-			<Typography variant="h3" fontWeight="bold" align="left" mt={2} mb={4}>
+		<Grid minWidth="30rem">
+			<Typography variant="h3" fontWeight="bold" align="center" mt={2} mb={4}>
 				<> </>Profile<> </>
 			</Typography>
 			<Paper
@@ -115,7 +115,7 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 					<Button
 						variant="contained"
 						onClick={saveProfile}
-						sx={{ width: '100%' }}
+						sx={{ width: '100%', alignSelf: 'center' }}
 					>
 						Save changes
 						<SaveIcon sx={{ marginLeft: '0.4em' }} />
