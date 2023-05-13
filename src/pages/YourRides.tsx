@@ -106,7 +106,7 @@ const YourRides = () => {
 						)}
 					</Grid>
 
-					<Grid mb={2}>
+					<Grid>
 						<Typography variant="h4" fontWeight="bold" mb={2}>
 							As passenger
 						</Typography>

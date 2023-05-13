@@ -29,15 +29,31 @@ const Home = () => {
 	const seats_available = useNumberField('seats_available', 1, true);
 
 	const searchRides = async () => {
-		window.location.href = `/results?leaving_from=${leaving_from.value}&going_to=${going_to.value}&datetime=${date.value}&seats_available=${seats_available.value}`;
+		window.location.href = `/results?leaving_from=${
+			leaving_from.value
+		}&going_to=${going_to.value}&datetime=${date.value
+			.set('hour', 0)
+			.set('minute', 0)
+			.set('second', 0)
+			.set('millisecond', 0)}&seats_available=${seats_available.value}`;
 	};
 
 	return (
 		<>
-			<img src="./logo.png" alt="CarGo logo" />
-			<Typography variant="h1" fontWeight="bold">
-				CarGo
-			</Typography>
+			<Box display="flex" alignItems="flex-end" mb={1.5}>
+				<Typography
+					variant="h1"
+					fontWeight="bold"
+					mr={1.5}
+					mb={-1}
+					color="#469597"
+					style={{ '-webkit-text-stroke': 'white 2px' }}
+				>
+					CarGo
+				</Typography>
+				<img src="./logo.png" alt="CarGo logo" height="150" />
+			</Box>
+
 			<Paper
 				component="form"
 				sx={{

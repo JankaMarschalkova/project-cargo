@@ -93,4 +93,3 @@ export const ridesCollection = collection(
 	db,
 	'rides'
 ) as CollectionReference<Ride>;
-

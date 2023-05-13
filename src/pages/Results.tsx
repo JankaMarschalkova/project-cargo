@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { Ride as RideType, ridesCollection } from '../firebase';
 import { onSnapshot } from 'firebase/firestore';
 import RideDetail from '../components/RideDetail';
+import dayjs, { Dayjs } from 'dayjs';
 
 const Results = ({
 	leaving_from,
@@ -22,10 +23,10 @@ const Results = ({
 	datetime,
 	seats_available
 }: {
-	leaving_from?: string;
-	going_to?: string;
-	datetime?: string;
-	seats_available?: number;
+	leaving_from: string;
+	going_to: string;
+	datetime: Dayjs;
+	seats_available: number;
 }) => {
 	usePageTitle('Results');
 
@@ -33,7 +34,7 @@ const Results = ({
 
 	leaving_from = searchParams.get('leaving_from') || '';
 	going_to = searchParams.get('going_to') || '';
-	datetime = searchParams.get('datetime') || new Date().getTime().toString();
+	datetime = dayjs(searchParams.get('datetime')) || dayjs();
 	seats_available = Number(searchParams.get('seats_available')) || 1;
 
 	const user = useLoggedInUser();
@@ -50,8 +51,9 @@ const Results = ({
 					.filter(ride => ride.driver !== user?.email)
 					.filter(
 						ride =>
-							ride.leaving_from == leaving_from &&
-							ride.going_to == going_to &&
+							ride.leaving_from.toLowerCase() == leaving_from.toLowerCase() &&
+							ride.going_to.toLowerCase() == going_to.toLowerCase() &&
+							dayjs(ride.datetime) >= datetime &&
 							ride.seats_available - ride.passengers.length >=
 								(seats_available ?? 0)
 					)
@@ -107,13 +109,10 @@ const Results = ({
 						</Typography>
 						<Typography variant="h6" color="#4F4F4F">
 							On{' '}
-							{new Date(datetime ?? '').toLocaleString('en-US', {
+							{new Date(datetime.toString() ?? '').toLocaleString('en-US', {
 								month: 'short',
 								day: 'numeric',
-								year: 'numeric',
-								hour: 'numeric',
-								minute: 'numeric',
-								hour12: true
+								year: 'numeric'
 							})}{' '}
 							(onwards)
 						</Typography>
