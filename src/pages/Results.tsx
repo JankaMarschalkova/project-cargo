@@ -51,8 +51,8 @@ const Results = ({
 					.filter(ride => ride.driver !== user?.email)
 					.filter(
 						ride =>
-							ride.leaving_from.toLowerCase() == leaving_from.toLowerCase() &&
-							ride.going_to.toLowerCase() == going_to.toLowerCase() &&
+							ride.leaving_from.toLowerCase().trim() == leaving_from.toLowerCase().trim() &&
+							ride.going_to.toLowerCase().trim() == going_to.toLowerCase().trim() &&
 							dayjs(ride.datetime) >= datetime &&
 							ride.seats_available - ride.passengers.length >=
 								(seats_available ?? 0)
