@@ -7,7 +7,6 @@ import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
 import dayjs from 'dayjs';
 import { useNavigate } from '@tanstack/react-router';
-import { FormEvent } from 'react';
 
 const Home = () => {
 	usePageTitle('Home');
@@ -79,7 +78,7 @@ const Home = () => {
 					{...going_to.props}
 					type="text"
 				/>
-				<DatePicker label="Date of the ride" {...date.props} />
+				<DatePicker label="Date of the ride" {...date.props} minDate={dayjs()} />
 
 				<TextField
 					label="Number of available seats"

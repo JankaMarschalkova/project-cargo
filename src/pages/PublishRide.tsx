@@ -126,6 +126,13 @@ const PublishRide = () => {
 								p: 4,
 								gap: 2
 							}}
+							onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
+								e.preventDefault();
+
+								if (e?.currentTarget?.checkValidity()) {
+									publishRide();
+								}
+							}}
 						>
 							<TextField
 								label="Leaving from"
@@ -139,7 +146,11 @@ const PublishRide = () => {
 								type="text"
 							/>
 
-							<DatePicker label="Date of the ride" {...date.props} />
+							<DatePicker
+								label="Date of the ride"
+								{...date.props}
+								minDate={dayjs()}
+							/>
 							<TimePicker
 								sx={{ mb: 3 }}
 								label="Time of the ride"
@@ -183,7 +194,7 @@ const PublishRide = () => {
 									mt: 3
 								}}
 							>
-								<Button variant="contained" onClick={() => publishRide()}>
+								<Button variant="contained" type="submit">
 									Publish ride
 									<AddIcon sx={{ marginLeft: '0.25em' }} />
 								</Button>
