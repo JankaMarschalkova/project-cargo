@@ -136,7 +136,13 @@ const Profile = () => {
 		<>
 			{!user ? (
 				<>
-					<Typography variant="h2" fontWeight="bold" textAlign="center">
+					<Typography
+						variant="h2"
+						fontWeight="bold"
+						fontSize={70}
+						color="#469597"
+						style={{ WebkitTextStroke: 'white 1px' }}
+					>
 						Login
 					</Typography>
 					<Paper
@@ -221,7 +227,13 @@ const Profile = () => {
 				</>
 			) : (
 				<>
-					<Typography variant="h2" fontWeight="bold">
+					<Typography
+						variant="h2"
+						fontWeight="bold"
+						fontSize={70}
+						color="#469597"
+						style={{ WebkitTextStroke: 'white 1px' }}
+					>
 						Profile
 					</Typography>
 

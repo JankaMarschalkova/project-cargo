@@ -7,6 +7,7 @@ import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
 import dayjs from 'dayjs';
 import { useNavigate } from '@tanstack/react-router';
+import { FormEvent } from 'react';
 
 const Home = () => {
 	usePageTitle('Home');
@@ -28,7 +29,7 @@ const Home = () => {
 	const date = useDateField('date', dayjs(), true);
 	const seats_available = useNumberField('seats_available', 1, true);
 
-	const searchRides = async () => {
+	const searchRides = () => {
 		window.location.href = `/results?leaving_from=${
 			leaving_from.value
 		}&going_to=${going_to.value}&datetime=${date.value
@@ -47,7 +48,7 @@ const Home = () => {
 					mr={1.5}
 					mb={-1}
 					color="#469597"
-					style={{ '-webkit-text-stroke': 'white 2px' }}
+					style={{ WebkitTextStroke: 'white 2px' }}
 				>
 					CarGo
 				</Typography>
@@ -62,6 +63,13 @@ const Home = () => {
 					width: '100%',
 					p: 4,
 					gap: 2
+				}}
+				onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
+					e.preventDefault();
+
+					if (e?.currentTarget?.checkValidity()) {
+						searchRides();
+					}
 				}}
 			>
 				<TextField label="Leaving from" {...leaving_from.props} type="text" />
@@ -91,7 +99,7 @@ const Home = () => {
 						mt: 3
 					}}
 				>
-					<Button variant="contained" onClick={() => searchRides()}>
+					<Button variant="contained" type="submit">
 						Search
 						<SearchIcon sx={{ marginLeft: '0.4em' }} />
 					</Button>
