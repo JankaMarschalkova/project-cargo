@@ -73,7 +73,23 @@ const RideStatus = ({
 	};
 
 	const leaveRide = async () => {
-		//TODO
+		try {
+			await setDoc(ridesDocument(rideID ?? ''), {
+				leaving_from: ride.leaving_from,
+				going_to: ride.going_to,
+				datetime: ride.datetime,
+				seats_available: ride.seats_available,
+				price_per_person: ride.price_per_person,
+				driver: ride.driver,
+				passengers: ride.passengers.filter(
+					passenger => passenger !== profile?.email
+				),
+				is_cancelled: ride.is_cancelled,
+				note: ride.note
+			});
+		} catch {
+			alert('Error while canceling ride as driver!');
+		}
 	};
 
 	return (
