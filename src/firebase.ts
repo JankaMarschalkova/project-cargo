@@ -93,3 +93,7 @@ export const ridesCollection = collection(
 	db,
 	'rides'
 ) as CollectionReference<Ride>;
+
+export const ridesDocument = (id: string) =>
+	doc(db, 'rides', id) as DocumentReference<Ride>;
+

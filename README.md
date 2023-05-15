@@ -13,7 +13,4 @@ The `CarGo` app is designed to respond to the needs of people who travel medium 
 
 ## Technologies
  * React
- * Firebase
- **     a) Collections
- **     b) Sign-in provider Google and Email/Password
- **     c) Deployment
+ * Firebase (Collections, Database, Sign-in provider Google and Email/Password, Deployment enviroment)

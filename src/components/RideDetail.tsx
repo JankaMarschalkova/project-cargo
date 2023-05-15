@@ -10,12 +10,15 @@ import BackIcon from '@mui/icons-material/ArrowBack';
 
 import {
 	Profile as ProfileType,
+	Ride,
 	Ride as RideType,
-	profilesCollection
+	profilesCollection,
+	ridesCollection,
+	ridesDocument
 } from '../firebase';
 import DriverPreview from './DriverPreview';
 import { SimpleDialogProps } from './RidePreview';
-import { onSnapshot } from 'firebase/firestore';
+import { deleteDoc, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 
@@ -26,12 +29,58 @@ const RideDetail = ({
 	ride: RideType;
 	username: string;
 }) => {
-	const joinRide = () => {
-		console.log('Join'); // TODO
+	const [rideID, setRideID] = useState<string | undefined>();
+
+	useEffect(() => {
+		onSnapshot(ridesCollection, snapshot => {
+			const rides = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+			const foundRide = rides.find(
+				currentRide =>
+					currentRide.driver === ride.driver &&
+					currentRide.leaving_from === ride.leaving_from &&
+					currentRide.going_to === ride.going_to &&
+					currentRide.datetime === ride.datetime
+			);
+			const rideID = foundRide ? foundRide.id : undefined;
+			setRideID(rideID);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ride]);
+
+	const joinRide = async () => {
+		try {
+			await setDoc(ridesDocument(rideID ?? ''), {
+				leaving_from: ride.leaving_from,
+				going_to: ride.going_to,
+				datetime: ride.datetime,
+				seats_available: ride.seats_available,
+				price_per_person: ride.price_per_person,
+				driver: ride.driver,
+				passengers: [...ride.passengers, username],
+				is_cancelled: ride.is_cancelled,
+				note: ride.note
+			});
+		} catch {
+			alert('Error saving new passenger to ride');
+		}
 	};
 
-	const leaveRide = () => {
-		console.log('Leave'); // TODO
+	const leaveRide = async () => {
+		try {
+			await setDoc(ridesDocument(rideID ?? ''), {
+				leaving_from: ride.leaving_from,
+				going_to: ride.going_to,
+				datetime: ride.datetime,
+				seats_available: ride.seats_available,
+				price_per_person: ride.price_per_person,
+				driver: ride.driver,
+				passengers: ride.passengers.filter(passenger => passenger !== username),
+				is_cancelled: ride.is_cancelled,
+				note: ride.note
+			});
+		} catch {
+			alert('Error deleting passenger from ride');
+		}
 	};
 
 	const [open, setOpen] = useState(false);
