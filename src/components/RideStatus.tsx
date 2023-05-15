@@ -68,7 +68,7 @@ const RideStatus = ({
 				note: ride.note
 			});
 		} catch {
-			alert('Error saving new passenger to ride!');
+			alert('Error while canceling ride as driver!');
 		}
 	};
 
