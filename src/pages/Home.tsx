@@ -6,14 +6,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
 import dayjs from 'dayjs';
-import { useNavigate } from '@tanstack/react-router';
 
 const Home = () => {
 	usePageTitle('Home');
 
 	const searchParams = new URLSearchParams(window.location.search);
-
-	const navigate = useNavigate();
 
 	const leaving_from = useField(
 		'leaving_from',
