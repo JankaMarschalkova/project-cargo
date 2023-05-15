@@ -1,4 +1,11 @@
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import {
+	Box,
+	Button,
+	Container,
+	Paper,
+	TextField,
+	Typography
+} from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import usePageTitle from '../hooks/usePageTitle';
 import useField from '../hooks/useField';
@@ -37,70 +44,88 @@ const Home = () => {
 
 	return (
 		<>
-			<Box display="flex" alignItems="flex-end" mb={1.5}>
-				<Typography
-					variant="h1"
-					fontWeight="bold"
-					mr={1.5}
-					mb={-1}
-					color="#469597"
-					style={{ WebkitTextStroke: 'white 2px' }}
-				>
-					Home
-				</Typography>
-				<img src="./logo.png" alt="CarGo logo" height="150" />
-			</Box>
-
-			<Paper
-				component="form"
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					width: '100%',
-					p: 4,
-					gap: 2
-				}}
-				onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
-					e.preventDefault();
-
-					if (e?.currentTarget?.checkValidity()) {
-						searchRides();
-					}
-				}}
-			>
-				<TextField label="Leaving from" {...leaving_from.props} type="text" />
-				<TextField
-					sx={{ mb: 3 }}
-					label="Going to"
-					{...going_to.props}
-					type="text"
-				/>
-				<DatePicker label="Date of the ride" {...date.props} minDate={dayjs()} />
-
-				<TextField
-					label="Number of available seats"
-					type="number"
-					InputLabelProps={{
-						shrink: true
-					}}
-					InputProps={{ inputProps: { min: 1, max: 10 } }}
-					{...seats_available.props}
-				/>
+			<Container maxWidth="sm">
 				<Box
+					display="flex"
+					alignItems="flex-end"
+					mb={1.5}
+					sx={{ display: 'flex', alignItems: 'center', marginBottom: 1.5 }}
+				>
+					<Typography
+						variant="h1"
+						fontWeight="bold"
+						align="center"
+						mr={1.5}
+						mb={-1}
+						color="#469597"
+						style={{ WebkitTextStroke: 'white 2px' }}
+						sx={{
+							'fontSize': '7rem',
+							'@media (max-width: 600px)': {
+								fontSize: '4.5rem'
+							}
+						}}
+					>
+						Home
+					</Typography>
+					<img src="./logo.png" alt="CarGo logo" height="150" />
+				</Box>
+
+				<Paper
+					component="form"
 					sx={{
 						display: 'flex',
-						gap: 2,
-						alignItems: 'center',
-						alignSelf: 'flex-end',
-						mt: 3
+						flexDirection: 'column',
+						width: '100%',
+						p: 4,
+						gap: 2
+					}}
+					onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
+						e.preventDefault();
+
+						if (e?.currentTarget?.checkValidity()) {
+							searchRides();
+						}
 					}}
 				>
-					<Button variant="contained" type="submit">
-						Search
-						<SearchIcon sx={{ marginLeft: '0.4em' }} />
-					</Button>
-				</Box>
-			</Paper>
+					<TextField label="Leaving from" {...leaving_from.props} type="text" />
+					<TextField
+						sx={{ mb: 3 }}
+						label="Going to"
+						{...going_to.props}
+						type="text"
+					/>
+					<DatePicker
+						label="Date of the ride"
+						{...date.props}
+						minDate={dayjs()}
+					/>
+
+					<TextField
+						label="Number of available seats"
+						type="number"
+						InputLabelProps={{
+							shrink: true
+						}}
+						InputProps={{ inputProps: { min: 1, max: 10 } }}
+						{...seats_available.props}
+					/>
+					<Box
+						sx={{
+							display: 'flex',
+							gap: 2,
+							alignItems: 'center',
+							alignSelf: 'flex-end',
+							mt: 3
+						}}
+					>
+						<Button variant="contained" type="submit">
+							Search
+							<SearchIcon sx={{ marginLeft: '0.4em' }} />
+						</Button>
+					</Box>
+				</Paper>
+			</Container>
 		</>
 	);
 };
