@@ -60,7 +60,13 @@ const YourRides = () => {
 
 	return (
 		<>
-			<Typography variant="h2" fontWeight="bold">
+			<Typography
+				variant="h2"
+				fontWeight="bold"
+				fontSize={70}
+				color="#469597"
+				style={{ WebkitTextStroke: 'white 1px' }}
+			>
 				Your rides
 			</Typography>
 			{!user ? (
