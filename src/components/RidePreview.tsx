@@ -153,7 +153,7 @@ const RidePreview = ({
 				)}
 
 				<Box display="flex" alignItems="center">
-					<RideStatus ride={ride} isPassenger={isPassenger} />
+					<RideStatus ride={ride} isPassenger={isPassenger} profile={profile}/>
 				</Box>
 			</CardContent>
 		</Card>

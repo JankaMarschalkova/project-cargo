@@ -1,12 +1,22 @@
 import { Button, Typography } from '@mui/material';
-import { Ride as RideType } from '../firebase';
+import {
+	Profile,
+	Ride as RideType,
+	ridesCollection,
+	ridesDocument
+} from '../firebase';
+import { useEffect, useState } from 'react';
+import { onSnapshot, setDoc } from 'firebase/firestore';
+import useLoggedInUser from '../hooks/useLoggedInUser';
 
 const RideStatus = ({
 	ride,
-	isPassenger = true
+	isPassenger = true,
+	profile
 }: {
 	ride: RideType;
 	isPassenger?: boolean;
+	profile: Profile | null;
 }) => {
 	let color, backgroundColor, text;
 
@@ -24,12 +34,62 @@ const RideStatus = ({
 		text = 'Completed';
 	}
 
-	const cancelRide = () => {
-		console.log('Cancel'); // TODO
+	const [rideID, setRideID] = useState<string | undefined>();
+
+	useEffect(() => {
+		onSnapshot(ridesCollection, snapshot => {
+			const rides = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+			const foundRide = rides.find(
+				currentRide =>
+					currentRide.driver === ride.driver &&
+					currentRide.leaving_from === ride.leaving_from &&
+					currentRide.going_to === ride.going_to &&
+					currentRide.datetime === ride.datetime
+			);
+			const rideID = foundRide ? foundRide.id : undefined;
+			setRideID(rideID);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ride]);
+
+	const cancelRide = async () => {
+		try {
+			await setDoc(ridesDocument(rideID ?? ''), {
+				leaving_from: ride.leaving_from,
+				going_to: ride.going_to,
+				datetime: ride.datetime,
+				seats_available: ride.seats_available,
+				price_per_person: ride.price_per_person,
+				driver: ride.driver,
+				passengers: profile?.email
+					? [...ride.passengers, profile.email]
+					: [...ride.passengers],
+				is_cancelled: true,
+				note: ride.note
+			});
+		} catch {
+			alert('Error saving new passenger to ride!');
+		}
 	};
 
-    const leaveRide = () => {
-		console.log('Leave'); // TODO
+	const leaveRide = async () => {
+		try {
+			await setDoc(ridesDocument(rideID ?? ''), {
+				leaving_from: ride.leaving_from,
+				going_to: ride.going_to,
+				datetime: ride.datetime,
+				seats_available: ride.seats_available,
+				price_per_person: ride.price_per_person,
+				driver: ride.driver,
+				passengers: ride.passengers.filter(
+					passenger => passenger !== profile?.email
+				),
+				is_cancelled: ride.is_cancelled,
+				note: ride.note
+			});
+		} catch {
+			alert('Error deleting passenger from ride!');
+		}
 	};
 
 	return (
@@ -55,10 +115,7 @@ const RideStatus = ({
 			)}
 
 			{text === 'Active' && isPassenger && (
-				<Button
-					sx={{ ml: 1.5, py: 0.5, color: '#E53935' }}
-					onClick={leaveRide}
-				>
+				<Button sx={{ ml: 1.5, py: 0.5, color: '#E53935' }} onClick={leaveRide}>
 					Leave ride
 				</Button>
 			)}
