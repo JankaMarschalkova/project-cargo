@@ -61,7 +61,7 @@ const RideDetail = ({
 				note: ride.note
 			});
 		} catch {
-			alert('Error saving new passenger to ride');
+			alert('Error saving new passenger to ride!');
 		}
 	};
 
@@ -79,7 +79,7 @@ const RideDetail = ({
 				note: ride.note
 			});
 		} catch {
-			alert('Error deleting passenger from ride');
+			alert('Error deleting passenger from ride!');
 		}
 	};
 
