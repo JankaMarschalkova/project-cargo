@@ -53,7 +53,7 @@ const RideDetail = ({
 				leaving_from: ride.leaving_from,
 				going_to: ride.going_to,
 				datetime: ride.datetime,
-				seats_available: ride.seats_available,
+				seats_available: ride.seats_available - 1,
 				price_per_person: ride.price_per_person,
 				driver: ride.driver,
 				passengers: [...ride.passengers, username],
@@ -71,7 +71,7 @@ const RideDetail = ({
 				leaving_from: ride.leaving_from,
 				going_to: ride.going_to,
 				datetime: ride.datetime,
-				seats_available: ride.seats_available,
+				seats_available: ride.seats_available + 1,
 				price_per_person: ride.price_per_person,
 				driver: ride.driver,
 				passengers: ride.passengers.filter(passenger => passenger !== username),
@@ -159,7 +159,7 @@ const RideDetail = ({
 			</Typography>
 			<Box>
 				<Typography>
-					Available seats: {ride.seats_available - ride.passengers.length}
+					Available seats: {ride.seats_available}
 				</Typography>
 
 				<Typography>Price per person: {ride.price_per_person} €</Typography>

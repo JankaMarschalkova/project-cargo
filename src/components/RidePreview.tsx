@@ -134,7 +134,7 @@ const RidePreview = ({
 					{!isPassenger && (
 						<>
 							<Typography>
-								Available seats: {ride.seats_available - ride.passengers.length}
+								Available seats: {ride.seats_available}
 							</Typography>
 							<Typography>
 								Passengers:{' '}
