@@ -1,6 +1,6 @@
 # Project CarGo
 
-** [CarGo App Link]https://pv247-project-cargo.web.app/) **
+[CarGo App Link](https://pv247-project-cargo.web.app/) 
 
 The `CarGo` app is designed to respond to the needs of people who travel medium to long distances and wish to **share their ride** with others heading in the same direction. The app allows users to create a profile, enter their starting point and destination, and search for potential carpooling partners based on location and route. This approach is **cost-effective** for passengers and drivers and simplifies **environmentally friendly** travel.
 
@@ -28,13 +28,6 @@ This app also allows user cancel ride. In case of driver it allows cancel ride a
 
 
 ## Technologies
- * React
- * Firebase 
-	- Collections
-	- Database
-	- Sign-in provider Google and Email/Password
-	- Deployment enviroment
-
 * **React:** React is a JavaScript library for building user interfaces. It provides a component-based architecture that allows for efficient and reusable UI development. React is commonly used for building single-page applications and provides a responsive and interactive user experience.
 
 * **Firebase:** Firebase is a backend-as-a-service platform provided by Google. It offers various services that are utilized in the CarGo app:
