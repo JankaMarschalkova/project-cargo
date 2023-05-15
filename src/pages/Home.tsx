@@ -46,7 +46,7 @@ const Home = () => {
 					color="#469597"
 					style={{ WebkitTextStroke: 'white 2px' }}
 				>
-					CarGo
+					Home
 				</Typography>
 				<img src="./logo.png" alt="CarGo logo" height="150" />
 			</Box>
