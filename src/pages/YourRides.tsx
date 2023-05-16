@@ -7,12 +7,7 @@ import ButtonLink from '../components/ButtonLink';
 import LoginIcon from '@mui/icons-material/Login';
 import { useEffect, useState } from 'react';
 import { onSnapshot } from 'firebase/firestore';
-import {
-	profilesCollection,
-	Profile as ProfileType,
-	ridesCollection,
-	Ride as RideType
-} from '../firebase';
+import { ridesCollection, Ride as RideType } from '../firebase';
 import RidePreview from '../components/RidePreview';
 import useLoggedInProfile from '../hooks/useLoggedInProfile';
 

@@ -1,25 +1,19 @@
 import { Button, Typography } from '@mui/material';
-import {
-	Profile,
-	Ride as RideType,
-	ridesCollection,
-	ridesDocument
-} from '../firebase';
+import { Ride as RideType, ridesCollection, ridesDocument } from '../firebase';
 import { useEffect, useState } from 'react';
 import { onSnapshot, setDoc } from 'firebase/firestore';
-import useLoggedInUser from '../hooks/useLoggedInUser';
+
+import useLoggedInProfile from '../hooks/useLoggedInProfile';
 
 const RideStatus = ({
 	ride,
-	isPassenger = true,
-	profile
+	isPassenger = true
 }: {
 	ride: RideType;
 	isPassenger?: boolean;
-	profile: Profile | undefined;
 }) => {
 	let color, backgroundColor, text;
-
+	const profile = useLoggedInProfile();
 	if (ride.is_cancelled) {
 		color = '#FFEBEE';
 		backgroundColor = '#E53935';
@@ -61,9 +55,7 @@ const RideStatus = ({
 				seats_available: 0,
 				price_per_person: ride.price_per_person,
 				driver: ride.driver,
-				passengers: profile?.email
-					? [...ride.passengers, profile.email]
-					: [...ride.passengers],
+				passengers: ride.passengers,
 				is_cancelled: true,
 				note: ride.note
 			});

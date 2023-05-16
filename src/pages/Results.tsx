@@ -1,5 +1,4 @@
 import usePageTitle from '../hooks/usePageTitle';
-import useLoggedInUser from '../hooks/useLoggedInUser';
 import {
 	Button,
 	Card,
@@ -16,6 +15,7 @@ import { Ride as RideType, ridesCollection } from '../firebase';
 import { onSnapshot } from 'firebase/firestore';
 import RideDetail from '../components/RideDetail';
 import dayjs, { Dayjs } from 'dayjs';
+import useLoggedInUser from '../hooks/useLoggedInUser';
 
 const Results = ({
 	leaving_from,

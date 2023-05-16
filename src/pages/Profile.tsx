@@ -41,7 +41,7 @@ export interface SimpleDialogProps {
 const Profile = () => {
 	usePageTitle('Profile');
 	const user = useLoggedInUser();
-	const profile = useLoggedInProfile();
+	const [profile, setProfile] = useState(useLoggedInProfile());
 	const [open, setOpen] = useState(false);
 	const [selectedValue, setSelectedValue] = useState('');
 
@@ -115,7 +115,7 @@ const Profile = () => {
 
 	const logout = () => {
 		signOut();
-		//setProfile(null);
+		setProfile(undefined);
 	};
 
 	return (

@@ -1,7 +1,8 @@
 import { Grid, Paper, Typography } from '@mui/material';
-import { Profile } from '../firebase';
+import useLoggedInProfile from '../hooks/useLoggedInProfile';
 
-const DriverPreview = ({ profile }: { profile: Profile | undefined }) => {
+const DriverPreview = () => {
+	const profile = useLoggedInProfile();
 	return (
 		<Grid minWidth="30rem">
 			<Typography variant="h3" fontWeight="bold" align="left" mt={2} mb={4}>
