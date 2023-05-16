@@ -9,12 +9,17 @@ import {
 	Typography
 } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBack';
-import { Profile as ProfileType, Ride as RideType, profilesCollection } from '../firebase';
+import {
+	Profile as ProfileType,
+	Ride as RideType,
+	profilesCollection
+} from '../firebase';
 import DriverPreview from './DriverPreview';
 import { useEffect, useState } from 'react';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { onSnapshot } from 'firebase/firestore';
 import RideStatus from './RideStatus';
+import useLoggedInProfile from '../hooks/useLoggedInProfile';
 
 export interface SimpleDialogProps {
 	open: boolean;
@@ -32,21 +37,7 @@ const RidePreview = ({
 	const user = useLoggedInUser();
 	const [open, setOpen] = useState(false);
 	const [selectedValue, setSelectedValue] = useState('');
-	const [profile, setProfile] = useState<ProfileType | null>(null);
-
-	useEffect(() => {
-		if (!user?.email) {
-			return;
-		}
-
-		onSnapshot(profilesCollection, snapshot => {
-			const profiles = snapshot.docs.map(doc => doc.data());
-			setProfile(
-				profiles.find(profile => profile.email === user?.email) ?? null
-			);
-		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
+	const profile = useLoggedInProfile();
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -133,9 +124,7 @@ const RidePreview = ({
 					)}
 					{!isPassenger && (
 						<>
-							<Typography>
-								Available seats: {ride.seats_available}
-							</Typography>
+							<Typography>Available seats: {ride.seats_available}</Typography>
 							<Typography>
 								Passengers:{' '}
 								{ride.passengers.length == 0
@@ -153,7 +142,7 @@ const RidePreview = ({
 				)}
 
 				<Box display="flex" alignItems="center">
-					<RideStatus ride={ride} isPassenger={isPassenger} profile={profile}/>
+					<RideStatus ride={ride} isPassenger={isPassenger} profile={profile} />
 				</Box>
 			</CardContent>
 		</Card>

@@ -21,6 +21,7 @@ import { SimpleDialogProps } from './RidePreview';
 import { deleteDoc, doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import useLoggedInProfile from '../hooks/useLoggedInProfile';
 
 const RideDetail = ({
 	ride,
@@ -85,7 +86,7 @@ const RideDetail = ({
 
 	const [open, setOpen] = useState(false);
 	const [selectedValue, setSelectedValue] = useState('');
-	const [profile, setProfile] = useState<ProfileType | null>(null);
+	const profile = useLoggedInProfile();
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -95,19 +96,6 @@ const RideDetail = ({
 		setOpen(false);
 		setSelectedValue(value);
 	};
-
-	useEffect(() => {
-		if (!ride.driver) {
-			return;
-		}
-
-		onSnapshot(profilesCollection, snapshot => {
-			const profiles = snapshot.docs.map(doc => doc.data());
-			setProfile(
-				profiles.find(profile => profile.email === ride.driver) ?? null
-			);
-		});
-	}, [ride.driver]);
 
 	const SimpleDialog = (props: SimpleDialogProps) => {
 		const { onClose, selectedValue, open } = props;

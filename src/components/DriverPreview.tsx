@@ -1,10 +1,10 @@
 import { Grid, Paper, Typography } from '@mui/material';
 import { Profile } from '../firebase';
 
-const DriverPreview = ({ profile }: { profile: Profile | null }) => {
+const DriverPreview = ({ profile }: { profile: Profile | undefined }) => {
 	return (
-		<Grid minWidth='30rem'>
-			<Typography variant="h3" fontWeight="bold" align="left" mt={2} mb={4} >
+		<Grid minWidth="30rem">
+			<Typography variant="h3" fontWeight="bold" align="left" mt={2} mb={4}>
 				Driver profile
 			</Typography>
 
@@ -14,7 +14,6 @@ const DriverPreview = ({ profile }: { profile: Profile | null }) => {
 					flexDirection: 'column',
 					p: 0,
 					boxShadow: 'none'
-					
 				}}
 			>
 				<Grid container spacing={2}>

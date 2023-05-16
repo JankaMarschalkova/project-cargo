@@ -14,26 +14,12 @@ import {
 	Ride as RideType
 } from '../firebase';
 import RidePreview from '../components/RidePreview';
+import useLoggedInProfile from '../hooks/useLoggedInProfile';
 
 const YourRides = () => {
 	usePageTitle('Your rides');
 	const user = useLoggedInUser();
-	const [profile, setProfile] = useState<ProfileType | null>(null);
-
-	useEffect(() => {
-		if (!user?.email) {
-			return;
-		}
-
-		onSnapshot(profilesCollection, snapshot => {
-			const profiles = snapshot.docs.map(doc => doc.data());
-			setProfile(
-				profiles.find(profile => profile.email === user?.email) ?? null
-			);
-		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
-
+	const profile = useLoggedInProfile();
 	const [driverRides, setDriverRides] = useState<RideType[] | null>(null);
 	const [passengerRides, setPassengerRides] = useState<RideType[] | null>(null);
 
