@@ -1,9 +1,9 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
-const useField = (
+const useField = <T extends number | string>(
 	id: string,
-	required?: boolean,
-	defaultValue = ''
+	defaultValue: T,
+	required?: boolean
 ) => {
 	const [value, setValue] = useState(defaultValue);
 	const [touched, setTouched] = useState(false);
@@ -19,8 +19,12 @@ const useField = (
 			value,
 			onChange: useCallback(
 				(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-					setValue(e.target.value),
-				[]
+					setValue(
+						(typeof defaultValue === 'number'
+							? parseFloat(e.target.value)
+							: e.target.value) as T
+					),
+				[defaultValue]
 			),
 			onBlur: useCallback(() => setTouched(true), []),
 			required,

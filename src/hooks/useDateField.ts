@@ -22,8 +22,7 @@ const useDateField = (
 				(e: dayjs.Dayjs | null) => {
 					setValue(e ?? dayjs());
 				},
-				// eslint-disable-next-line react-hooks/exhaustive-deps
-				[value]
+				[]
 			),
 			onBlur: useCallback(() => setTouched(true), []),
 			error,
