@@ -107,7 +107,12 @@ const Profile = () => {
 		setSelectedValue(value);
 	};
 
-	function SimpleDialog(props: SimpleDialogProps) {
+	const logout = () => {
+		signOut();
+		setProfile(null);
+	};
+
+	const SimpleDialog = (props: SimpleDialogProps) => {
 		const { onClose, selectedValue, open } = props;
 
 		const handleClose = () => {
@@ -132,11 +137,6 @@ const Profile = () => {
 				</Grid>
 			</Dialog>
 		);
-	}
-
-	const logout = () => {
-		signOut();
-		setProfile(null);
 	};
 
 	return (
