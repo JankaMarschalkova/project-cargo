@@ -19,6 +19,7 @@ import useField from '../hooks/useField';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 
 import { setDoc } from 'firebase/firestore';
+import useNumberField from '../hooks/useNumberField';
 
 const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 	usePageTitle('Edit profile');
@@ -28,16 +29,16 @@ const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 		setGender(event.target.value as string);
 	};
 
-	const nickname = useField('nick_name', currentProfile?.nickname ?? '', false);
-	const age = useField('age', currentProfile?.age ?? 0, false);
+	const nickname = useField('nick_name', false, currentProfile?.nickname);
+	const age = useNumberField('age', currentProfile?.age ?? 0, false);
 	const [gender, setGender] = useState(currentProfile?.gender ?? '');
 	const phone_number = useField(
 		'phone_number',
-		currentProfile?.phone_number ?? '',
-		false
+		false,
+		currentProfile?.phone_number
 	);
-	const car = useField('car', currentProfile?.car ?? '', false);
-	const note = useField('note', currentProfile?.note ?? '', false);
+	const car = useField('car', false, currentProfile?.car);
+	const note = useField('note', false, currentProfile?.note);
 
 	const saveProfile = async () => {
 		try {

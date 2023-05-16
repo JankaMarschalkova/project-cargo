@@ -19,6 +19,7 @@ import {
 	signOut,
 	signUp,
 	Profile as ProfileType,
+	profilesCollection,
 	profilesDocument,
 	ridesCollection
 } from '../firebase';
@@ -48,8 +49,8 @@ const Profile = () => {
 
 	const [isSignUp, setSignUp] = useState(false);
 
-	const email = useField('email', '', true);
-	const password = useField('password', '', true);
+	const email = useField('email', true);
+	const password = useField('password', true);
 
 	const [submitError, setSubmitError] = useState<string>();
 	const [publishedRides, setPublishedRides] = useState<number>(0);
@@ -137,11 +138,11 @@ const Profile = () => {
 
 							try {
 								isSignUp
-									? await signUp(email.value ?? '', password.value?? '')
-									: await signIn(email.value ?? '', password.value?? '');
+									? await signUp(email.value, password.value)
+									: await signIn(email.value, password.value);
 								navigate({ to: '/' });
-								await setDoc(profilesDocument(email.value ?? ''), {
-									email: email.value ?? '',
+								await setDoc(profilesDocument(email.value), {
+									email: email.value,
 									nickname: profile?.nickname,
 									age: profile?.age,
 									gender: profile?.gender,

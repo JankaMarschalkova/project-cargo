@@ -6,8 +6,9 @@ import {
 	useEffect,
 	useState
 } from 'react';
+import { User } from 'firebase/auth';
 
-import { Profile, profilesCollection } from '../firebase';
+import { onAuthChanged, Profile, profilesCollection } from '../firebase';
 import { onSnapshot } from 'firebase/firestore';
 import useLoggedInUser from './useLoggedInUser';
 
@@ -33,14 +34,11 @@ export const ProfileProvider: FC<PropsWithChildren> = ({ children }) => {
 	}, [user]);
 
 	return (
-		<ProfileContext.Provider value={profile}>
-			{children}
-		</ProfileContext.Provider>
+		<ProfileContext.Provider value={profile}>{children}</ProfileContext.Provider>
 	);
 };
 
 // Hook providing logged in user information
 const useLoggedInProfile = () => useContext(ProfileContext);
 
-// eslint-disable-next-line react-refresh/only-export-components
 export default useLoggedInProfile;

@@ -15,6 +15,7 @@ import useField from '../hooks/useField';
 import { addDoc } from 'firebase/firestore';
 import { ridesCollection } from '../firebase';
 import LoginIcon from '@mui/icons-material/Login';
+import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
 import dayjs from 'dayjs';
 import { useNavigate } from '@tanstack/react-router';
@@ -28,17 +29,17 @@ const PublishRide = () => {
 	const profile = useLoggedInProfile();
 	const navigate = useNavigate();
 
-	const leaving_from = useField('leaving_from', '', true);
-	const going_to = useField('going_to', '', true);
+	const leaving_from = useField('leaving_from', true);
+	const going_to = useField('going_to', true);
 	const date = useDateField('date', dayjs().add(1, 'day'), true);
 	const time = useDateField(
 		'time',
 		dayjs().add(1, 'hour').set('minute', 0),
 		true
 	);
-	const seats_available = useField('seats_available', 3, true);
-	const price_per_person = useField('price_per_person', 5, true);
-	const note = useField('note', '', false);
+	const seats_available = useNumberField('seats_available', 3, true);
+	const price_per_person = useNumberField('price_per_person', 5, true);
+	const note = useField('note', false);
 
 	const publishRide = async () => {
 		// TODO Validation and email validation

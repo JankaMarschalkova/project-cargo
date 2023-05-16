@@ -10,6 +10,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import usePageTitle from '../hooks/usePageTitle';
 import useField from '../hooks/useField';
 import SearchIcon from '@mui/icons-material/Search';
+import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
 import dayjs from 'dayjs';
 
@@ -20,16 +21,16 @@ const Home = () => {
 
 	const leaving_from = useField(
 		'leaving_from',
-		searchParams.get('leaving_from_arg') || '',
-		true
+		true,
+		searchParams.get('leaving_from_arg') || ''
 	);
 	const going_to = useField(
 		'going_to',
-		searchParams.get('going_to_arg') || '',
-		true
+		true,
+		searchParams.get('going_to_arg') || ''
 	);
 	const date = useDateField('date', dayjs(), true);
-	const seats_available = useField('seats_available', 1, true);
+	const seats_available = useNumberField('seats_available', 1, true);
 
 	const searchRides = () => {
 		window.location.href = `/results?leaving_from=${
@@ -47,7 +48,7 @@ const Home = () => {
 				<Box
 					display="flex"
 					justifyContent="center"
-					alignItems="flex"
+					alignItems="flex-end"
 					mb={1.5}
 					flexWrap="wrap"
 				>

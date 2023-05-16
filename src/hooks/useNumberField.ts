@@ -1,11 +1,7 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
-const useField = (
-	id: string,
-	required?: boolean,
-	defaultValue = ''
-) => {
-	const [value, setValue] = useState(defaultValue);
+const useNumberField = (id: string, defaultValue: number, required?: boolean) => {
+	const [value, setValue] = useState<number>(defaultValue);
 	const [touched, setTouched] = useState(false);
 
 	const error = required && touched && !value;
@@ -19,7 +15,7 @@ const useField = (
 			value,
 			onChange: useCallback(
 				(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-					setValue(e.target.value),
+					setValue(parseFloat(e.target.value)),
 				[]
 			),
 			onBlur: useCallback(() => setTouched(true), []),
@@ -30,4 +26,4 @@ const useField = (
 	} as const;
 };
 
-export default useField;
+export default useNumberField;
