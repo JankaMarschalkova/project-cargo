@@ -60,9 +60,7 @@ const RideStatus = ({
 				seats_available: 0,
 				price_per_person: ride.price_per_person,
 				driver: ride.driver,
-				passengers: profile?.email
-					? [...ride.passengers, profile.email]
-					: [...ride.passengers],
+				passengers: ride.passengers,
 				is_cancelled: true,
 				note: ride.note
 			});
