@@ -9,11 +9,17 @@ import {
 	Typography
 } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBack';
-import { Ride as RideType } from '../firebase';
+import {
+	Profile as ProfileType,
+	Ride as RideType,
+	profilesCollection
+} from '../firebase';
 import DriverPreview from './DriverPreview';
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import useLoggedInUser from '../hooks/useLoggedInUser';
+import { onSnapshot } from 'firebase/firestore';
 import RideStatus from './RideStatus';
+import useLoggedInProfile from '../hooks/useLoggedInProfile';
 
 export interface SimpleDialogProps {
 	open: boolean;
@@ -28,8 +34,10 @@ const RidePreview = ({
 	ride: RideType;
 	isPassenger?: boolean;
 }) => {
+	const user = useLoggedInUser();
 	const [open, setOpen] = useState(false);
 	const [selectedValue, setSelectedValue] = useState('');
+	const profile = useLoggedInProfile();
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -50,7 +58,7 @@ const RidePreview = ({
 		return (
 			<Dialog onClose={handleClose} open={open}>
 				<DialogContent>
-					<DriverPreview />
+					<DriverPreview profile={profile} />
 				</DialogContent>
 				<Grid sx={{ mx: 3, mb: 3, alignItems: 'stretch' }}>
 					<Button
@@ -134,7 +142,7 @@ const RidePreview = ({
 				)}
 
 				<Box display="flex" alignItems="center">
-					<RideStatus ride={ride} isPassenger={isPassenger} />
+					<RideStatus ride={ride} isPassenger={isPassenger} profile={profile} />
 				</Box>
 			</CardContent>
 		</Card>

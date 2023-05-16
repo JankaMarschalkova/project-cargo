@@ -12,14 +12,19 @@ import ButtonLink from '../components/ButtonLink';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import useField from '../hooks/useField';
-import { addDoc } from 'firebase/firestore';
-import { ridesCollection } from '../firebase';
+import { addDoc, onSnapshot } from 'firebase/firestore';
+import {
+	ridesCollection,
+	Profile as ProfileType,
+	profilesCollection
+} from '../firebase';
 import LoginIcon from '@mui/icons-material/Login';
 import useNumberField from '../hooks/useNumberField';
 import useDateField from '../hooks/useDateField';
 import dayjs from 'dayjs';
 import { useNavigate } from '@tanstack/react-router';
 import AddIcon from '@mui/icons-material/Add';
+import { useEffect, useState } from 'react';
 import ProfileIcon from '@mui/icons-material/Person2Sharp';
 import useLoggedInProfile from '../hooks/useLoggedInProfile';
 
