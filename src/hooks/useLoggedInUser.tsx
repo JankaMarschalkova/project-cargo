@@ -27,4 +27,5 @@ export const UserProvider: FC<PropsWithChildren> = ({ children }) => {
 // Hook providing logged in user information
 const useLoggedInUser = () => useContext(UserContext);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export default useLoggedInUser;

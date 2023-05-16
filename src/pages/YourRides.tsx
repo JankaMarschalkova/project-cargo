@@ -14,6 +14,7 @@ import {
 	Ride as RideType
 } from '../firebase';
 import RidePreview from '../components/RidePreview';
+import { loadProfile } from './Profile';
 
 const YourRides = () => {
 	usePageTitle('Your rides');
@@ -21,15 +22,10 @@ const YourRides = () => {
 	const [profile, setProfile] = useState<ProfileType | null>(null);
 
 	useEffect(() => {
-		if (!user?.email) {
-			return;
-		}
+		if (!user?.email) return;
 
 		onSnapshot(profilesCollection, snapshot => {
-			const profiles = snapshot.docs.map(doc => doc.data());
-			setProfile(
-				profiles.find(profile => profile.email === user?.email) ?? null
-			);
+			setProfile(loadProfile(user.email ?? '', snapshot));
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);

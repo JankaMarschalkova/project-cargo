@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { onSnapshot } from 'firebase/firestore';
 import RideStatus from './RideStatus';
+import { loadProfile } from '../pages/Profile';
 
 export interface SimpleDialogProps {
 	open: boolean;
@@ -35,15 +36,10 @@ const RidePreview = ({
 	const [profile, setProfile] = useState<ProfileType | null>(null);
 
 	useEffect(() => {
-		if (!user?.email) {
-			return;
-		}
+		if (!user?.email) return;
 
 		onSnapshot(profilesCollection, snapshot => {
-			const profiles = snapshot.docs.map(doc => doc.data());
-			setProfile(
-				profiles.find(profile => profile.email === user?.email) ?? null
-			);
+			setProfile(loadProfile(user.email ?? '', snapshot));
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);

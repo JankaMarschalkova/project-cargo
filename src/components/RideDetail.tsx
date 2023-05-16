@@ -10,7 +10,6 @@ import BackIcon from '@mui/icons-material/ArrowBack';
 
 import {
 	Profile as ProfileType,
-	Ride,
 	Ride as RideType,
 	profilesCollection,
 	ridesCollection,
@@ -18,9 +17,10 @@ import {
 } from '../firebase';
 import DriverPreview from './DriverPreview';
 import { SimpleDialogProps } from './RidePreview';
-import { deleteDoc, doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import { loadProfile } from '../pages/Profile';
 
 const RideDetail = ({
 	ride,
@@ -97,15 +97,10 @@ const RideDetail = ({
 	};
 
 	useEffect(() => {
-		if (!ride.driver) {
-			return;
-		}
+		if (!ride?.driver) return;
 
 		onSnapshot(profilesCollection, snapshot => {
-			const profiles = snapshot.docs.map(doc => doc.data());
-			setProfile(
-				profiles.find(profile => profile.email === ride.driver) ?? null
-			);
+			setProfile(loadProfile(ride.driver ?? '', snapshot));
 		});
 	}, [ride.driver]);
 
@@ -158,9 +153,7 @@ const RideDetail = ({
 				})}
 			</Typography>
 			<Box>
-				<Typography>
-					Available seats: {ride.seats_available}
-				</Typography>
+				<Typography>Available seats: {ride.seats_available}</Typography>
 
 				<Typography>Price per person: {ride.price_per_person} €</Typography>
 

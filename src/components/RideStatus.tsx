@@ -7,7 +7,6 @@ import {
 } from '../firebase';
 import { useEffect, useState } from 'react';
 import { onSnapshot, setDoc } from 'firebase/firestore';
-import useLoggedInUser from '../hooks/useLoggedInUser';
 
 const RideStatus = ({
 	ride,

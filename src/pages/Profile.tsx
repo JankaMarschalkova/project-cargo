@@ -28,7 +28,7 @@ import useLoggedInUser from '../hooks/useLoggedInUser';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/EditOutlined';
-import { onSnapshot, setDoc } from 'firebase/firestore';
+import { QuerySnapshot, onSnapshot, setDoc } from 'firebase/firestore';
 import EditProfile from './EditProfile';
 
 export interface SimpleDialogProps {
@@ -36,6 +36,15 @@ export interface SimpleDialogProps {
 	selectedValue: string;
 	onClose: (value: string) => void;
 }
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const loadProfile = (email: string, snapshot: QuerySnapshot<ProfileType>) => {
+	return (
+		snapshot.docs
+			.map(doc => doc.data())
+			.find(profile => profile.email === email) ?? null
+	);
+};
 
 const Profile = () => {
 	usePageTitle('Profile');
@@ -54,15 +63,10 @@ const Profile = () => {
 	const [submitError, setSubmitError] = useState<string>();
 
 	useEffect(() => {
-		if (!user?.email) {
-			return;
-		}
+		if (!user?.email) return;
 
 		onSnapshot(profilesCollection, snapshot => {
-			const profiles = snapshot.docs.map(doc => doc.data());
-			setProfile(
-				profiles.find(profile => profile.email === user?.email) ?? null
-			);
+			setProfile(loadProfile(user.email ?? '', snapshot));
 		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user]);

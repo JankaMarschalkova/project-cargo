@@ -48,8 +48,8 @@ const Home = () => {
 				<Box
 					display="flex"
 					justifyContent="center"
-					alignItems="flex-end"
-					mb={1.5}
+					alignItems="center"
+					mb={4.5}
 					flexWrap="wrap"
 				>
 					<Typography
@@ -57,7 +57,7 @@ const Home = () => {
 						fontWeight="bold"
 						align="center"
 						mr={1.5}
-						mb={-1}
+						mb={-6}
 						color="#469597"
 						sx={{
 							'WebkitTextStroke': 'white 2px',
