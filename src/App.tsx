@@ -26,7 +26,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import useLoggedInUser, { UserProvider } from './hooks/useLoggedInUser';
 import Results from './pages/Results';
-import { ProfileProvider } from './hooks/useLoggedInProfile';
 
 const rootRoute = new RootRoute({
 	component: () => {
@@ -141,11 +140,9 @@ declare module '@tanstack/react-router' {
 
 const App = () => (
 	<UserProvider>
-		<ProfileProvider>
-			<LocalizationProvider dateAdapter={AdapterDayjs}>
-				<RouterProvider router={router} />
-			</LocalizationProvider>
-		</ProfileProvider>
+		<LocalizationProvider dateAdapter={AdapterDayjs}>
+			<RouterProvider router={router} />
+		</LocalizationProvider>
 	</UserProvider>
 );
 

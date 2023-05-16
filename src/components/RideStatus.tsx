@@ -16,7 +16,7 @@ const RideStatus = ({
 }: {
 	ride: RideType;
 	isPassenger?: boolean;
-	profile: Profile | undefined;
+	profile: Profile | null;
 }) => {
 	let color, backgroundColor, text;
 

@@ -26,12 +26,27 @@ import { useNavigate } from '@tanstack/react-router';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from 'react';
 import ProfileIcon from '@mui/icons-material/Person2Sharp';
-import useLoggedInProfile from '../hooks/useLoggedInProfile';
 
 const PublishRide = () => {
 	usePageTitle('Publish ride');
+
 	const user = useLoggedInUser();
-	const profile = useLoggedInProfile();
+	const [profile, setProfile] = useState<ProfileType | null>(null);
+
+	useEffect(() => {
+		if (!user?.email) {
+			return;
+		}
+
+		onSnapshot(profilesCollection, snapshot => {
+			const profiles = snapshot.docs.map(doc => doc.data());
+			setProfile(
+				profiles.find(profile => profile.email === user?.email) ?? null
+			);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
 	const navigate = useNavigate();
 
 	const leaving_from = useField('leaving_from', true);

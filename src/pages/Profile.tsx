@@ -30,7 +30,6 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/EditOutlined';
 import { onSnapshot, setDoc } from 'firebase/firestore';
 import EditProfile from './EditProfile';
-import useLoggedInProfile from '../hooks/useLoggedInProfile';
 
 export interface SimpleDialogProps {
 	open: boolean;
@@ -41,7 +40,7 @@ export interface SimpleDialogProps {
 const Profile = () => {
 	usePageTitle('Profile');
 	const user = useLoggedInUser();
-	const profile = useLoggedInProfile();
+	const [profile, setProfile] = useState<ProfileType | null>(null);
 	const [open, setOpen] = useState(false);
 	const [selectedValue, setSelectedValue] = useState('');
 
@@ -53,6 +52,21 @@ const Profile = () => {
 	const password = useField('password', true);
 
 	const [submitError, setSubmitError] = useState<string>();
+
+	useEffect(() => {
+		if (!user?.email) {
+			return;
+		}
+
+		onSnapshot(profilesCollection, snapshot => {
+			const profiles = snapshot.docs.map(doc => doc.data());
+			setProfile(
+				profiles.find(profile => profile.email === user?.email) ?? null
+			);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [user]);
+
 	const [publishedRides, setPublishedRides] = useState<number>(0);
 	const [reservedRides, setReservedRides] = useState<number>(0);
 
@@ -115,7 +129,7 @@ const Profile = () => {
 
 	const logout = () => {
 		signOut();
-		//setProfile(null);
+		setProfile(null);
 	};
 
 	return (
