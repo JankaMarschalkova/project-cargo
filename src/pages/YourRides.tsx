@@ -1,4 +1,4 @@
-import { Grid, Paper, Typography } from '@mui/material';
+import { Grid, Hidden, Paper, Typography } from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
 import useLoggedInUser from '../hooks/useLoggedInUser';
@@ -67,7 +67,8 @@ const YourRides = () => {
 				color="#469597"
 				style={{ WebkitTextStroke: 'white 1px' }}
 			>
-				Your rides
+				<Hidden mdDown>Your rides</Hidden>
+				<Hidden mdUp>Rides</Hidden>
 			</Typography>
 			{!user ? (
 				<Paper

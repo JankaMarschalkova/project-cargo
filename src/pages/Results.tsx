@@ -6,6 +6,7 @@ import {
 	CardContent,
 	Divider,
 	Grid,
+	Hidden,
 	Paper,
 	Typography
 } from '@mui/material';
@@ -80,7 +81,8 @@ const Results = ({
 				color="#469597"
 				style={{ WebkitTextStroke: 'white 1px' }}
 			>
-				Search results
+				<Hidden mdDown>Search results</Hidden>
+				<Hidden mdUp>Results</Hidden>
 			</Typography>
 			<Paper
 				sx={{

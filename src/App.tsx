@@ -4,7 +4,8 @@ import {
 	Toolbar,
 	ThemeProvider,
 	CssBaseline,
-	Box
+	Box,
+	Hidden
 } from '@mui/material';
 import {
 	Outlet,
@@ -37,12 +38,24 @@ const rootRoute = new RootRoute({
 				<AppBar sx={{ position: 'sticky', background: '#FFFFFF' }}>
 					<Container maxWidth="sm">
 						<Toolbar disableGutters sx={{ gap: 2 }}>
-							<ButtonLink to="/">
-								<img src="./logo.png" alt="CarGo logo" width="48" />
-							</ButtonLink>
+							<Hidden mdDown>
+								<ButtonLink to="/">
+									<img src="./logo.png" alt="CarGo logo" width="48" />
+								</ButtonLink>
+							</Hidden>
+
 							<ButtonLink to="/">Home</ButtonLink>
-							<ButtonLink to="/your-rides">Your rides</ButtonLink>
-							<ButtonLink to="/publish-ride">Publish ride</ButtonLink>
+
+							<Hidden mdDown>
+								<ButtonLink to="/your-rides">Your rides</ButtonLink>
+								<ButtonLink to="/publish-ride">Publish ride</ButtonLink>
+							</Hidden>
+
+							<Hidden mdUp>
+								<ButtonLink to="/your-rides">Rides</ButtonLink>
+								<ButtonLink to="/publish-ride">Publish</ButtonLink>
+							</Hidden>
+
 							<Box sx={{ flexGrow: 1 }} />
 							<ButtonLink to="/profile">
 								{user ? <ProfileIcon /> : 'Login'}

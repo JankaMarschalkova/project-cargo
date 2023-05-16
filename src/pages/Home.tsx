@@ -47,9 +47,10 @@ const Home = () => {
 			<Container maxWidth="sm">
 				<Box
 					display="flex"
+					justifyContent="center"
 					alignItems="flex-end"
 					mb={1.5}
-					sx={{ display: 'flex', alignItems: 'center', marginBottom: 1.5 }}
+					flexWrap="wrap"
 				>
 					<Typography
 						variant="h1"
@@ -58,15 +59,14 @@ const Home = () => {
 						mr={1.5}
 						mb={-1}
 						color="#469597"
-						style={{ WebkitTextStroke: 'white 2px' }}
 						sx={{
-							'fontSize': '7rem',
+							'WebkitTextStroke': 'white 2px',
 							'@media (max-width: 600px)': {
-								fontSize: '4.5rem'
+								mb: '0.5rem'
 							}
 						}}
 					>
-						Home
+						CarGo
 					</Typography>
 					<img src="./logo.png" alt="CarGo logo" height="150" />
 				</Box>

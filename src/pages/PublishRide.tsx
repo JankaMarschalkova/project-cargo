@@ -1,4 +1,11 @@
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import {
+	Box,
+	Button,
+	Hidden,
+	Paper,
+	TextField,
+	Typography
+} from '@mui/material';
 
 import usePageTitle from '../hooks/usePageTitle';
 import ButtonLink from '../components/ButtonLink';
@@ -93,7 +100,8 @@ const PublishRide = () => {
 				color="#469597"
 				style={{ WebkitTextStroke: 'white 1px' }}
 			>
-				Publish ride
+				<Hidden mdDown>Publish ride</Hidden>
+				<Hidden mdUp>Publish</Hidden>
 			</Typography>
 			{!user ? (
 				<Paper

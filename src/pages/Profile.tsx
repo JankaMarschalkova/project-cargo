@@ -244,7 +244,8 @@ const Profile = () => {
 							flexDirection: 'column',
 							width: '100%',
 							p: 4,
-							gap: 2
+							gap: 2,
+							overflow: 'scroll'
 						}}
 					>
 						<Typography variant="h5" fontWeight="bold">
