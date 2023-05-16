@@ -1,5 +1,5 @@
-import usePageTitle from '../hooks/usePageTitle';
-import useLoggedInUser from '../hooks/useLoggedInUser';
+import usePageTitle from '../../hooks/usePageTitle';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
 import {
 	Button,
 	Card,
@@ -12,9 +12,9 @@ import {
 } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBack';
 import { useEffect, useState } from 'react';
-import { Ride as RideType, ridesCollection } from '../firebase';
+import { Ride as RideType, ridesCollection } from '../../firebase';
 import { onSnapshot } from 'firebase/firestore';
-import RideDetail from '../components/RideDetail';
+import RideSearchResult from '../../components/RideSearchResult';
 import dayjs, { Dayjs } from 'dayjs';
 
 const Results = ({
@@ -141,7 +141,7 @@ const Results = ({
 					) : (
 						rides?.map((ride, i) => (
 							<Grid key={i}>
-								<RideDetail ride={ride} username={user?.email ?? ''} />
+								<RideSearchResult ride={ride} username={user?.email ?? ''} />
 								<Divider />
 							</Grid>
 						))

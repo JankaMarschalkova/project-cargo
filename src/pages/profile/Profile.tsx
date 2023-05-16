@@ -10,7 +10,7 @@ import {
 	Typography
 } from '@mui/material';
 import { useNavigate } from '@tanstack/react-router';
-import usePageTitle from '../hooks/usePageTitle';
+import usePageTitle from '../../hooks/usePageTitle';
 import BackIcon from '@mui/icons-material/ArrowBack';
 import { FormEvent, useEffect, useState } from 'react';
 import {
@@ -22,9 +22,9 @@ import {
 	profilesCollection,
 	profilesDocument,
 	ridesCollection
-} from '../firebase';
-import useField from '../hooks/useField';
-import useLoggedInUser from '../hooks/useLoggedInUser';
+} from '../../firebase';
+import useField from '../../hooks/field/useField';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/EditOutlined';
@@ -38,7 +38,10 @@ export interface SimpleDialogProps {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const loadProfile = (email: string, snapshot: QuerySnapshot<ProfileType>) => {
+export const loadProfile = (
+	email: string,
+	snapshot: QuerySnapshot<ProfileType>
+) => {
 	return (
 		snapshot.docs
 			.map(doc => doc.data())
@@ -249,7 +252,7 @@ const Profile = () => {
 							width: '100%',
 							p: 4,
 							gap: 2,
-							overflow: 'scroll'
+							overflow: 'auto'
 						}}
 					>
 						<Typography variant="h5" fontWeight="bold">

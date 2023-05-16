@@ -16,13 +16,13 @@ import {
 	ridesDocument
 } from '../firebase';
 import DriverPreview from './DriverPreview';
-import { SimpleDialogProps } from './RidePreview';
+import { SimpleDialogProps } from './RideOverview';
 import { onSnapshot, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { loadProfile } from '../pages/Profile';
+import { loadProfile } from '../pages/profile/Profile';
 
-const RideDetail = ({
+const RideSearchResult = ({
 	ride,
 	username
 }: {
@@ -205,4 +205,4 @@ const RideDetail = ({
 	);
 };
 
-export default RideDetail;
+export default RideSearchResult;

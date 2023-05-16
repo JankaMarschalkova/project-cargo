@@ -7,26 +7,26 @@ import {
 	Typography
 } from '@mui/material';
 
-import usePageTitle from '../hooks/usePageTitle';
-import ButtonLink from '../components/ButtonLink';
-import useLoggedInUser from '../hooks/useLoggedInUser';
+import usePageTitle from '../../hooks/usePageTitle';
+import ButtonLink from '../../components/ButtonLink';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
-import useField from '../hooks/useField';
+import useField from '../../hooks/field/useField';
 import { addDoc, onSnapshot } from 'firebase/firestore';
 import {
 	ridesCollection,
 	Profile as ProfileType,
 	profilesCollection
-} from '../firebase';
+} from '../../firebase';
 import LoginIcon from '@mui/icons-material/Login';
-import useNumberField from '../hooks/useNumberField';
-import useDateField from '../hooks/useDateField';
+import useNumberField from '../../hooks/field/useNumberField';
+import useDateField from '../../hooks/field/useDateField';
 import dayjs from 'dayjs';
 import { useNavigate } from '@tanstack/react-router';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from 'react';
 import ProfileIcon from '@mui/icons-material/Person2Sharp';
-import { loadProfile } from './Profile';
+import { loadProfile } from '../profile/Profile';
 
 const PublishRide = () => {
 	usePageTitle('Publish ride');

@@ -11,15 +11,15 @@ import {
 	TextField,
 	Typography
 } from '@mui/material';
-import usePageTitle from '../hooks/usePageTitle';
+import usePageTitle from '../../hooks/usePageTitle';
 import { useState } from 'react';
-import { Profile as ProfileType, profilesDocument } from '../firebase';
+import { Profile as ProfileType, profilesDocument } from '../../firebase';
 import SaveIcon from '@mui/icons-material/Save';
-import useField from '../hooks/useField';
-import useLoggedInUser from '../hooks/useLoggedInUser';
+import useField from '../../hooks/field/useField';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
 
 import { setDoc } from 'firebase/firestore';
-import useNumberField from '../hooks/useNumberField';
+import useNumberField from '../../hooks/field/useNumberField';
 
 const EditProfile = ({ currentProfile }: { currentProfile: ProfileType }) => {
 	usePageTitle('Edit profile');

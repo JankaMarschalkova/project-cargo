@@ -1,8 +1,8 @@
 import { Grid, Hidden, Paper, Typography } from '@mui/material';
 
-import usePageTitle from '../hooks/usePageTitle';
-import useLoggedInUser from '../hooks/useLoggedInUser';
-import ButtonLink from '../components/ButtonLink';
+import usePageTitle from '../../hooks/usePageTitle';
+import useLoggedInUser from '../../hooks/useLoggedInUser';
+import ButtonLink from '../../components/ButtonLink';
 
 import LoginIcon from '@mui/icons-material/Login';
 import { useEffect, useState } from 'react';
@@ -12,9 +12,9 @@ import {
 	Profile as ProfileType,
 	ridesCollection,
 	Ride as RideType
-} from '../firebase';
-import RidePreview from '../components/RidePreview';
-import { loadProfile } from './Profile';
+} from '../../firebase';
+import RideOverview from '../../components/RideOverview';
+import { loadProfile } from '../profile/Profile';
 
 const YourRides = () => {
 	usePageTitle('Your rides');
@@ -104,7 +104,7 @@ const YourRides = () => {
 							<Typography>No records</Typography>
 						) : (
 							driverRides?.map((ride, i) => (
-								<RidePreview key={i} ride={ride} isPassenger={false} />
+								<RideOverview key={i} ride={ride} isPassenger={false} />
 							))
 						)}
 					</Grid>
@@ -117,7 +117,7 @@ const YourRides = () => {
 							<Typography>No records</Typography>
 						) : (
 							passengerRides?.map((ride, i) => (
-								<RidePreview key={i} ride={ride} />
+								<RideOverview key={i} ride={ride} />
 							))
 						)}
 					</Grid>

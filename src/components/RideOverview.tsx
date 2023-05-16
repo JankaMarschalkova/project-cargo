@@ -9,13 +9,17 @@ import {
 	Typography
 } from '@mui/material';
 import BackIcon from '@mui/icons-material/ArrowBack';
-import { Profile as ProfileType, Ride as RideType, profilesCollection } from '../firebase';
+import {
+	Profile as ProfileType,
+	Ride as RideType,
+	profilesCollection
+} from '../firebase';
 import DriverPreview from './DriverPreview';
 import { useEffect, useState } from 'react';
 import useLoggedInUser from '../hooks/useLoggedInUser';
 import { onSnapshot } from 'firebase/firestore';
 import RideStatus from './RideStatus';
-import { loadProfile } from '../pages/Profile';
+import { loadProfile } from '../pages/profile/Profile';
 
 export interface SimpleDialogProps {
 	open: boolean;
@@ -23,7 +27,7 @@ export interface SimpleDialogProps {
 	onClose: (value: string) => void;
 }
 
-const RidePreview = ({
+const RideOverview = ({
 	ride,
 	isPassenger = true
 }: {
@@ -129,9 +133,7 @@ const RidePreview = ({
 					)}
 					{!isPassenger && (
 						<>
-							<Typography>
-								Available seats: {ride.seats_available}
-							</Typography>
+							<Typography>Available seats: {ride.seats_available}</Typography>
 							<Typography>
 								Passengers:{' '}
 								{ride.passengers.length == 0
@@ -149,11 +151,11 @@ const RidePreview = ({
 				)}
 
 				<Box display="flex" alignItems="center">
-					<RideStatus ride={ride} isPassenger={isPassenger} profile={profile}/>
+					<RideStatus ride={ride} isPassenger={isPassenger} profile={profile} />
 				</Box>
 			</CardContent>
 		</Card>
 	);
 };
 
-export default RidePreview;
+export default RideOverview;
