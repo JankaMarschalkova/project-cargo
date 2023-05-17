@@ -16,7 +16,6 @@ import {
 } from '../firebase';
 import DriverPreview from './DriverPreview';
 import { useEffect, useState } from 'react';
-import useLoggedInUser from '../hooks/useLoggedInUser';
 import { onSnapshot } from 'firebase/firestore';
 import RideStatus from './RideStatus';
 import { loadProfile } from '../pages/profile/Profile';
@@ -34,7 +33,6 @@ const RideOverview = ({
 	ride: RideType;
 	isPassenger?: boolean;
 }) => {
-	const user = useLoggedInUser();
 	const [open, setOpen] = useState(false);
 	const [selectedValue, setSelectedValue] = useState('');
 	const [profile, setProfile] = useState<ProfileType | null>(null);
