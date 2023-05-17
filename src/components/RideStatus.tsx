@@ -57,7 +57,7 @@ const RideStatus = ({
 				leaving_from: ride.leaving_from,
 				going_to: ride.going_to,
 				datetime: ride.datetime,
-				seats_available: 0,
+				seats_available: ride.seats_available,
 				price_per_person: ride.price_per_person,
 				driver: ride.driver,
 				passengers: ride.passengers,
