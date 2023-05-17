@@ -201,6 +201,11 @@ const RideSearchResult = ({
 					)}
 				</Box>
 			)}
+			{!username && (
+				<Box mt={1}>
+					<Typography color='#E53935'>In order to join the ride, log in first, please</Typography>
+				</Box>
+			)}
 		</Grid>
 	);
 };
