@@ -40,13 +40,12 @@ const RideOverview = ({
 	const [profile, setProfile] = useState<ProfileType | null>(null);
 
 	useEffect(() => {
-		if (!user?.email) return;
+		if (!ride?.driver) return;
 
 		onSnapshot(profilesCollection, snapshot => {
-			setProfile(loadProfile(user.email ?? '', snapshot));
+			setProfile(loadProfile(ride.driver ?? '', snapshot));
 		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [user]);
+	}, [ride.driver]);
 
 	const handleClickOpen = () => {
 		setOpen(true);
